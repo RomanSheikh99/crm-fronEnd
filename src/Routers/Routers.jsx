@@ -10,6 +10,7 @@ import Imports from "../components/Pages/HomePageDashboard/Imports";
 import AllLeadsMain from "../components/Pages/All_Leads/AllLeadsMain";
 import MyFollowUpAllLeads from "../components/Pages/All_Leads/MyFollowUp";
 import AllLeads from "../components/Pages/All_Leads/AllLeads";
+import AdminDashboard from "../components/Layout/AdminDashboard/AdminDashboard";
 
 
 const router = createBrowserRouter([
@@ -69,6 +70,17 @@ const router = createBrowserRouter([
             }
         ]
 
+    },
+
+    // Admin Dashboard Route setup 
+    {
+     path: '/admin-dashboard',
+     element: <AdminDashboard> </AdminDashboard>,
+     children:[
+     {
+        
+     }
+     ]
     },
 
     {

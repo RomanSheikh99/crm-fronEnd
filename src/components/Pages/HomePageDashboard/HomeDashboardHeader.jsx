@@ -21,9 +21,8 @@ const HomeDashboardHeader = () => {
           </ul>
          </div>
        {/* Profile dropdown start here  */}
+        </div> 
         
-         
-      </div>
 
         {/* Quarterly KPI report Navbar start  */}
         <div className='w-full  mt-3   mx-auto rounded-sm  py-3 flex justify-between text-black font-semibold'>
