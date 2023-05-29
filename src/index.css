@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* active nav-option design   */
+.active{
+    background-color: rgb(17, 17, 220);
+    color: white;
+}
