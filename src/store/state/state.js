@@ -1,6 +1,6 @@
 const State = {
     count: 0,
-    user: "MD. Roman",
+    user: {},
 };
 
 export default State;
