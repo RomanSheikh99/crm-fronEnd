@@ -11,6 +11,10 @@ import AllLeadsMain from "../components/Pages/All_Leads/AllLeadsMain";
 import MyFollowUpAllLeads from "../components/Pages/All_Leads/MyFollowUp";
 import AllLeads from "../components/Pages/All_Leads/AllLeads";
 import AdminDashboard from "../components/Layout/AdminDashboard/AdminDashboard";
+import CreateUser from "../components/Layout/AdminDashboard/CreateUser";
+import AllUser from "../components/Layout/AdminDashboard/AllUser";
+import AdminDashboardAllLeads from "../components/Layout/AdminDashboard/AdminDashboardAllLeads";
+import AdminFreshLeads from "../components/Layout/AdminDashboard/AdminFreshLeads";
 
 
 const router = createBrowserRouter([
@@ -78,7 +82,20 @@ const router = createBrowserRouter([
      element: <AdminDashboard> </AdminDashboard>,
      children:[
      {
-        
+      path: '/admin-dashboard/create-user',
+      element: <CreateUser> </CreateUser>
+     },
+     {
+      path: '/admin-dashboard/all-user',
+      element: <AllUser> </AllUser>
+     },
+     {
+      path: '/admin-dashboard/all-leads',
+      element: <AdminDashboardAllLeads> </AdminDashboardAllLeads>
+     },
+     {
+      path: '/admin-dashboard/fresh-leads',
+      element: <AdminFreshLeads > </AdminFreshLeads>
      }
      ]
     },
