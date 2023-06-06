@@ -28,8 +28,9 @@ const Login = () => {
     axios
       .post(api, data)
       .then((res) => {
-        navigate(-1);
-        dispatch(setUser(res.data))
+        const user = res.data;
+        dispatch(setUser(user))
+        user.role === 'admin' ? navigate('/admin-dashboard'): navigate('/my-followup');
         setIsLoding(false);
       })
       .catch((error) => {

@@ -12,11 +12,21 @@ import MyFollowUpAllLeads from "../components/Pages/All_Leads/MyFollowUp";
 import AllLeads from "../components/Pages/All_Leads/AllLeads";
 import AdminDashboard from "../components/Layout/AdminDashboard/AdminDashboard";
 import PrivetRoute from "./PrivetRoutes";
+import { useSelector } from "react-redux";
+
+// const state = useSelector((state) => state);
+
+// console.log(state.user)
+
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <PrivetRoute element={<HomePageDashboard />} />,
+    element: <PrivetRoute element={<MyFollowUpAllLeads />} />,
+  },
+  {
+    path: "/my-followup",
+    element: <MyFollowUpAllLeads> </MyFollowUpAllLeads>,
   },
   {
     path: "/login",
@@ -60,10 +70,7 @@ const router = createBrowserRouter([
     path: "/all-leads",
     element: <AllLeadsMain> </AllLeadsMain>,
     children: [
-      {
-        path: "/all-leads/my-followup",
-        element: <MyFollowUpAllLeads> </MyFollowUpAllLeads>,
-      },
+     
       {
         path: "/all-leads/all-leads-data",
         element: <AllLeads> </AllLeads>,
