@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-
-import RegisterNav from "./RegisterNav";
-import SignupAnimation from "../../../assets/json/signup-animation.json";
-import Lottie from "lottie-react";
-import siteInfo from "../../../../siteInfo";
 import { useDispatch } from "react-redux";
-import { action } from "../../../store/store";
+import axios from "axios";
+import Lottie from "lottie-react";
+
+import siteInfo from "../../../siteInfo";
+import { action } from "../../store/store";
+import SignupAnimation from "../../assets/json/signup-animation.json";
 
 const Login = () => {
   const api = siteInfo.api + "/user/login";
@@ -41,8 +40,6 @@ const Login = () => {
 
   return (
     <div className="w-full">
-      {/* Login navbar section start here  */}
-      <RegisterNav></RegisterNav>
 
       {/* Login form section start here  */}
       <div className="block w-3/5 mx-auto mt-4 rounded-lg bg-white text-center shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
@@ -85,18 +82,6 @@ const Login = () => {
                 />
 
                 <div>
-                  {/* <div className="form-control  mt-3   ">
-                    <label className="cursor-pointer label justify-start gap-2 items-center ">
-                      <input
-                        type="checkbox"
-                        name="login_checked"
-                        className="checkbox checkbox-info w-4 h-4 "
-                      />
-                      <span className="label-text   font-semibold">
-                        Remember me
-                      </span>
-                    </label>
-                  </div> */}
 
                   <div className="float-left mt-3">
                     {isLoading && <h1>loading...</h1>}

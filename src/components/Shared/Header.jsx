@@ -2,7 +2,7 @@ import React from 'react';
 import { FaCaretDown } from 'react-icons/fa';
 import { Link, NavLink } from 'react-router-dom';
 
-const AllLeadsHeader  = () => {
+const Header  = () => {
     return (
       <div>
     {/* Titlebar section start here  */}
@@ -114,10 +114,14 @@ const AllLeadsHeader  = () => {
            <section className='w-full '> 
             <div className='w-full  mt-2 bg-neutral-50  mx-auto rounded-sm  py-3 flex justify-between items-center  text-black font-semibold'>
           <div className='text-blue-500 left-0 '> 
-              <NavLink className={' mr-2  hover:bg-blue-500 hover:text-neutral-100 p-2 px-3 rounded-sm'} to={'/all-leads/my-followup'}> My Follow-up </NavLink>  
-              <NavLink className={'  hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm'} to={'/all-leads/assign-leads'}>Assign Leads </NavLink> 
-              <NavLink className={'  hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm'} to={'/all-leads/fresh-leads'}> Fresh Leads </NavLink> 
-              <NavLink className={'  hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm'} to={'/all-leads/all-leads-data'}> All Leads </NavLink> 
+              <NavLink className={' mr-2  hover:bg-blue-500 hover:text-neutral-100 p-2 px-3 rounded-sm'} 
+              to={'/followup-leads'}> My Follow-up </NavLink>  
+              <NavLink className={'  hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm'} 
+              to={'/assign-leads'}>Assign Leads </NavLink> 
+              <NavLink className={'  hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm'} 
+              to={'/fresh-leads'}> Fresh Leads </NavLink> 
+              <NavLink className={'  hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm'} 
+              to={'/all-leads'}> All Leads </NavLink> 
           </div>
 
            <div className='flex'>
@@ -127,9 +131,12 @@ const AllLeadsHeader  = () => {
 
           <div className='text-green-500'>
               <div>
-              <NavLink className={' mr-2 hover:bg-green-500 hover:text-neutral-100  py-2 px-3 rounded-sm'} to={'/'}> Filter Leads  </NavLink>  
-              <NavLink className={' mr-2 hover:bg-green-500 hover:text-neutral-100  py-2 px-3 rounded-sm'} to={'/'}> Favourite  Leads  </NavLink>  
-              <NavLink className={' mr-2 hover:bg-green-500 hover:text-neutral-100  py-2 px-3 rounded-sm'} to={'/'}> Touch Leads  </NavLink>  
+              <NavLink className={' mr-2 hover:bg-green-500 hover:text-neutral-100  py-2 px-3 rounded-sm'} 
+              to={'/filter-leads'}> Filter Leads  </NavLink>  
+              <NavLink className={' mr-2 hover:bg-green-500 hover:text-neutral-100  py-2 px-3 rounded-sm'} 
+              to={'/favourite-leads'}> Favourite  Leads  </NavLink>  
+              <NavLink className={' mr-2 hover:bg-green-500 hover:text-neutral-100  py-2 px-3 rounded-sm'} 
+              to={'/trash-leads'}> Trash Leads  </NavLink>  
               </div>
               <div className=' flex justify-end '>
               <NavLink className={'  bg-green-500 hover:bg-green-700 text-neutral-100 py-2 px-3 rounded-sm mt-2'} to={'/'}> Create New Leads </NavLink> 
@@ -144,4 +151,4 @@ const AllLeadsHeader  = () => {
     );
 };
 
-export default AllLeadsHeader ;
+export default Header ;
