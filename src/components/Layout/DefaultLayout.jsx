@@ -1,6 +1,6 @@
 import Header from "../Shared/Header";
 
-const AdminLayout = ({ children }) => {
+const DefaultLayout = ({ children }) => {
     return (
         <div>
              <Header> </Header>
@@ -9,4 +9,4 @@ const AdminLayout = ({ children }) => {
     );
 };
 
-export default AdminLayout;
+export default DefaultLayout;

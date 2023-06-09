@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import DefultLayout from '../Layout/DefultLayout';
+import DefaultLayout from '../Layout/DefaultLayout';
 import DataTable from '../Shared/DataTable';
 
 const AllLeads = () => {
@@ -22,12 +22,12 @@ const AllLeads = () => {
   }, [])
 
   return (
-    <DefultLayout>
+    <DefaultLayout>
       <div className='w-full '>
       
       <DataTable data={userData}></DataTable>
       </div>
-    </DefultLayout>
+    </DefaultLayout>
   );
 };
 
