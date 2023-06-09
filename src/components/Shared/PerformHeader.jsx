@@ -2,14 +2,14 @@ import { FaCaretDown} from "react-icons/fa";
 import { Link, NavLink } from 'react-router-dom';
 
 
-const HomeDashboardHeader = () => {
+const PerformHeader = () => {
     return (
       <div className='w-full '>
       {/* Titlebar section start here  */}
        <div className='w-full bg-slate-900 mx-auto rounded-sm px-3 py-3 flex justify-between text-neutral-100'>
         
         <Link to={'/'} className='cursor-pointer p-1'> Skill_CRM </Link>
-        <div className='text-xl p-1'> Quarterly KPI Report  </div>
+        <div className='text-xl p-1'> CRM Performanc Report </div>
      
         {/* Profile dropdown start here  */}
          <div className="dropdown dropdown-end">
@@ -31,9 +31,12 @@ const HomeDashboardHeader = () => {
               <NavLink className={'  hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm'} to={'/all-leads'}> All Leads </NavLink> 
           </div>
           <div className='text-blue-500'> 
-              <NavLink className={' mx-2 hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm '} to={'/homepage-dashboard/kpi-quarterly'}> Quarterly </NavLink>  
-              <NavLink className={' mx-2 hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm '} to={'/homepage-dashboard/kpi-monthly'}> Monthly  </NavLink> 
-              <NavLink className={' mx-2 hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm '} to={'/homepage-dashboard/kpi-daily'}> Daily  </NavLink> 
+              <NavLink className={' mx-2 hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm '} 
+              to={'/performench/quarterly'}> Quarterly </NavLink>  
+              <NavLink className={' mx-2 hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm '} 
+              to={'/performench/monthly'}> Monthly  </NavLink> 
+              <NavLink className={' mx-2 hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm '} 
+              to={'/performench/daily'}> Daily  </NavLink> 
           </div>
           <div className='text-green-500'>
               <NavLink className={' mr-2 hover:bg-green-500 hover:text-neutral-100  py-2 px-3 rounded-sm'} to={'/homepage-dashboard/kpi-imports'}> Imports </NavLink>  
@@ -48,4 +51,4 @@ const HomeDashboardHeader = () => {
     );
 };
 
-export default HomeDashboardHeader;
+export default PerformHeader;
