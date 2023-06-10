@@ -1,16 +1,11 @@
 import counterReducers from "./counterReducers";
+import themeReducers from "./themeReducers";
+import userReducers from "./userReducers";
 
 const reducers = {
     ...counterReducers,
-    setUser: (state,action)=> {
-        const user = action.payload;
-        localStorage.setItem('crmUserId', JSON.stringify(user.id));
-        state.user = user;
-      },
-      logout: (state) => {
-        localStorage.removeItem('crmUserId');
-        state.user = '';
-      }
+    ...userReducers,
+    ...themeReducers
       
 }
 

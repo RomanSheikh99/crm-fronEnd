@@ -1,0 +1,12 @@
+$light-primary-color: #ffffff;
+$dark-primary-color: #333333;
+
+.light {
+  background-color: $light-primary-color;
+  color: $dark-primary-color;
+}
+
+.dark {
+  background-color: $dark-primary-color;
+  color: $light-primary-color;
+}
