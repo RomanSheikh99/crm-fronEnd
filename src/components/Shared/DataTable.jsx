@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const DataTable = ({data}) => {
     return (
-        <div className="w-full overflow-x-scroll ">
+        <div className="w-full overflow-x-scroll">
 
-            <table className=" w-full whitespace-nowrap overflow-x-scroll  ">
+            <table className=" w-full whitespace-nowrap  ">
                 {/* head*/}
                 <thead className=''>
                     <tr className='border'>
@@ -19,7 +19,7 @@ const DataTable = ({data}) => {
                         <th className='bg-blue-500  font-extrabold  py-3'> Status </th>
                         <th className='bg-blue-500  font-extrabold  py-3 '> Possiblity  </th>
                         <th className='bg-blue-500  font-extrabold  py-3'> Next Followup </th>
-                        <th className='bg-blue-500  font-extrabold  py-3'> Created At </th>
+                        <th className='bg-blue-500  font-extrabold  py-3 '> Created At </th>
                         <th className='bg-blue-500  font-extrabold  py-3'> Phone </th>
                         <th className='bg-blue-500 rounded-tr-sm    py-3 rounded-br-sm font-extrabold '> Action </th>
                     </tr>
@@ -38,7 +38,7 @@ const DataTable = ({data}) => {
                             <td className='h-3 bg-gray-200 border border-slate-300 py-0 text-center px-0  m-1'> {userInfo.status} </td>
                             <td className='h-3 bg-gray-200 border border-slate-300 py-0 text-center px-0  m-1'> {userInfo.possibility} </td>
                             <td className='h-3 bg-gray-200 border border-slate-300 py-0 text-center px-0  m-1'> {userInfo.next_followup} </td>
-                            <td className='h-3 bg-gray-200 border border-slate-300 py-0 text-center px-0  m-1 w-24 '> {userInfo.created_at} </td>
+                            <td className='h-3 bg-gray-200 border border-slate-300 py-0 text-center px-0  m-1'> {userInfo.created_at} </td>
                             <td className='h-3 bg-gray-200 border border-slate-300 py-0 text-center px-0  m-1'> {userInfo.phone} </td>
                             <td className='h-3 bg-gray-200 border border-slate-300 py-0 text-center px-0  m-1 w-24'>
                                 <tr className="h-12    border border-slate-300">
