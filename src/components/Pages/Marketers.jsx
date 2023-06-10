@@ -31,7 +31,7 @@ const Marketers = () => {
               
                 <div>
                 
-                   <label htmlFor="my_modal_6" className=" bg-green-500 hover:bg-green-600  font-semibold  text-neutral-100  py-2 px-3 rounded-sm"> Create New Marketer </label>
+                   <label htmlFor="create_marketer_modal" className=" bg-green-500 hover:bg-green-600  font-semibold  text-neutral-100  py-2 px-3 rounded-sm"> Create New Marketer </label>
                    <CreateMarkterModal  > </CreateMarkterModal>
                 </div>
              </div>

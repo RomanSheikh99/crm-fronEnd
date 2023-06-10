@@ -17,7 +17,7 @@ const DataTable = ({data}) => {
                         <th className='bg-blue-500  font-extrabold  py-3'> Minor  </th>
                         <th className='bg-blue-500  font-extrabold  py-3'> Follower</th>
                         <th className='bg-blue-500  font-extrabold  py-3'> Status </th>
-                        <th className='bg-blue-500  font-extrabold  py-3 '> Possiblity  </th>
+                        <th className='bg-blue-500  font-extrabold  py-3 '> Possibility  </th>
                         <th className='bg-blue-500  font-extrabold  py-3'> Next Followup </th>
                         <th className='bg-blue-500  font-extrabold  py-3 '> Created At </th>
                         <th className='bg-blue-500  font-extrabold  py-3'> Phone </th>

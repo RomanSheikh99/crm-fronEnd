@@ -4,12 +4,12 @@ import {  FaRegTimesCircle } from 'react-icons/fa';
 const CreateMarkterModal = () => {
     return (
  <div className=''>
- <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+ <input type="checkbox" id="create_marketer_modal" className="modal-toggle" />
   <div className="modal">
   
    <div className="modal-box">
    <div className='float-right'>
-    <label htmlFor="my_modal_6"className='  cursor-pointer text-slate-700 text-3xl hover:text-red-500 rounded-md'> <FaRegTimesCircle/> </label>
+    <label htmlFor="create_marketer_modal"className='  cursor-pointer text-slate-700 text-3xl hover:text-red-500 rounded-md'> <FaRegTimesCircle/> </label>
     </div>
      {/* Create Marketer form start here  */}
      <form className=" w-full mx-auto px-4 py-6 mb-10  items-start  flex flex-col rounded-b-md font-semibold ">
@@ -79,7 +79,7 @@ const CreateMarkterModal = () => {
         <div className="flex flex-row-reverse   gap-2  ">
              <div>
                <input
-                  value={"Sign up"}
+                  value={"Submit"}
                   type="submit"
                   className="  bg-sky-600 border-none text-neutral-100 px-4 py-2 rounded-md hover:bg-sky-800 cursor-pointer"
                 />
