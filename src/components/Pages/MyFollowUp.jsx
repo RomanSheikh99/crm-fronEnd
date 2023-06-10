@@ -4,7 +4,6 @@ import DataTable from '../Shared/DataTable';
 
 const MyFollowUp = () => {
 
-
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
