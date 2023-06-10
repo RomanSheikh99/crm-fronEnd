@@ -6,10 +6,10 @@ const AdminLayout = ({ children }) => {
         <div>
             <AdminDashboardNavbar />
             <main className='flex '>
-                <div className='w-1/5 '>
+                <div className='w-[200px] '>
                     <AdminDashboardSideNav> </AdminDashboardSideNav>
                 </div>
-                <div className='w-full bg-neutral-100'>
+                <div className='w-full overflow-x-scroll bg-neutral-100'>
                     {children}
                 </div>
 

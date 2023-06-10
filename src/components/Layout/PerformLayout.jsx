@@ -4,7 +4,7 @@ import PerformHeader from "../Shared/PerformHeader";
 const AdminLayout = ({ children }) => {
     return (
         <div>
-            <div className='w-4/5 mx-auto'>
+            <div className='w-full '>
                 <PerformHeader />
                 { children }
             </div>
