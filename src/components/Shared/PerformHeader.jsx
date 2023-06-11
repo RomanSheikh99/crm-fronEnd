@@ -1,13 +1,13 @@
 import { FaCaretDown} from "react-icons/fa";
 import { Link, NavLink } from 'react-router-dom';
-import TitleBar from "./TitleBar";
+import Navbar from "./Navbar";
 
 
 const PerformHeader = () => {
     return (
       <div className='w-full '>
-      {/* Titlebar section start here  */}
-       <TitleBar data={' CRM Performanc Report'} />
+      {/* Navbar section start here  */}
+       <Navbar data={' CRM Performanc Report'} />
         
 
         {/* Quarterly KPI report Navbar start  */}

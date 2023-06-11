@@ -1,98 +1,17 @@
 import React from 'react';
 import {  NavLink } from 'react-router-dom';
-import TitleBar from './TitleBar';
+import Navbar from './Navbar';
 import CreateNewLeadModal from './CreateNewLeadModal';
 import FilterLeadsModal from './FilterLeadsModal';
 
 const Header  = () => {
     return (
       <div>
-    {/* Titlebar section start here  */}
-     <TitleBar data ={'Total Showing Leads :'} />
+    {/* Navbar section start here  */}
+     <Navbar data ={'Total Showing Leads :'} />
        
 
-     {/* Search Filter section start here  */}
-     <section className='w-full flex justify-between  gap-y-2 mt-3 px-2 bg-slate-200 py-2 font-semibold text-black'>
-      <div> 
-      <label> Minor:</label>
-       <select className=" select-bordered w-[115px] ml-1 h-10 rounded-sm">
-          <option disabled selected> </option>
-          <option>Game of Thrones</option>
-          <option>Lost</option>
-          <option>Breaking Bad</option>
-          <option>Walking Dead</option>
-       </select>
-      </div>
-
-      <div> 
-      <label> Status :</label>
-       <select className=" select-bordered w-[115px] ml-1 h-10 rounded-sm">
-          <option disabled selected> </option>
-          <option>Game of Thrones</option>
-          <option>Lost</option>
-          <option>Breaking Bad</option>
-          <option>Walking Dead</option>
-       </select>
-      </div>
-     
-      <div> 
-      <label> Possibility :</label>
-       <select className=" select-bordered w-[115px] ml-1 h-10 rounded-sm">
-          <option disabled selected> </option>
-          <option>Game of Thrones</option>
-          <option>Lost</option>
-          <option>Breaking Bad</option>
-          <option>Walking Dead</option>
-       </select>
-      </div>
-
-      <div> 
-      <label> Country :</label>
-       <select className=" select-bordered w-[115px] ml-1 h-10 rounded-sm">
-          <option disabled selected> </option>
-          <option>Game of Thrones</option>
-          <option>Lost</option>
-          <option>Breaking Bad</option>
-          <option>Walking Dead</option>
-       </select>
-      </div>
-
-      <div> 
-      <label> Category :</label>
-       <select className=" select-bordered w-[115px] ml-1 h-10 rounded-sm">
-          <option disabled selected> </option>
-          <option>Game of Thrones</option>
-          <option>Lost</option>
-          <option>Breaking Bad</option>
-          <option>Walking Dead</option>
-       </select>
-      </div>
-
-      <div> 
-      <label> To :</label>
-       <select className=" select-bordered w-[115px] ml-1 h-10 rounded-sm">
-          <option disabled selected> </option>
-          <option>Game of Thrones</option>
-          <option>Lost</option>
-          <option>Breaking Bad</option>
-          <option>Walking Dead</option>
-       </select>
-      </div>
-
-      <div> 
-      <label> From :</label>
-       <select className=" select-bordered w-[115px] ml-1 h-10 rounded-sm">
-          <option disabled selected> </option>
-          <option>Game of Thrones</option>
-          <option>Lost</option>
-          <option>Breaking Bad</option>
-          <option>Walking Dead</option>
-       </select>
-      </div>
-
-       <button  type='submit' className=' border border-blue-400 p-1 text-blue-400 hover:bg-blue-300 hover:text-white hover:border-white' > Apply Filter  </button>
-      </section>
-       {/* Search Filter section end here  */}
+    
 
 
          {/* All Leads Navbar  */}

@@ -16,10 +16,10 @@ const FilterLeadsModal = () => {
             <div className=' '>
              <div className='flex justify-between'> 
                 <label> Minor:</label>
-                <select className=" select-bordered w-56 ml-1 h-10 rounded-sm bg-slate-300">
+                <select className=" select-bordered w-56 ml-1 h-10  border border-slate-400 rounded-sm ">
                 <option disabled selected> </option>
                 <option>Game of Thrones</option>
-                <option>Lost</option>
+                <option> Lost </option>
                 <option>Breaking Bad</option>
                 <option>Walking Dead</option>
             </select>
@@ -27,7 +27,7 @@ const FilterLeadsModal = () => {
             
             <div className='mt-6 flex justify-between'> 
             <label> Possibiliti :</label>
-            <select name='possibility' className=" select-bordered bg-slate-300 w-56 ml-1 h-10 rounded-sm">
+            <select name='possibility' className=" select-bordered  border border-slate-400  w-56 ml-1 h-10 rounded-sm">
                 <option disabled selected> </option>
                 <option> High  </option>
                 <option> Medium </option>
@@ -37,7 +37,7 @@ const FilterLeadsModal = () => {
 
             <div className='mt-6 flex justify-between items-start'> 
             <label> Category :</label>
-            <select name='category' className=" select-bordered bg-slate-300 w-56 ml-1 h-10 rounded-sm">
+            <select name='category' className=" select-bordered  border border-slate-400  w-56 ml-1 h-10 rounded-sm">
                 <option value={''} disabled selected> </option>
                 <option value={''}> Online  Store </option>
                 <option value={''}> Brand </option>
@@ -55,7 +55,7 @@ const FilterLeadsModal = () => {
          <div className=''>
             <div className='flex justify-between'> 
             <label> Status :</label>
-            <select name='status' className=" select-bordered w-56 bg-slate-300 ml-1 h-10 rounded-sm">
+            <select name='status' className=" select-bordered w-56 border border-slate-400  ml-1 h-10 rounded-sm">
                 <option disabled selected> </option>
                 <option> Gatekeeper</option>
                 <option> Contacted </option>
@@ -71,7 +71,7 @@ const FilterLeadsModal = () => {
             
             <div className=' flex justify-between mt-6'> 
             <label> Country :</label>
-            <select name='country' className=" select-bordered bg-slate-300 w-56 ml-1 h-10 rounded-sm">
+            <select name='country' className=" select-bordered  border border-slate-400  w-56 ml-1 h-10 rounded-sm">
                <option value={''} disabled selected> </option>
                <option value={''} > German  </option>
                <option value={''} > USA  </option>
