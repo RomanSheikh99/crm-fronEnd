@@ -9,6 +9,8 @@ import FreshLeads from "../components/Pages/FreshLeads";
 import AllLeads from "../components/Pages/AllLeads";
 import Login from "../components/Pages/Login";
 import AdminProfile from "../components/Pages/AdminProfile";
+import TrashLeads from "../components/Pages/TrashLeads";
+import FavouriteLeads from "../components/Pages/FavouriteLeads";
 
 
 const router = createBrowserRouter([
@@ -47,6 +49,15 @@ const router = createBrowserRouter([
   {
     path: "/fresh-leads",
     element: <FreshLeads />,
+  },
+  {
+    path: '/trash-leads',
+    element: <TrashLeads />
+  },
+  {
+   path: '/favourite-leads',
+   element:<FavouriteLeads />
+
   },
   {
     path: "/all-leads",

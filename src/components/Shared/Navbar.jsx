@@ -2,11 +2,11 @@ import React from 'react';
 import { FaCaretDown, FaCog, FaMoon, FaSun } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-const TitleBar = ({data}) => {
+const Navbar = ({data}) => {
     return (
         <div>
-            {/* Titlebar section start here  */}
-    <div className='w-full  bg-slate-900 mx-auto rounded-sm px-3 py-2 flex justify-between text-neutral-100'>
+            {/* Navbar section start here  */}
+    <div className='w-full  bg-slate-900 mx-auto rounded-bl-sm rounded-br-sm  px-3 py-2 flex justify-between text-neutral-100'>
         
         <Link to={'/'} className='cursor-pointer p-1'> Skill_CRM </Link>
           <div className='text-xl p-1'> {data}  </div>
@@ -38,4 +38,4 @@ const TitleBar = ({data}) => {
     );
 };
 
-export default TitleBar;
+export default Navbar;

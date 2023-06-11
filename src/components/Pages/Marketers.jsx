@@ -22,6 +22,8 @@ const Marketers = () => {
     FetchData();
   }, []);
 
+
+
   return (
     <AdminLayout>
       <section>
