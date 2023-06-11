@@ -1,7 +1,6 @@
 import React from 'react';
 import { FaCaretDown, FaCog, FaMoon, FaSun } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import {  FaCog, FaMoon, FaSun } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { action } from "../../store/store";
 
