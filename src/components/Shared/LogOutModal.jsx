@@ -17,7 +17,7 @@ const LogOutModal = () => {
               </div>
             </div>
           </div>
-         </div>
+            </div>
         </div>
     );
 };
