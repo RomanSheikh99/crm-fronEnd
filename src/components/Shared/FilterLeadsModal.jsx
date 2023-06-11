@@ -1,6 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const FilterLeadsModal = () => {
+  const [countries,setCountries] = useState([]);
+  useEffect(()=> {
+    const FetchCountry = async () => {
+      try{
+       const response  =  await fetch('../../../country.json')
+       const data = await response.json()
+       setCountries(data.countries)
+      }catch(error){
+        console.log('Failed to fetch country data',error)
+      }
+
+    }
+    FetchCountry()
+  },[])
+
     return (
         <div>
    <div className='px-2 py-4'>
@@ -73,8 +88,8 @@ const FilterLeadsModal = () => {
             <label> Country :</label>
             <select name='country' className=" select-bordered  border border-slate-400  w-56 ml-1 h-10 rounded-sm">
                <option value={''} disabled selected> </option>
-               <option value={''} > German  </option>
-               <option value={''} > USA  </option>
+               {countries.map((country,i) => (<option key={i} > {country} </option>))}
+             
              
            </select>
             </div>

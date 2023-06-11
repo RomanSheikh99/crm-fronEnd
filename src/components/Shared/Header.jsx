@@ -10,10 +10,6 @@ const Header  = () => {
     {/* Navbar section start here  */}
      <Navbar data ={'Total Showing Leads :'} />
        
-
-    
-
-
          {/* All Leads Navbar  */}
            <section className='w-full '> 
             <div className='w-full  mt-2 bg-neutral-50  mx-auto rounded-sm  py-3 flex justify-between items-center  text-black font-semibold'>
@@ -56,8 +52,6 @@ const Header  = () => {
             </div>
             </section>
           {/* All Leads Navbar end here   */}
-
-
       </div>
     );
 };
