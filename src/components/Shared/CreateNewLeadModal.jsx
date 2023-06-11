@@ -7,7 +7,7 @@ return (
     {/* The button to open modal */}
     <input type="checkbox" id="create_newlead_modal" className="modal-toggle" />
     <div className="modal">
-      <div className=" bg-neutral-100 w-4/6 max-w-5xl ">
+      <div className=" bg-neutral-100 w-4/6 max-w-4xl ">
         <form className="px-10 w-10/12   py-10 mx-auto">
           <h1 className="text-3xl font-semibold text-gray-700 mb-2"> Create New Lead  </h1>
          <section className="  ">

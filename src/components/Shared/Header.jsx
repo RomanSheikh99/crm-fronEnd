@@ -47,7 +47,7 @@ const Header  = () => {
                   </div>
                
                 <div className=' flex justify-end '>
-                  <label htmlFor='create_newlead_modal' className={'  bg-green-500 mr-3 hover:bg-green-700 text-neutral-100 py-2 px-3 rounded-sm mt-2'} > Imports </label> 
+                  <label htmlFor='' className={'  bg-green-500 mr-3 hover:bg-green-700 text-neutral-100 py-2 px-3 rounded-sm mt-2'} > Imports </label> 
                   <label htmlFor='create_newlead_modal' className={'  bg-green-500 hover:bg-green-700 text-neutral-100 py-2 px-2 rounded-sm mt-2'} > Create New Leads </label> 
                   <CreateNewLeadModal> </CreateNewLeadModal>
                  </div>
