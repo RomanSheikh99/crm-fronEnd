@@ -1,7 +1,7 @@
 
 import PerformHeader from "../Shared/PerformHeader";
 
-const AdminLayout = ({ children }) => {
+const PerformLayout = ({ children }) => {
     return (
         <div>
             <div className='w-full '>
@@ -12,4 +12,4 @@ const AdminLayout = ({ children }) => {
     );
 };
 
-export default AdminLayout;
+export default PerformLayout;

@@ -12,9 +12,9 @@ const PerformHeader = () => {
         
 
         {/* Quarterly KPI report Navbar start  */}
-        <div className='w-full  mt-3   mx-auto rounded-sm  py-3 flex justify-between text-black font-semibold'>
+        <div className='w-full  mt-4 h-8  mx-auto rounded-sm  py-0 flex justify-between text-black font-semibold'>
           <div className='text-blue-500 left-0 '> 
-              <NavLink className={' mr-2  hover:bg-blue-500 hover:text-neutral-100 p-2 px-3 rounded-sm'} to={'/homepage-dashboard/my-followup-performance'}> My Followup </NavLink>  
+              <NavLink className={' mr-2  hover:bg-blue-500 hover:text-neutral-100 p-2 px-3 rounded-sm'} to={'/'}> My Followup </NavLink>  
               <NavLink className={'  hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm'} to={'/all-leads'}> All Leads </NavLink> 
           </div>
           <div className='text-blue-500'> 
