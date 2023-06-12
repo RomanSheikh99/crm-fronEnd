@@ -7,7 +7,7 @@ const PerformDataTable = () => {
           <table className=" w-full  ">
             {/* head*/}
             <thead className='text-center'>
-              <tr className='border h-12'>
+              <tr className='border h-12    '>
                 <th className='bg-blue-500 rounded-tl-sm rounded-bl-sm  font-extrabold '> Quarter</th>
                 <th className='bg-blue-500   font-extrabold '> Criteria</th>
                 <th className='bg-blue-500   font-extrabold '> New Call </th>

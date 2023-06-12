@@ -11,6 +11,7 @@ import Login from "../components/Pages/Login";
 import AdminProfile from "../components/Pages/AdminProfile";
 import TrashLeads from "../components/Pages/TrashLeads";
 import FavouriteLeads from "../components/Pages/FavouriteLeads";
+import PageNotFound from "../components/Shared/PageNotFound";
 
 
 const router = createBrowserRouter([
@@ -70,15 +71,7 @@ const router = createBrowserRouter([
 
   {
     path: "*",
-    element: (
-      <div
-        className="text-3xl text-center mt-4
-           font-bold text-red-600"
-      >
-        {" "}
-        This routes not found !{" "}
-      </div>
-    ),
+    element: <PageNotFound/>,
   },
 
 
