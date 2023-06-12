@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaCaretDown, FaCog, FaMoon, FaSun } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import Logo from '../../assets/logo/vivipng 2.png'
 
 const Navbar = ({data}) => {
     return (
@@ -8,7 +9,7 @@ const Navbar = ({data}) => {
             {/* Navbar section start here  */}
     <div className='w-full  bg-slate-900 mx-auto rounded-bl-sm rounded-br-sm  px-3 py-2 flex justify-between text-neutral-100'>
         
-        <Link to={'/'} className='cursor-pointer p-1'> Skill_CRM </Link>
+        <Link to={'/'} className='cursor-pointer p-1'> <img src={Logo} className='w-12 h-10' /> </Link>
           <div className='text-xl p-1'> {data}  </div>
   
        
