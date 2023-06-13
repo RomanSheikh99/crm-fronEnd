@@ -21,7 +21,7 @@ return (
     {/* The button to open modal */}
     <input type="checkbox" id="create_newlead_modal" className="modal-toggle" />
     <div className="modal">
-      <div className=" bg-neutral-100 w-4/6 max-w-4xl ">
+      <div className=" bg-neutral-100 w-4/6 max-w-4xl h-auto ">
         <form className="px-10 w-10/12   py-10 mx-auto">
           <h1 className="text-3xl font-semibold text-gray-700 mb-2"> Create New Lead  </h1>
 
@@ -29,14 +29,14 @@ return (
         <div className=" flex  justify-between">
           {/* Left side of form  */}
           <div>
-          <div className="mb-4">
+          <div className="mb-3">
             <label htmlFor="name" className="text-lg font-medium text-gray-700">
               Company 
             </label>
             <input type="text" name="company" required
               className="mt-1 block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
           </div>
-          <div className="mb-4">
+          <div className="mb-3">
             <label  className="text-lg font-medium text-gray-700">
               Website 
             </label>
@@ -44,7 +44,7 @@ return (
               className="mt-1 block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
            </div>
 
-           <div className="mb-4 flex flex-col">
+           <div className="mb-3 flex flex-col">
             <label  className="text-lg font-medium text-gray-700">
               Country   
             </label>
@@ -54,7 +54,7 @@ return (
               
             </select>
            </div>
-          <div className="mb-4 flex flex-col">
+          <div className="mb-3 flex flex-col">
             <label htmlFor="email" className="text-lg font-medium text-gray-700">
               Category  
             </label>
@@ -75,7 +75,7 @@ return (
               
           {/* Right side of form start  */}
           <div>
-          <div className="mb-4">
+          <div className="mb-3">
             <label className="text-lg font-medium text-gray-700">
               Contact Person
             </label>
@@ -83,7 +83,7 @@ return (
               className="mt-1 block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-3">
             <label  className="text-lg font-medium text-gray-700">
               Designation
             </label>
@@ -91,19 +91,19 @@ return (
               className="mt-1 block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
            </div>
 
-           <div className="mb-4">
+           <div className="mb-3">
             <label  className="text-lg font-medium text-gray-700">
               Phone  
             </label>
             <input type="number"  required name="phone"
-              className="mt-1 block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              className=" block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
           </div>
-          <div className="mb-4">
+          <div className="mb-3">
             <label htmlFor="email"  className="text-lg font-medium text-gray-700">
               Email
             </label>
             <input type="email" required name="email"
-              className="mt-1 block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              className=" block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
            </div>
          </div>
          {/* Right side of form end   */}
