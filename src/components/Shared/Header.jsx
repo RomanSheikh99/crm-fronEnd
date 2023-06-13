@@ -3,6 +3,7 @@ import {  NavLink } from 'react-router-dom';
 import Navbar from './Navbar';
 import CreateNewLeadModal from './CreateNewLeadModal';
 import FilterLeadsModal from './FilterLeadsModal';
+import ImportModal from './ImportModal';
 
 const Header  = () => {
     return (
@@ -42,10 +43,15 @@ const Header  = () => {
                      to={'/trash-leads'}> Trash Leads  </NavLink>  
                   </div>
                
-                <div className=' flex justify-end '>
-                  <label htmlFor='' className={'  bg-green-500 mr-3 hover:bg-green-700 text-neutral-100 py-2 px-3 rounded-sm mt-2'} > Imports </label> 
+                <div className=' flex justify-end items-center  '>
+                 <>
+                 <label htmlFor="import_modal" className={'  bg-green-500 mr-3 hover:bg-green-700 text-neutral-100 py-2 px-3 rounded-sm mt-2'} > Imports </label> 
+                  <ImportModal/>
+                 </>
+                  <>
                   <label htmlFor='create_newlead_modal' className={'  bg-green-500 hover:bg-green-700 text-neutral-100 py-2 px-2 rounded-sm mt-2'} > Create New Leads </label> 
                   <CreateNewLeadModal> </CreateNewLeadModal>
+                  </>
                  </div>
               </div>
 
