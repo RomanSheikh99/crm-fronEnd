@@ -30,14 +30,8 @@ const FilterLeadsModal = () => {
             {/* Filter Form Leftside   */}
             <div className=' '>
              <div className='flex justify-between'> 
-                <label> Minor:</label>
-                <select className=" select-bordered w-56 ml-1 h-10  border border-slate-400 rounded-sm ">
-                <option disabled selected> </option>
-                <option>Game of Thrones</option>
-                <option> Lost </option>
-                <option>Breaking Bad</option>
-                <option>Walking Dead</option>
-            </select>
+             <label> Minor: </label>
+             <input name='minor' placeholder=''  className='  border border-slate-400  w-56 ml-1 h-10 rounded-sm' />
             </div>
             
             <div className='mt-6 flex justify-between'> 

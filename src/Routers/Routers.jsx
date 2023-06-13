@@ -12,6 +12,7 @@ import AdminProfile from "../components/Pages/AdminProfile";
 import TrashLeads from "../components/Pages/TrashLeads";
 import FavouriteLeads from "../components/Pages/FavouriteLeads";
 import PageNotFound from "../components/Shared/PageNotFound";
+import UserProfile from "../components/Pages/UserProfile";
 
 
 const router = createBrowserRouter([
@@ -68,7 +69,10 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login> </Login>,
   },
-
+   {
+     path: '/user-profile',
+     element: <UserProfile/>
+   },
   {
     path: "*",
     element: <PageNotFound/>,
