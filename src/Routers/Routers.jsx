@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import PrivetRoutes from './PrivetRoutes'
 import QuarterlyPerform from "../components/Pages/QuarterlyPerform";
 import MonthlyPerform from "../components/Pages/MonthlyPerform";
 import DailyPerform from "../components/Pages/DailyPerform";
@@ -16,52 +17,51 @@ import FavouriteLeads from "../components/Pages/FavouriteLeads";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MyFollowUp /> 
+    element: <PrivetRoutes element={<MyFollowUp />} /> 
   },
   {
     path: "/dashboard/marketers",
-    element: <Marketers />,
+    element: <PrivetRoutes element={<Marketers />} /> 
   },
   {
     path: "/dashboard/profile",
-    element: <AdminProfile />
+    element: <PrivetRoutes element={<AdminProfile />} /> 
   },
   {
     path: "/performench/quarterly",
-    element:<QuarterlyPerform />,
+    element: <PrivetRoutes element={<QuarterlyPerform />} /> 
   },
   {
     path: "/performench/monthly",
-    element: <MonthlyPerform />,
+    element: <PrivetRoutes element={<MonthlyPerform />} /> 
   },
   {
     path: "/performench/daily",
-    element: <DailyPerform />,
+    element: <PrivetRoutes element={<DailyPerform />} /> 
   },
   {
     path: "/followup-leads",
-    element: <MyFollowUp />,
+    element: <PrivetRoutes element={<MyFollowUp />} /> 
   },
   {
     path: "/assign-leads",
-    element:<AssignLeads />,
+    element: <PrivetRoutes element={<AssignLeads />} /> 
   },
   {
     path: "/fresh-leads",
-    element: <FreshLeads />,
+    element: <PrivetRoutes element={<FreshLeads />} /> 
   },
   {
     path: '/trash-leads',
-    element: <TrashLeads />
+    element: <PrivetRoutes element={<TrashLeads />} /> 
   },
   {
    path: '/favourite-leads',
-   element:<FavouriteLeads />
-
+   element: <PrivetRoutes element={<FavouriteLeads />} /> 
   },
   {
     path: "/all-leads",
-    element: <AllLeads />,
+    element: <PrivetRoutes element={<AllLeads />} />
   },
   {
     path: "/login",

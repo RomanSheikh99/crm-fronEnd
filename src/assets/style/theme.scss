@@ -10,3 +10,27 @@ $dark-primary-color: #333333;
   background-color: $dark-primary-color;
   color: $light-primary-color;
 }
+
+.darkHover:hover {
+  background-color: #555;
+  color: $light-primary-color;
+}
+.darkHover {
+  background-color: #555;
+  color: $light-primary-color;
+}
+
+
+.darkLight {
+  background-color: #555;
+  color: $light-primary-color;
+}
+
+.darkLightHover {
+  background-color: $dark-primary-color;
+  color: $light-primary-color;
+}
+.darkLightHover:hover {
+  background-color: $dark-primary-color;
+  color: $light-primary-color;
+}

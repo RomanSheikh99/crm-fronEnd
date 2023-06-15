@@ -29,7 +29,7 @@ const Login = () => {
       .then((res) => {
         const user = res.data;
         dispatch(setUser(user))
-        user.role === 'admin' ? navigate('/admin-dashboard'): navigate('/my-followup');
+        user.role === 'admin' ? navigate('/dashboard/marketers'): navigate('/my-followup');
         setIsLoding(false);
       })
       .catch((error) => {

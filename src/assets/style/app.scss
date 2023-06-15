@@ -8,8 +8,20 @@
     margin: 0 auto;
 }
 
-.tableHeader{
-    background: #549eff;
-    color: #fff;
-}
 
+.dataTableHeader {
+    background-color: #6366F1;
+    color: #fff;
+    font-weight: bold;
+  }
+
+
+ul#activeClass{
+    li{
+        a.active{
+            background-color: #6366F1;
+            color: #fff;
+            font-weight: bold;
+        }
+    }
+}

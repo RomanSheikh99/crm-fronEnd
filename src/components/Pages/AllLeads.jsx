@@ -9,23 +9,12 @@ import { Button } from "@mui/material";
 import { useSelector } from "react-redux";
 
 
-import { makeStyles } from '@mui/styles';
-
-const useStyles = makeStyles({
-  customHeader: {
-    backgroundColor: '#888',
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-});
-
-
-
 const AllLeads = () => {
   const state = useSelector((state) => state);
   const [data, setData] = useState([]);
+  const [hover, setHover] = useState(false);
   const local = siteInfo.api;
-  const classes = useStyles();
+
 
   const fetchData = async () => {
     try {
@@ -62,23 +51,25 @@ const AllLeads = () => {
     }
   };
 
-  const columns = [
-    { field: "leadsNo", headerName: "SL No", width: 120 },
-    { field: "company", headerName: "Company", width: 150 ,editable: true},
-    { field: "country", headerName: "Country", width: 150 },
-    { field: "website", headerName: "Website", width: 150 },
-    { field: "category", headerName: "Category", width: 150 },
-    { field: "minor", headerName: "Minor", width: 120 },
-    { field: "follower", headerName: "Follower", width: 120 },
-    { field: "possibility", headerName: "Possibility", width: 100 },
-    { field: "nextFollowUp", headerName: "Next Follow Up", width: 150 },
-    { field: "createOn", headerName: "Created At", width: 150 },
-    { field: "phone", headerName: "Phone", width: 130 },
-    { field: "email", headerName: "Email", width: 150 },
+  const columns  = [
+    { field: "leadsNo", headerName: "SL No", width: 120 , sortable: false,  headerClassName: 'dataTableHeader',},
+    { field: "company", headerName: "Company", width: 150 , sortable: false, headerClassName: 'dataTableHeader'},
+    { field: "country", headerName: "Country", width: 150 , sortable: false, headerClassName: 'dataTableHeader'},
+    { field: "website", headerName: "Website", width: 150 , sortable: false, headerClassName: 'dataTableHeader'},
+    { field: "category", headerName: "Category", width: 150 , sortable: false, headerClassName: 'dataTableHeader'},
+    { field: "minor", headerName: "Minor", width: 120 , sortable: false, headerClassName: 'dataTableHeader'},
+    { field: "follower", headerName: "Follower", width: 120 , sortable: false, headerClassName: 'dataTableHeader'},
+    { field: "possibility", headerName: "Possibility", width: 100 , sortable: false, headerClassName: 'dataTableHeader'},
+    { field: "nextFollowUp", headerName: "Next Follow Up", width: 150 , sortable: false, filterable: false, headerClassName: 'dataTableHeader'},
+    { field: "createOn", headerName: "Created At", width: 150 , sortable: false, filterable: false, headerClassName: 'dataTableHeader'},
+    { field: "phone", headerName: "Phone", width: 130 , sortable: false, headerClassName: 'dataTableHeader'},
+    { field: "email", headerName: "Email", width: 150 , sortable: false, headerClassName: 'dataTableHeader'},
     {
       field: "action",
       headerName: "Action",
       width: 200,
+      sortable: false,
+      filterable: false, headerClassName: 'dataTableHeader',
       renderCell: (id) => (
         <div>
           <Button variant="text" color="info" onClick={() => handleDelete(id)}>
@@ -95,8 +86,27 @@ const AllLeads = () => {
     },
   ];
 
-  const headerClassName = 'custom-header';
-const headerCellClassName = 'custom-header-cell';
+  const getRowClassName = (params) => {
+    console.log(hover)
+    if(state.theme == "DARK"){
+      if(params.row.leadsNo % 2 == 0){
+        if(hover){
+          return "darkHover";
+        }else{
+          return "dark";
+        }
+      }else{
+        if(hover){
+          return "darkLightHover";
+        }else{
+          return "darkLight";
+        }
+      }
+    }else{
+      return "light"
+    }
+  }
+
 
   return (
     <DefaultLayout>
@@ -109,7 +119,7 @@ const headerCellClassName = 'custom-header-cell';
           pagination: { paginationModel: { pageSize: 25 } },
         }}
         pageSizeOptions={[25, 50, 100]}
-        headerClassName={classes.customHeader}
+        getRowClassName={getRowClassName}
         />
       </div>
     </DefaultLayout>
@@ -117,3 +127,5 @@ const headerCellClassName = 'custom-header-cell';
 };
 
 export default AllLeads;
+
+// onMouseEnter and onMouseLeave 
