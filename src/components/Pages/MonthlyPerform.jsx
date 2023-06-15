@@ -1,11 +1,12 @@
 import React from 'react';
 import PerformLayout from '../Layout/PerformLayout';
+import PerformDataTable from '../Shared/PerformDataTable';
 
 const MonthlyPerform = () => {
     return (
         <PerformLayout>
             <div>
-                <h2> Monthly performench</h2>
+                <PerformDataTable />
             </div>
         </PerformLayout>
     );

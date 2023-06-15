@@ -2,6 +2,7 @@ import React from 'react';
 import AdminLayout from '../Layout/AdminLayout';
 import { FaCamera} from 'react-icons/fa';
 import LogOutModal from '../Shared/LogOutModal';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
 
  const AdminProfile = () => {
   const sectionStyle = {
@@ -31,7 +32,14 @@ import LogOutModal from '../Shared/LogOutModal';
       {/* profile picture  */}
       <div className="flex -mt-20">
       <div className=' flex'>
-        <img className="w-40 h-40 rounded-full border-4 border-white ml-2" src={'https://images.pexels.com/photos/5669641/pexels-photo-5669641.jpeg?auto=compress&cs=tinysrgb&w=600'} alt="Profile Picture" />
+        {/* Photo viewer  */}
+      <PhotoProvider>
+      <div className="foo">
+          <PhotoView src={'https://images.pexels.com/photos/5669641/pexels-photo-5669641.jpeg?auto=compress&cs=tinysrgb&w=600'}>
+            <img src={'https://images.pexels.com/photos/5669641/pexels-photo-5669641.jpeg?auto=compress&cs=tinysrgb&w=600'}  className="w-40 h-40 cursor-pointer rounded-full border-4 border-white ml-2" alt="" />
+          </PhotoView>
+      </div>
+    </PhotoProvider>
         <div className=' -ml-1'>
         <button className=' h-10 mt-20 w-10 flex items-center justify-center bg-gray-400 hover:bg-gray-500 rounded-full  cursor-pointer  '> <FaCamera /> </button>
         </div>

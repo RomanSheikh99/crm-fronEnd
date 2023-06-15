@@ -76,7 +76,7 @@ const CreateMarkterModal = () => {
           </div>
         </div>
 
-        <div className="flex flex-row-reverse   gap-2  ">
+        <div className="flex  flex-row-reverse items-end  w-full   gap-2  ">
              <div>
                <input
                   value={"Submit"}

@@ -1,6 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const FilterLeadsModal = () => {
+  const [countries,setCountries] = useState([]);
+  useEffect(()=> {
+    const FetchCountry = async () => {
+      try{
+       const response  =  await fetch('../../../country.json')
+       const data = await response.json()
+       setCountries(data.countries)
+      }catch(error){
+        console.log('Failed to fetch country data',error)
+      }
+
+    }
+    FetchCountry()
+  },[])
+
     return (
         <div>
    <div className='px-2 py-4'>
@@ -15,14 +30,8 @@ const FilterLeadsModal = () => {
             {/* Filter Form Leftside   */}
             <div className=' '>
              <div className='flex justify-between'> 
-                <label> Minor:</label>
-                <select className=" select-bordered w-56 ml-1 h-10  border border-slate-400 rounded-sm ">
-                <option disabled selected> </option>
-                <option>Game of Thrones</option>
-                <option> Lost </option>
-                <option>Breaking Bad</option>
-                <option>Walking Dead</option>
-            </select>
+             <label> Minor: </label>
+             <input name='minor' placeholder=''  className='  border border-slate-400  w-56 ml-1 h-10 rounded-sm' />
             </div>
             
             <div className='mt-6 flex justify-between'> 
@@ -73,8 +82,8 @@ const FilterLeadsModal = () => {
             <label> Country :</label>
             <select name='country' className=" select-bordered  border border-slate-400  w-56 ml-1 h-10 rounded-sm">
                <option value={''} disabled selected> </option>
-               <option value={''} > German  </option>
-               <option value={''} > USA  </option>
+               {countries.map((country,i) => (<option key={i} > {country} </option>))}
+             
              
            </select>
             </div>

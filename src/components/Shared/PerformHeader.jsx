@@ -2,6 +2,7 @@ import { FaCaretDown} from "react-icons/fa";
 import { Link, NavLink } from 'react-router-dom';
 import Navbar from "./Navbar";
 import CreateNewLeadModal from "./CreateNewLeadModal";
+import ImportModal from "./ImportModal";
 
 
 const PerformHeader = () => {
@@ -12,9 +13,9 @@ const PerformHeader = () => {
         
 
         {/* Quarterly KPI report Navbar start  */}
-        <div className='w-full  mt-3   mx-auto rounded-sm  py-3 flex justify-between text-black font-semibold'>
+        <div className='w-full  mt-4 h-8  mx-auto rounded-sm  py-0 flex justify-between text-black font-semibold'>
           <div className='text-blue-500 left-0 '> 
-              <NavLink className={' mr-2  hover:bg-blue-500 hover:text-neutral-100 p-2 px-3 rounded-sm'} to={'/homepage-dashboard/my-followup-performance'}> My Followup </NavLink>  
+              <NavLink className={' mr-2  hover:bg-blue-500 hover:text-neutral-100 p-2 px-3 rounded-sm'} to={'/'}> My Followup </NavLink>  
               <NavLink className={'  hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm'} to={'/all-leads'}> All Leads </NavLink> 
           </div>
           <div className='text-blue-500'> 
@@ -25,10 +26,15 @@ const PerformHeader = () => {
               <NavLink className={' mx-2 hover:bg-blue-500 hover:text-neutral-100 py-2 px-3 rounded-sm '} 
               to={'/performench/daily'}> Daily  </NavLink> 
           </div>
-          <div className='text-green-500'>
-              <NavLink className={' mr-2 hover:bg-green-500 hover:text-neutral-100  py-2 px-3 rounded-sm'} to={'/homepage-dashboard/kpi-imports'}> Imports </NavLink>  
-            <label htmlFor="create_newlead_modal" className={'  bg-green-500 hover:bg-green-700 text-neutral-100 py-2 px-3 rounded-sm'} > Create New Leads </label> 
+          <div className='text-green-500  flex'>
+              <div>
+              <label htmlFor="import_modal"  className={' mr-2 hover:bg-green-500 hover:text-neutral-100  py-2 px-3 rounded-sm'}> Imports </label> 
+              <ImportModal/> 
+              </div>
+              <div>
+              <label htmlFor="create_newlead_modal" className={'  bg-green-500 hover:bg-green-700 text-neutral-100 py-2 px-3 rounded-sm'} > Create New Leads </label> 
             <CreateNewLeadModal/>
+              </div>
           </div>
         </div>
       {/* Quarterly KPI report Navbar end  */}
