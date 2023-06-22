@@ -21,12 +21,12 @@ return (
     {/* The button to open modal */}
     <input type="checkbox" id="create_newlead_modal" className="modal-toggle" />
     <div className="modal">
-      <div className=" bg-neutral-100 w-4/6 max-w-4xl h-auto ">
-        <form className="px-10 w-10/12   py-10 mx-auto">
+      <div className=" bg-neutral-100 w-4/6 max-w-3xl h-[75vh] overflow-y-scroll ">
+        <form className="px-8 w-11/12   py-5 mx-auto">
           <h1 className="text-3xl font-semibold text-gray-700 mb-2"> Create New Lead  </h1>
 
-         <section className="  ">
-        <div className=" flex  justify-between">
+         <section className="   w-full mx-auto">
+        <div className=" flex  justify-between gap-x-5">
           {/* Left side of form  */}
           <div>
           <div className="mb-3">
@@ -111,7 +111,7 @@ return (
       
 
          {/* Text area for  description   */}
-         <div className="w-full mx-auto">
+         <div className="w-full mx-auto  ">
           <label className="text-lg font-medium text-gray-700"> Description </label>
          <textarea placeholder=" "  className="textarea textarea-bordered textarea-lg w-full mt-2  " ></textarea>
          </div>
