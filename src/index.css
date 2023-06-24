@@ -4,6 +4,16 @@
 
 /* active nav-option design   */
 .active{
-    background-color: rgb(17, 167, 226);
+    background-color: #6366F1;
     color: white;
+}
+
+.btn-style{
+    background-color: #6366F1;
+    color: white;
+}
+.btn-design:hover{
+    background-color: #6366F1;
+    color: white;
+
 }
