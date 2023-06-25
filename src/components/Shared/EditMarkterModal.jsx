@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegTimesCircle } from "react-icons/fa";
-// import { createUsers } from "../../store/reducers/usersReducers";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import siteInfo from "../../../siteInfo";
 import { toast } from "react-toastify";
-import { addUser } from "../../store/reducers/usersReducers";
+import { updateUser } from "../../store/reducers/usersReducers";
+import ShowMsg from "./ShowMsg";
 
-const CreateMarkterModal = () => {
+const EditMarkterModal = ({ id }) => {
   const dispatch = useDispatch();
+  const [marketer, setMarketer] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
   const alert = {
     position: "top-center",
@@ -19,59 +22,78 @@ const CreateMarkterModal = () => {
     draggable: true,
     progress: undefined,
     theme: "colored",
+  };
+
+  useEffect(() => {
+    setError(null)
+    setLoading(true)
+    axios
+      .get(`${siteInfo.api}/users/${id}`)
+      .then((res) => {
+        setMarketer(res.data);
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.error(error);
+        setError(error)
+        setLoading(false)
+      });
+  }, [id]);
+
+  const reset = (e) => {
+    e.target.name.value = marketer.name;
+    e.target.email.value = marketer.email;
+    e.target.phone.value = marketer.phone;
   }
 
-  const handleCreateMarkter = async (event) => {
-    event.preventDefault();
-
-    const data = {
-      name: event.target.name.value,
-      email: event.target.email.value,
-      // phone: event.target.phone.value,
-      // designation: event.target.designation.value,
-      pass: event.target.pass.value,
+  const handleUpdateMarkter = async (e) => {
+    e.preventDefault();
+    const newUser = {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      phone: e.target.phone.value,
     };
 
     await axios
-      .post(`${siteInfo.api}/users`, data)
+      .patch(`${siteInfo.api}/users/${id}`, newUser)
       .then((res) => {
-        toast.success("New Marketer Added", alert);
-        dispatch(addUser(res.data));
+        toast.success("Marketer Account Edited", alert);
+        setMarketer(res.data)
+        dispatch(updateUser(res.data));
       })
       .catch((error) => {
         toast.error("Something Wrong, Try Again", alert);
-        console.log(error);
       });
-
-
-    event.target.name.value = "";
-    event.target.email.value = "";
-    // event.target.phone.value = '';
-    // event.target.designation.value = '';
-    event.target.pass.value = "";
   };
+
   return (
     <div className="">
-      <input type="checkbox" id="marketers-modal" className="modal-toggle" />
+      <input
+        type="checkbox"
+        id="edit-marketers-modal"
+        className="modal-toggle"
+      />
       <div className="modal">
-        <div className="modal-box">
+        <div  className="modal-box">
           <div className="float-right">
             <label
-              htmlFor="marketers-modal"
-              className="  cursor-pointer text-slate-700 text-3xl hover:text-red-500 rounded-md"
+              htmlFor="edit-marketers-modal"
+              className="cursor-pointer text-slate-700 text-3xl hover:text-red-500 rounded-md"
             >
               {" "}
               <FaRegTimesCircle />{" "}
             </label>
           </div>
           {/* Create Marketer form start here  */}
-          <form
-            onSubmit={handleCreateMarkter}
+          {loading && <ShowMsg>usar loading</ShowMsg>}
+          {error && <ShowMsg>{error.message}</ShowMsg>}
+         {!loading && !error && <form
+            onSubmit={handleUpdateMarkter}
+            onReset={reset}
             className=" w-full mx-auto px-4 py-6 mb-10  items-start  flex flex-col rounded-b-md font-semibold "
           >
             <h2 className="text-2xl font-smeibold mt-2 mb-4">
-              {" "}
-              Create New Marketer Account{" "}
+              Edit Marketer Account
             </h2>
             <div className="flex gap-3">
               <h3 className="w-36 "> Name </h3>
@@ -81,7 +103,7 @@ const CreateMarkterModal = () => {
                   name={"name"}
                   className="w-72 py-2 border hover:bg-yellow-100 "
                   placeholder=" Marketer name"
-                  required
+                  defaultValue={marketer.name}
                 />
               </div>
             </div>
@@ -94,24 +116,25 @@ const CreateMarkterModal = () => {
                   name={"email"}
                   className="w-72 py-2 border hover:bg-yellow-100 "
                   placeholder="  Marketer email"
-                  required
+                  defaultValue={marketer.email}
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <h3 className="w-36 "> Phone </h3>
+              <div className="relative mb-3" data-te-input-wrapper-init>
+                <input
+                  type="text"
+                  name={"phone"}
+                  className="w-72 py-2 border hover:bg-yellow-100 "
+                  placeholder="  Phone Number"
+                  defaultValue={marketer.phone}
                 />
               </div>
             </div>
 
             {/* <div className="flex gap-3">
-              <h3 className="w-36 "> Company Name </h3>
-              <div className="relative mb-3" data-te-input-wrapper-init>
-                <input
-                  type="text"
-                  name={"company-name"}
-                  className="w-72 py-2 border hover:bg-yellow-100 "
-                  placeholder="  Company name / optional"
-                />
-              </div>
-            </div> */}
-
-            <div className="flex gap-3">
               <h3 className="w-36 "> Password </h3>
               <div className="relative mb-3" data-te-input-wrapper-init>
                 <input
@@ -121,7 +144,7 @@ const CreateMarkterModal = () => {
                   placeholder=" Create a strong password"
                 />
               </div>
-            </div>
+            </div> */}
 
             {/* <div className="flex gap-3">
               <h3 className="w-36 "> Confirm Password </h3>
@@ -138,19 +161,18 @@ const CreateMarkterModal = () => {
             <div className="flex  flex-row-reverse items-end  w-full   gap-2  ">
               <div>
                 <input
-                  value={"Submit"}
+                  value={"Update User"}
                   type="submit"
                   className="  bg-sky-600 border-none text-neutral-100 px-4 py-2 rounded-md hover:bg-sky-800 cursor-pointer"
                 />
               </div>
               {/* <div className="modal-action"> */}
-              <button className=" bg-green-600 hover:bg-green-700 cursor-pointer  text-neutral-100 px-4  py-2 rounded-md ">
-                {" "}
-                Reset{" "}
+              <button type="reset" className=" bg-green-600 hover:bg-green-700 cursor-pointer  text-neutral-100 px-4  py-2 rounded-md ">
+                Reset
               </button>
               {/* </div> */}
             </div>
-          </form>
+          </form>}
 
           {/* Create Marketer form end here  */}
         </div>
@@ -159,4 +181,4 @@ const CreateMarkterModal = () => {
   );
 };
 
-export default CreateMarkterModal;
+export default EditMarkterModal;

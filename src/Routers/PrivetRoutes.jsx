@@ -6,7 +6,7 @@ import { action } from "../store/store";
 import siteInfo from "../../siteInfo";
 
 const PrivetRoute = ({ element }) => {
-  const state = useSelector((state) => state);
+  const state = useSelector((state) => state.app);
   const dispatch = useDispatch();
   const { setUser } = action;
 

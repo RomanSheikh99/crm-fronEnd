@@ -7,7 +7,7 @@ import { action } from "../../store/store";
 import Logo from '../../assets/logo/vivipng 2.png'
 
 const AdminDashboardNavbar = () => {
-  const state = useSelector((state) => state);
+  const state = useSelector((state) => state.app);
   const dispatch = useDispatch();
   const { setDarkTheme, setLightTheme } = action;
     return (

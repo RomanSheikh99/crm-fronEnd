@@ -1,7 +1,7 @@
 const State = {
     count: 0,
     user: {},
-    theme: "LIGHT"
+    theme: "LIGHT",
 };
 
 export default State;

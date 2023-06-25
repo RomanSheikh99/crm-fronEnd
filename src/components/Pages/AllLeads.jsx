@@ -1,131 +1,176 @@
 import React, { useEffect, useState } from "react";
 import { FaEdit, FaTelegramPlane, FaTrashAlt } from "react-icons/fa";
-import axios from "axios";
-import DefaultLayout from "../Layout/DefaultLayout";
-import { DataGrid } from "@mui/x-data-grid";
-import siteInfo from "../../../siteInfo";
-import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
-import { useSelector } from "react-redux";
-
+import DefaultLayout from "../Layout/DefaultLayout";
+import { fetchData } from "../../store/reducers/leadsReducers";
+import DataTable from "../Shared/DataTable";
+import ShowMsg from "../Shared/ShowMsg";
+import AddToTrashModal from "../Shared/AddToTrashModal";
+import EditLeadModal from "../Shared/EditLeadModal";
 
 const AllLeads = () => {
-  const state = useSelector((state) => state);
-  const [data, setData] = useState([]);
-  const [hover, setHover] = useState(false);
-  const local = siteInfo.api;
+  const { showLeads, leadsError, pending } = useSelector(
+    (state) => state.leads
+  );
+  const [dltItem, setDltItem] = useState(null);
+  const [editItem, setEditItem] = useState(null);
 
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${local}/leads`);
-      setData(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  const state = useSelector((state) => state.app);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchData();
+    dispatch(fetchData("/leads"));
   }, []);
 
-  const handleDelete = async (id) => {
-    const api = `${local}/leads/${id}`;
-    try {
-      const response = await axios.delete(api);
-      fetchData();
-      if (response.status === 200) {
-        toast.success("Action completed successfully!", {
-          position: "top-center",
-          autoClose: 500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      }
-    } catch (error) {
-      console.error("Error deleting resource:", error);
-    }
+  const handleTrashModal = () => {
+    setDltItem(null);
   };
 
-  const columns  = [
-    { field: "leadsNo", headerName: "SL No", width: 120 , sortable: false,  headerClassName: 'dataTableHeader',},
-    { field: "company", headerName: "Company", width: 150 , sortable: false, headerClassName: 'dataTableHeader'},
-    { field: "country", headerName: "Country", width: 150 , sortable: false, headerClassName: 'dataTableHeader'},
-    { field: "website", headerName: "Website", width: 150 , sortable: false, headerClassName: 'dataTableHeader'},
-    { field: "category", headerName: "Category", width: 150 , sortable: false, headerClassName: 'dataTableHeader'},
-    { field: "minor", headerName: "Minor", width: 120 , sortable: false, headerClassName: 'dataTableHeader'},
-    { field: "follower", headerName: "Follower", width: 120 , sortable: false, headerClassName: 'dataTableHeader'},
-    { field: "possibility", headerName: "Possibility", width: 100 , sortable: false, headerClassName: 'dataTableHeader'},
-    { field: "nextFollowUp", headerName: "Next Follow Up", width: 150 , sortable: false, filterable: false, headerClassName: 'dataTableHeader'},
-    { field: "createOn", headerName: "Created At", width: 150 , sortable: false, filterable: false, headerClassName: 'dataTableHeader'},
-    { field: "phone", headerName: "Phone", width: 130 , sortable: false, headerClassName: 'dataTableHeader'},
-    { field: "email", headerName: "Email", width: 150 , sortable: false, headerClassName: 'dataTableHeader'},
+  const columns = [
+    {
+      field: "leadsNo",
+      headerName: "SL No",
+      width: 120,
+      sortable: false,
+      headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+    },
+    {
+      field: "company",
+      headerName: "Company",
+      width: 150,
+      sortable: false,
+      headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+    },
+    {
+      field: "country",
+      headerName: "Country",
+      width: 150,
+      sortable: false,
+      headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+    },
+    {
+      field: "website",
+      headerName: "Website",
+      width: 150,
+      sortable: false,
+      headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+    },
+    {
+      field: "category",
+      headerName: "Category",
+      width: 150,
+      sortable: false,
+      headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+    },
+    {
+      field: "minor",
+      headerName: "Minor",
+      width: 120,
+      sortable: false,
+      headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+    },
+    {
+      field: "follower",
+      headerName: "Follower",
+      width: 120,
+      sortable: false,
+      headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+    },
+    {
+      field: "possibility",
+      headerName: "Possibility",
+      width: 100,
+      sortable: false,
+      headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+    },
+    {
+      field: "nextFollowUp",
+      headerName: "Next Follow Up",
+      width: 150,
+      sortable: false,
+      filterable: false,
+      headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+    },
+    {
+      field: "createdOn",
+      headerName: "Created At",
+      width: 150,
+      sortable: false,
+      filterable: false,
+      headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+    },
+    {
+      field: "phone",
+      headerName: "Phone",
+      width: 130,
+      sortable: false,
+      headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      width: 150,
+      sortable: false,
+      headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+    },
     {
       field: "action",
       headerName: "Action",
       width: 200,
       sortable: false,
-      filterable: false, headerClassName: 'dataTableHeader',
-      renderCell: (id) => (
+      filterable: false,
+      headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+      renderCell: ({ row }) => (
         <div>
-          <Button variant="text" color="info" onClick={() => handleDelete(id)}>
+          <Button variant="text" color="info">
             <FaTelegramPlane />
           </Button>
-          <Button variant="text" color="warning" onClick={() => handleDelete(id)}>
-            <FaEdit />
+          <Button
+            onClick={() => setEditItem(row.id)}
+            variant="text"
+            color="warning"
+          >
+            <label htmlFor="edit-lead-modal" className="cursor-pointer">
+              <FaEdit />
+            </label>
           </Button>
-          <Button variant="text" color="error" onClick={() => handleDelete(id)}>
-            <FaTrashAlt />
+          <Button variant="text" color="error" onClick={() => setDltItem(row)}>
+            <label htmlFor="addToTrashModal" className="cursor-pointer">
+              <FaTrashAlt />
+            </label>
           </Button>
         </div>
       ),
     },
   ];
 
-  const getRowClassName = (params) => {
-    console.log(hover)
-    if(state.theme == "DARK"){
-      if(params.row.leadsNo % 2 == 0){
-        if(hover){
-          return "darkHover";
-        }else{
-          return "dark";
-        }
-      }else{
-        if(hover){
-          return "darkLightHover";
-        }else{
-          return "darkLight";
-        }
-      }
-    }else{
-      return "light"
-    }
-  }
-
-
   return (
     <DefaultLayout>
-      <div>
-        <DataGrid 
-        columns={columns} 
-        rows={data} 
-        initialState={{
-          ...data.initialState,
-          pagination: { paginationModel: { pageSize: 25 } },
-        }}
-        pageSizeOptions={[25, 50, 100]}
-        getRowClassName={getRowClassName}
-        />
-      </div>
+      {editItem && (
+        <EditLeadModal id={editItem} onClose={() => setEditItem(null)}>
+          {" "}
+        </EditLeadModal>
+      )}
+      {dltItem && (
+        <AddToTrashModal
+          item={dltItem}
+          handleTrashModal={handleTrashModal}
+          onClose={() => setDltItem(null)}
+        >
+          {" "}
+        </AddToTrashModal>
+      )}
+      {pending && <ShowMsg>data is loading...</ShowMsg>}
+      {leadsError && <ShowMsg color={"yellow"}>{leadsError}</ShowMsg>}
+      {showLeads?.length > 0 && (
+        <DataTable columns={columns} data={showLeads}></DataTable>
+      )}
+      {!pending && !leadsError && !showLeads?.length && (
+        <ShowMsg>data not found</ShowMsg>
+      )}
     </DefaultLayout>
   );
 };
 
 export default AllLeads;
-
-// onMouseEnter and onMouseLeave 

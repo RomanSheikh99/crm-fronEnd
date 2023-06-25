@@ -14,6 +14,8 @@ import TrashLeads from "../components/Pages/TrashLeads";
 import FavouriteLeads from "../components/Pages/FavouriteLeads";
 import PageNotFound from "../components/Shared/PageNotFound";
 import UserProfile from "../components/Pages/UserProfile";
+import AdminFreshLeads from "../components/Pages/AdminFreshLeads";
+import AdminAllLeads from "../components/Pages/AdminAllLeads";
 
 
 const router = createBrowserRouter([
@@ -24,6 +26,18 @@ const router = createBrowserRouter([
   {
     path: "/dashboard/marketers",
     element: <PrivetRoutes element={<Marketers />} /> 
+  },
+  {
+    path: "/dashboard/trashLeads",
+    element: <PrivetRoutes element={<TrashLeads />} /> 
+  },
+  {
+    path: "/dashboard/freshLeads",
+    element: <PrivetRoutes element={<AdminFreshLeads />} /> 
+  },
+  {
+    path: "/dashboard/allLeads",
+    element: <PrivetRoutes element={<AdminAllLeads />} /> 
   },
   {
     path: "/dashboard/profile",
@@ -53,10 +67,10 @@ const router = createBrowserRouter([
     path: "/fresh-leads",
     element: <PrivetRoutes element={<FreshLeads />} /> 
   },
-  {
-    path: '/trash-leads',
-    element: <PrivetRoutes element={<TrashLeads />} /> 
-  },
+  // {
+  //   path: '/trash-leads',
+  //   element: <PrivetRoutes element={<TrashLeads />} /> 
+  // },
   {
    path: '/favourite-leads',
    element: <PrivetRoutes element={<FavouriteLeads />} /> 

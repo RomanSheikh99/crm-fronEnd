@@ -9,7 +9,7 @@ const AdminLayout = ({ children }) => {
                 <div className='w-[200px] '>
                     <AdminDashboardSideNav> </AdminDashboardSideNav>
                 </div>
-                <div className='w-full overflow-x-scroll bg-neutral-100'>
+                <div className='w-full overflow-x-scroll'>
                     {children}
                 </div>
 

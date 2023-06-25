@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 const AdminDashboardSideNav = () => {
-  const state = useSelector((state) => state);
+  const state = useSelector((state) => state.app);
 
   return (
     <div
@@ -14,7 +14,13 @@ const AdminDashboardSideNav = () => {
           <NavLink  to="/dashboard/marketers"> Marketers </NavLink>
         </li>
         <li className="active:bg-Indigo-500 rounded-md mt-1">
-          <NavLink to="/all-leads"> Leads </NavLink>
+          <NavLink to="/dashboard/allLeads"> All Leads </NavLink>
+        </li>
+        <li className="active:bg-Indigo-500 rounded-md mt-1">
+          <NavLink to="/dashboard/freshLeads"> Fresh Leads </NavLink>
+        </li>
+        <li className="active:bg-Indigo-500 rounded-md mt-1">
+          <NavLink to="/dashboard/trashLeads"> Trash Leads </NavLink>
         </li>
         <li className="active:bg-Indigo-500 rounded-md mt-1">
           <NavLink className="active:bg-Indigo-500"  to="/dashboard/profile"> Profile </NavLink>
