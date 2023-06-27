@@ -15,6 +15,7 @@ const users = createSlice({
     pending: false,
     error: null,
     users: [],
+    currentUser: {},
   },
   reducers: {
     addUser: (state,action)=>{
@@ -22,6 +23,10 @@ const users = createSlice({
     },
     setUser: (state,action)=>{
       state.users = action.payload
+    },
+    setCurrentUser: (state,action)=>{
+      console.log(action.payload)
+      state.currentUser = action.payload
     },
     updateUser: (state,action)=>{
       const itemToEdit = state.users.find(user => user.id === action.payload.id);
@@ -51,6 +56,6 @@ const users = createSlice({
   },
 });
 
-export const { addUser, setUser , updateUser } = users.actions;
+export const { addUser, setUser , updateUser, setCurrentUser } = users.actions;
 
 export default users.reducer;

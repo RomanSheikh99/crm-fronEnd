@@ -79,16 +79,7 @@ const Header = () => {
           {/* Filter section and Create Leads  */}
           <div className="flex flex-col">
             <div className="flex whitespace-nowrap justify-center">
-              <label
-                htmlFor="filter_leads_modal"
-                className={
-                  " mr-2 btn-design hover:text-neutral-100  py-2 px-3 rounded-sm"
-                }
-              >
-                {" "}
-                Filter Leads{" "}
-              </label>
-              <FilterLeadsModal> </FilterLeadsModal>
+              
 
               <NavLink
                 className={
@@ -111,18 +102,7 @@ const Header = () => {
             </div>
 
             <div className=" flex justify-end items-center  ">
-              <>
-                <label
-                  htmlFor="import_modal"
-                  className={
-                    " btn-design mr-3  text-slate-700 hover:text-white py-2 px-3 rounded-sm mt-2"
-                  }
-                >
-                  {" "}
-                  Imports{" "}
-                </label>
-                <ImportModal />
-              </>
+             
               <>
                 <label
                   htmlFor="create_newlead_modal"

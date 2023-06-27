@@ -1,14 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
-import PrivetRoutes from './PrivetRoutes'
-import QuarterlyPerform from "../components/Pages/QuarterlyPerform";
-import MonthlyPerform from "../components/Pages/MonthlyPerform";
-import DailyPerform from "../components/Pages/DailyPerform";
+import PrivetRoutes from "./PrivetRoutes";
+import AdminRoutes from "./AdminRoutes";
+// import QuarterlyPerform from "../components/Pages/QuarterlyPerform";
+// import MonthlyPerform from "../components/Pages/MonthlyPerform";
+// import DailyPerform from "../components/Pages/DailyPerform";
 import Marketers from "../components/Pages/Marketers";
 import MyFollowUp from "../components/Pages/MyFollowUp";
 import AssignLeads from "../components/Pages/AssignLeads";
 import FreshLeads from "../components/Pages/FreshLeads";
 import AllLeads from "../components/Pages/AllLeads";
-import Login from "../components/Pages/Login";
 import AdminProfile from "../components/Pages/AdminProfile";
 import TrashLeads from "../components/Pages/TrashLeads";
 import FavouriteLeads from "../components/Pages/FavouriteLeads";
@@ -16,85 +16,65 @@ import PageNotFound from "../components/Shared/PageNotFound";
 import UserProfile from "../components/Pages/UserProfile";
 import AdminFreshLeads from "../components/Pages/AdminFreshLeads";
 import AdminAllLeads from "../components/Pages/AdminAllLeads";
+import Leads from "../components/Pages/Leads";
+import Login from "../components/Pages/Login";
+
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <PrivetRoutes element={<MyFollowUp />} /> 
+    element: <PrivetRoutes element={<MyFollowUp />} />,
   },
   {
-    path: "/dashboard/marketers",
-    element: <PrivetRoutes element={<Marketers />} /> 
+    path: "/dashboard",
+    element: <AdminRoutes element={<div>Dashboard</div>} />,
   },
   {
-    path: "/dashboard/trashLeads",
-    element: <PrivetRoutes element={<TrashLeads />} /> 
+    path: "/users",
+    element: <AdminRoutes  element={<Marketers />} />,
   },
   {
-    path: "/dashboard/freshLeads",
-    element: <PrivetRoutes element={<AdminFreshLeads />} /> 
+    path: "/trashLeads",
+    element: <AdminRoutes  element={<Leads />} />,
   },
   {
-    path: "/dashboard/allLeads",
-    element: <PrivetRoutes element={<AdminAllLeads />} /> 
+    path: "/allLeads",
+    element: <PrivetRoutes element={<Leads />} />,
   },
   {
-    path: "/dashboard/profile",
-    element: <PrivetRoutes element={<AdminProfile />} /> 
+    path: "/freshLeads",
+    element: <PrivetRoutes element={<Leads />} />,
   },
   {
-    path: "/performench/quarterly",
-    element: <PrivetRoutes element={<QuarterlyPerform />} /> 
+    path: "/followUp",
+    element: <PrivetRoutes element={<MyFollowUp />} />,
   },
   {
-    path: "/performench/monthly",
-    element: <PrivetRoutes element={<MonthlyPerform />} /> 
+    path: "/assignLeads",
+    element: <PrivetRoutes element={<AssignLeads />} />,
   },
   {
-    path: "/performench/daily",
-    element: <PrivetRoutes element={<DailyPerform />} /> 
+    path: "/favLeads",
+    element: <PrivetRoutes element={<FavouriteLeads />} />,
   },
   {
-    path: "/followup-leads",
-    element: <PrivetRoutes element={<MyFollowUp />} /> 
+    path: "/performench",
+    element: <PrivetRoutes element={<div>user parformenc</div>} />,
   },
   {
-    path: "/assign-leads",
-    element: <PrivetRoutes element={<AssignLeads />} /> 
-  },
-  {
-    path: "/fresh-leads",
-    element: <PrivetRoutes element={<FreshLeads />} /> 
-  },
-  // {
-  //   path: '/trash-leads',
-  //   element: <PrivetRoutes element={<TrashLeads />} /> 
-  // },
-  {
-   path: '/favourite-leads',
-   element: <PrivetRoutes element={<FavouriteLeads />} /> 
-  },
-  {
-    path: "/all-leads",
-    element: <PrivetRoutes element={<AllLeads />} />
+    path: "profile",
+    element: <PrivetRoutes element={<AdminProfile />} />,
   },
   {
     path: "/login",
     element: <Login> </Login>,
   },
-   {
-     path: '/user-profile',
-     element: <UserProfile/>
-   },
   {
     path: "*",
-    element: <PageNotFound/>,
+    element: <PageNotFound />,
   },
-
-
-
+ 
 ]);
-
 
 export default router;

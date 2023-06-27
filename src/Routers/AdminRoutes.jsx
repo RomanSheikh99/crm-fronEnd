@@ -5,19 +5,18 @@ import siteInfo from "../../siteInfo";
 import { setCurrentUser } from "../store/reducers/usersReducers";
 import { useEffect, useState } from "react";
 
-const PrivetRoute = ({ element }) => {
+const AdminRoutes = ({ element }) => {
   const dispatch = useDispatch();
 
-  const [isAuthenticate, setIsAuthenticate] = useState(JSON.parse(localStorage.getItem("crmUserId")));
-  // const [isAdmin, setIsAdmin] = useState(false);
-  
+  const [isAdmin, setIsAdmin] = useState(
+    JSON.parse(localStorage.getItem("crmUserId"))
+  );
 
-  
   useEffect(() => {
     const userId = JSON.parse(localStorage.getItem("crmUserId"));
     const local = siteInfo.api;
     const api = `${local}/users/${userId}`;
-  
+
     if (userId) {
       axios
         .get(api)
@@ -25,18 +24,19 @@ const PrivetRoute = ({ element }) => {
           console.log(res.data);
           dispatch(setCurrentUser(res.data));
           localStorage.setItem("crmUserId", JSON.stringify(res.data.id));
-          setIsAuthenticate(res.data.id);
+          setIsAdmin(res.data.id);
         })
         .catch((error) => {
           localStorage.setItem("crmUserId", JSON.stringify(null));
-          setIsAuthenticate(null);
+          setIsAdmin(null);
         });
     } else {
+      setIsAdmin(null);
       localStorage.setItem("crmUserId", JSON.stringify(null));
-      setIsAuthenticate(null);
     }
-  }, [isAuthenticate]);
+  }, [isAdmin]);
 
-  return isAuthenticate ? element : <Navigate to="/login" replace={true} />;
+  return isAdmin ? element : <Navigate to="/login" replace={true} />;
 };
-export default PrivetRoute;
+
+export default AdminRoutes;

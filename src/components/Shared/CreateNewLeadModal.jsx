@@ -112,7 +112,7 @@ const CreateNewLeadModal = () => {
                     />
                   </div>
 
-                  <div className="mb-3 flex flex-col">
+                  {/* <div className="mb-3 flex flex-col">
                     <label className="text-lg font-medium text-gray-700">
                       Country
                     </label>
@@ -128,7 +128,7 @@ const CreateNewLeadModal = () => {
                         <option key={i}> {country} </option>
                       ))}
                     </select>
-                  </div>
+                  </div> */}
                   <div className="mb-3 flex flex-col">
                     <label
                       htmlFor="email"

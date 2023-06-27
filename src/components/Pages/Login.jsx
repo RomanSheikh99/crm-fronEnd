@@ -7,9 +7,10 @@ import Lottie from "lottie-react";
 import siteInfo from "../../../siteInfo";
 import { action } from "../../store/store";
 import SignupAnimation from "../../assets/json/signup-animation.json";
+import { setCurrentUser } from "../../store/reducers/usersReducers";
 
 const Login = () => {
-  const api = siteInfo.api + "/user/login";
+  const api = siteInfo.api + "/users/login";
   const [isLoading, setIsLoding] = useState(false);
   const dispatch = useDispatch();
   const { setUser } = action;
@@ -28,19 +29,19 @@ const Login = () => {
       .post(api, data)
       .then((res) => {
         const user = res.data;
-        dispatch(setUser(user))
-        user.role === 'admin' ? navigate('/dashboard/marketers'): navigate('/my-followup');
+        console.log(user)
+        dispatch(setCurrentUser(user));
+        localStorage.setItem("crmUserId", JSON.stringify(res.data.id));
+        user.role == "ADMIN" ? navigate('/users'): navigate('/followUp');
         setIsLoding(false);
       })
       .catch((error) => {
-        console.log("error:", error);
         setIsLoding(false);
       });
   };
 
   return (
     <div className="w-full">
-
       {/* Login form section start here  */}
       <div className="block w-3/5 mx-auto mt-4 rounded-lg bg-white text-center shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
         <div className="border-b-2 border-slate-200 text-start px-4 rounded-t-md py-3 bg-neutral-200 dark:border-neutral-600 dark:text-neutral-50">
@@ -82,7 +83,6 @@ const Login = () => {
                 />
 
                 <div>
-
                   <div className="float-left mt-3">
                     {isLoading && <h1>loading...</h1>}
                     <input
@@ -90,10 +90,10 @@ const Login = () => {
                       type="submit"
                       className="  bg-sky-600 border-none text-neutral-100 px-4 py-2 rounded-md hover:bg-sky-800"
                     />
-                    <Link to={"/"} className="text-blue-500">
+                    {/* <Link to={"/"} className="text-blue-500">
                       {" "}
                       Forgot your password ?{" "}
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
                 <div></div>

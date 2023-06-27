@@ -11,6 +11,7 @@ import axios from "axios";
 import siteInfo from "../../../siteInfo";
 import { toast } from "react-toastify";
 import EditMarkterModal from "../Shared/EditMarkterModal";
+import MiniDrawer from "../Layout/Layout";
 
 const Marketers = () => {
   const { users, error, pending } = useSelector((state) => state.users);
@@ -131,7 +132,7 @@ const Marketers = () => {
   ];
 
   return (
-    <AdminLayout>
+    <MiniDrawer>
       <section className={` ${state.theme == "DARK" ? 'dark': 'light'}`}>
         <div className={`flex ${state.theme == "DARK" ? 'dark': 'light'} justify-between px-2 items-center py-3  `}>
           <div className="flex">
@@ -175,7 +176,7 @@ const Marketers = () => {
           <ShowMsg>data not found</ShowMsg>
         )}
       </section>
-    </AdminLayout>
+    </MiniDrawer>
   );
 };
 

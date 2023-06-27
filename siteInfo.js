@@ -1,5 +1,5 @@
 const siteInfo = {
-    api: "http://localhost:4000/api"
+    api: "https://crm-9w23.onrender.com/api"
 }
 
 export default siteInfo;
