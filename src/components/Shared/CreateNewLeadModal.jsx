@@ -59,9 +59,12 @@ const CreateNewLeadModal = () => {
       });
 
     reset(event);
-    console.log(event);
     setPending(false);
   };
+
+  const countries = [
+    "Germany" , "Spain", "Austria", "Luxembourg", "Belgium", "Canada", "Denmark", "France","Italy", "Netherlands","Poland", "Sweden", "Switzerland","UK", "Norway", "Finland", "Ireland", "USA (EST)", "USA (CST)"," USA(PDT)",  " USA (CDT)", " Czech Republic", "Greece", "Romania", "Portugal", "Malta", "Bulgaria", "Cyprus", "Russia", "Brazil","Mexico", "Estonia", "Turkey", "Australia"," New Zealand","Singapore", "Malaysia", "Indonesia", "Hungary", "South Africa", "Slovenia", "Others"
+  ]
 
   return (
     <div className=" px-2 py-4">
@@ -112,7 +115,7 @@ const CreateNewLeadModal = () => {
                     />
                   </div>
 
-                  {/* <div className="mb-3 flex flex-col">
+                  <div className="mb-3 flex flex-col">
                     <label className="text-lg font-medium text-gray-700">
                       Country
                     </label>
@@ -128,7 +131,7 @@ const CreateNewLeadModal = () => {
                         <option key={i}> {country} </option>
                       ))}
                     </select>
-                  </div> */}
+                  </div>
                   <div className="mb-3 flex flex-col">
                     <label
                       htmlFor="email"

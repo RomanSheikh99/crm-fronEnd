@@ -23,16 +23,16 @@ import { useSelector } from "react-redux";
 
 const PathList = ({ open }) => {
   const { currentUser } = useSelector((state) => state.users);
-  console.log(currentUser);
+  const { theme } = useSelector((state) => state.app);
 
   const pathList = [
-    {
-      icon: <DashboardIcon />,
-      text: "Dashboard",
-      path: "/dashboard",
-      user: false,
-      admin: true,
-    },
+    // {
+    //   icon: <DashboardIcon />,
+    //   text: "Dashboard",
+    //   path: "/dashboard",
+    //   user: false,
+    //   admin: true,
+    // },
     { icon: <PeopleAltIcon />, text: "Users", path: "/users", user: false,
     admin: true, },
     { icon: <BallotIcon />, text: "All Leads", path: "/allLeads", user: true,
@@ -47,21 +47,21 @@ const PathList = ({ open }) => {
     {
       icon: <BookmarkIcon />,
       text: "FollowUp Leads",
-      path: "/followUp",
+      path: `/followUp/${currentUser.id}`,
       user: true,
       admin: false,
     },
     {
       icon: <AssignmentIcon />,
       text: "Assign Leads",
-      path: "/assignLeads",
+      path: `/assignLeads/${currentUser.id}`,
       user: true,
       admin: false,
     },
     {
       icon: <FavoriteIcon />,
       text: "Favorite Leads",
-      path: "/favLeads",
+      path: `/favLeads/${currentUser.id}`,
       user: true,
       admin: false,
     },
@@ -74,7 +74,7 @@ const PathList = ({ open }) => {
     },
   ];
   return (
-    <Box>
+    <Box sx={{background: `${theme == "DARK" && "#0a1929"}`,color: `${theme == "DARK" && "#f3f6f9"}`, height: '100%'}}>
       <List>
         {pathList.map((link, index) => {
           if (currentUser.role == "ADMIN") {
@@ -94,6 +94,7 @@ const PathList = ({ open }) => {
                           minWidth: 0,
                           mr: open ? 3 : "auto",
                           justifyContent: "center",
+                          color: theme === "DARK" ? "#f3f6f9" : "#0a1929",
                         }}
                       >
                         {link.icon}
@@ -124,6 +125,7 @@ const PathList = ({ open }) => {
                           minWidth: 0,
                           mr: open ? 3 : "auto",
                           justifyContent: "center",
+                          color: theme === "DARK" ? "#fff" : "#111",
                         }}
                       >
                         {link.icon}
@@ -160,6 +162,7 @@ const PathList = ({ open }) => {
                     minWidth: 0,
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
+                    color: theme === "DARK" ? "#fff" : "#111",
                   }}
                 >
                   {link.icon}

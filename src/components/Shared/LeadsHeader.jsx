@@ -5,8 +5,11 @@ import AddToTrashModal from "./AddToTrashModal";
 import CreateNewLeadModal from "./CreateNewLeadModal";
 import { useSelector } from "react-redux";
 import ImportModal from "./ImportModal";
+import AssignModal from "./AssignModal";
 
 const LeadsHeader = ({
+  assignItem,
+  setAssignItem,
   editItem,
   setEditItem,
   dltItem,
@@ -38,6 +41,11 @@ const LeadsHeader = ({
           Create New Lead
         </label>
 
+        {assignItem && (
+          <AssignModal id={assignItem} setAssignItem={setAssignItem} onClose={() => setAssignItem(null)}>
+            {" "}
+          </AssignModal>
+        )}
         {editItem && (
           <EditLeadModal id={editItem} onClose={() => setEditItem(null)}>
             {" "}

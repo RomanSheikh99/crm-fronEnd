@@ -9,9 +9,9 @@ const DataTable = ({ columns, data }) => {
   const getRowClassName = (params) => {
     if (state.theme == "DARK") {
       if (params.indexRelativeToCurrentPage % 2 == 0) {
-        return "dark";
-      } else {
         return "darkLight";
+      } else {
+        return "dark";
       }
     } else {
       if (params.indexRelativeToCurrentPage % 2 == 0) {
@@ -38,7 +38,8 @@ const DataTable = ({ columns, data }) => {
         sx={{
           maxWidth: "max-content",
           margin: "auto",
-          boxShadow: 2,
+          border: 'none',
+          boxShadow: 8,
           "& .MuiDataGrid-row:hover": {
             backgroundColor: "#777",
             color: "#fff",

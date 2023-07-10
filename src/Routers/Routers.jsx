@@ -18,18 +18,24 @@ import AdminFreshLeads from "../components/Pages/AdminFreshLeads";
 import AdminAllLeads from "../components/Pages/AdminAllLeads";
 import Leads from "../components/Pages/Leads";
 import Login from "../components/Pages/Login";
+import HomeRoutes from "./HomeRoutes";
+import LeadPage from "../components/Pages/LeadPage";
 
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <PrivetRoutes element={<MyFollowUp />} />,
+    element: <PrivetRoutes element={<HomeRoutes />} />,
   },
-  {
-    path: "/dashboard",
-    element: <AdminRoutes element={<div>Dashboard</div>} />,
-  },
+  // {
+  //   path: "/dashboard",
+  //   element: <AdminRoutes element={<div>Dashboard</div>} />,
+  // },
+  // {
+  //   path: "/users",
+  //   element: <Marketers />
+  // },
   {
     path: "/users",
     element: <AdminRoutes  element={<Marketers />} />,
@@ -47,16 +53,20 @@ const router = createBrowserRouter([
     element: <PrivetRoutes element={<Leads />} />,
   },
   {
-    path: "/followUp",
-    element: <PrivetRoutes element={<MyFollowUp />} />,
+    path: "/leads/:id",
+    element: <LeadPage></LeadPage>,
   },
   {
-    path: "/assignLeads",
-    element: <PrivetRoutes element={<AssignLeads />} />,
+    path: "/followUp/:id",
+    element: <PrivetRoutes element={<Leads />} />,
   },
   {
-    path: "/favLeads",
-    element: <PrivetRoutes element={<FavouriteLeads />} />,
+    path: "/assignLeads/:id",
+    element: <PrivetRoutes element={<Leads />} />,
+  },
+  {
+    path: "/favLeads/:id",
+    element: <PrivetRoutes element={<Leads />} />,
   },
   {
     path: "/performench",

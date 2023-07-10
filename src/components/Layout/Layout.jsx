@@ -9,6 +9,7 @@ import Divider from "@mui/material/Divider";
 
 import PathList from "../Shared/PathList";
 import CRMAppBar from "../Shared/CRMAppBar";
+import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -18,7 +19,7 @@ const openedMixin = (theme) => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
-  overflowX: "hidden",
+  // overflowX: "hidden",
 });
 
 const closedMixin = (theme) => ({
@@ -26,7 +27,7 @@ const closedMixin = (theme) => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  overflowX: "hidden",
+  // overflowX: "hidden",
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
@@ -66,7 +67,8 @@ const Drawer = styled(MuiDrawer, {
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
-  boxSizing: "border-box",
+  // boxSizing: "border-box",
+  // background: "blue",
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),
@@ -79,13 +81,15 @@ const Drawer = styled(MuiDrawer, {
 
 const Layout = ({ children }) => {
   const [open, setOpen] = React.useState(false);
+  const {theme} = useSelector(state=> state.app)
+
 
   const handleDrawer = () => {
     open ? setOpen(false) : setOpen(true);
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", background: `${theme == "DARK" && '#0a1929'}` }}>
       <CssBaseline />
       <CRMAppBar
         AppBar={AppBar}
@@ -97,9 +101,9 @@ const Layout = ({ children }) => {
           sx={{
             display: "flex",
             justifyContent: "start",
-            background: "#1976d2",
+            background: `${theme == "DARK"? "#0a1929": "#1976d2"}`,
             paddingLeft: "16px",
-            color: "#fff",
+            color: "#f3f6f9",
           }}
         >
           <Typography
@@ -116,7 +120,7 @@ const Layout = ({ children }) => {
         <Divider />
         <PathList open={open}></PathList>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, minWidth: '90%' }}>
         <DrawerHeader />
         {children}
       </Box>

@@ -1,25 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Button } from "@mui/material";
-import { FaEdit, FaTelegramPlane, FaTrashAlt } from "react-icons/fa";
-import DefaultLayout from "../Layout/DefaultLayout";
-import DataTable from "../Shared/DataTable";
-import { fetchData } from "../../store/reducers/leadsReducers";
-import ShowMsg from "../Shared/ShowMsg";
-import Layout from "../Layout/Layout";
 
-const MyFollowUp = () => {
-  const { showLeads, leadsError, pending } = useSelector(
-    (state) => state.leads
-  );
-  const state = useSelector((state) => state.app);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchData(`/leads/${state.user.id}`));
-  }, []);
-
-  const columns = [
+export const Columns = [
     {
       field: "leadsNo",
       headerName: "SL No",
@@ -62,13 +42,13 @@ const MyFollowUp = () => {
       sortable: false,
       headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
     },
-    // {
-    //   field: "follower",
-    //   headerName: "Follower",
-    //   width: 120,
-    //   sortable: false,
-    //   headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
-    // },
+    {
+      field: "follower",
+      headerName: "Follower",
+      width: 120,
+      sortable: false,
+      headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+    },
     {
       field: "possibility",
       headerName: "Possibility",
@@ -113,38 +93,30 @@ const MyFollowUp = () => {
       sortable: false,
       filterable: false,
       headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
-      renderCell: (id) => (
+      renderCell: ({ row }) => (
         <div>
-          <Button variant="text" color="info" onClick={() => handleDelete(id)}>
+          {/* <Button
+            variant="text"
+            color="info"
+            // onClick={() => handleDelete(id)}
+          >
             <FaTelegramPlane />
-          </Button>
+          </Button> */}
           <Button
+            onClick={() => setEditItem(row.id)}
             variant="text"
             color="warning"
-            onClick={() => handleDelete(id)}
           >
-            <FaEdit />
+            <label htmlFor="edit-lead-modal" className="cursor-pointer">
+              <FaEdit />
+            </label>
           </Button>
-          <Button variant="text" color="error" onClick={() => handleDelete(id)}>
-            <FaTrashAlt />
+          <Button variant="text" color="error" onClick={() => setDltItem(row)}>
+            <label htmlFor="addToTrashModal" className="cursor-pointer">
+              <FaTrashAlt />
+            </label>
           </Button>
         </div>
       ),
     },
   ];
-
-  return (
-    <Layout>
-      {pending && <ShowMsg>data is loading...</ShowMsg>}
-      {leadsError && <ShowMsg color={"yellow"}>{leadsError}</ShowMsg>}
-      {showLeads?.length > 0 && (
-        <DataTable columns={columns} data={showLeads}></DataTable>
-      )}
-      {!pending && !leadsError && !showLeads?.length && (
-        <ShowMsg>data not found</ShowMsg>
-      )}
-    </Layout>
-  );
-};
-
-export default MyFollowUp;

@@ -31,6 +31,8 @@ const leads = createSlice({
     itemToEdit.country = action.payload.country;
     itemToEdit.website = action.payload.website;
     itemToEdit.company = action.payload.company;
+    itemToEdit.assignToName = action.payload.assignToName;
+    itemToEdit.assignToID = action.payload.assignToID;
   },
 },
   extraReducers: (builder) => {

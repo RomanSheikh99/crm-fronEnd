@@ -2,11 +2,13 @@ import React from 'react';
 import { IconButton, Toolbar, Typography } from '@mui/material';
 import MenuIcon from "@mui/icons-material/Menu";
 import Settings from './Settings';
+import { useSelector } from 'react-redux';
 
 
 const CRMAppBar = ({AppBar, handleDrawer, open}) => {
+  const {theme} = useSelector(state=> state.app)
     return (
-        <AppBar position="fixed" open={open}>
+        <AppBar sx={{background: `${theme == "DARK" && "#0a1929"}`, color: '#f3f6f9'}} position="fixed" open={open}>
         <Toolbar>
           <IconButton
             color="inherit"

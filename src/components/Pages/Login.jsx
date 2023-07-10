@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import Lottie from "lottie-react";
 
 import siteInfo from "../../../siteInfo";
-import { action } from "../../store/store";
 import SignupAnimation from "../../assets/json/signup-animation.json";
 import { setCurrentUser } from "../../store/reducers/usersReducers";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const api = siteInfo.api + "/users/login";
   const [isLoading, setIsLoding] = useState(false);
   const dispatch = useDispatch();
-  const { setUser } = action;
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -29,14 +28,14 @@ const Login = () => {
       .post(api, data)
       .then((res) => {
         const user = res.data;
-        console.log(user)
         dispatch(setCurrentUser(user));
         localStorage.setItem("crmUserId", JSON.stringify(res.data.id));
-        user.role == "ADMIN" ? navigate('/users'): navigate('/followUp');
+        navigate('/');
         setIsLoding(false);
       })
       .catch((error) => {
         setIsLoding(false);
+        toast.error(error.response.data.message);
       });
   };
 

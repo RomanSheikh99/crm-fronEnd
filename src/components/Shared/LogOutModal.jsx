@@ -2,16 +2,17 @@ import React from "react";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../store/reducers/usersReducers";
-import { Navigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+// import { useHistory } from 'react-router-dom';
 
 const LogOutModal = () => {
-
+  const navigate = useNavigate();
   const dispatch = useDispatch()
 
   const handleLogOut = () => {
     dispatch(setCurrentUser(null));
     localStorage.removeItem("crmUserId");
-    Navigate('/login')
+    navigate('/login');
   };
 
 
