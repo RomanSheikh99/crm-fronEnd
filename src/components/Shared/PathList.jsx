@@ -26,13 +26,13 @@ const PathList = ({ open }) => {
   const { theme } = useSelector((state) => state.app);
 
   const pathList = [
-    // {
-    //   icon: <DashboardIcon />,
-    //   text: "Dashboard",
-    //   path: "/dashboard",
-    //   user: false,
-    //   admin: true,
-    // },
+    {
+      icon: <DashboardIcon />,
+      text: "Dashboard",
+      path: "/dashboard",
+      user: true,
+      admin: true,
+    },
     { icon: <PeopleAltIcon />, text: "Users", path: "/users", user: false,
     admin: true, },
     { icon: <BallotIcon />, text: "All Leads", path: "/allLeads", user: true,

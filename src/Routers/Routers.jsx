@@ -11,6 +11,7 @@ import Leads from "../components/Pages/Leads";
 import Login from "../components/Pages/Login";
 import HomeRoutes from "./HomeRoutes";
 import LeadPage from "../components/Pages/LeadPage";
+import Dashboard from "../components/Pages/Dashboard";
 
 
 
@@ -19,9 +20,37 @@ const router = createBrowserRouter([
     path: "/",
     element: <PrivetRoutes element={<HomeRoutes />} />,
   },
+  {
+    path: "/dashboard",
+    element: <PrivetRoutes element={<Dashboard />} />,
+  },
+  {
+    path: "dashboard/quarterly",
+    element: <PrivetRoutes element={<QuarterlyPerform />} />,
+  },
+  {
+    path: "dashboard/monthly",
+    element: <PrivetRoutes element={<MonthlyPerform />} />,
+  },
+  {
+    path: "dashboard/daily",
+    element: <PrivetRoutes element={<DailyPerform />} />,
+  },
   // {
   //   path: "/dashboard",
-  //   element: <AdminRoutes element={<div>Dashboard</div>} />,
+  //   element: <Dashboard />,
+  // },
+  // {
+  //   path: "dashboard/quarterly",
+  //   element: <QuarterlyPerform />,
+  // },
+  // {
+  //   path: "dashboard/monthly",
+  //   element: <MonthlyPerform />,
+  // },
+  // {
+  //   path: "dashboard/daily",
+  //   element: <DailyPerform />,
   // },
   {
     path: "/users",
@@ -54,10 +83,6 @@ const router = createBrowserRouter([
   {
     path: "/favLeads/:id",
     element: <PrivetRoutes element={<Leads />} />,
-  },
-  {
-    path: "/performench",
-    element: <PrivetRoutes element={<QuarterlyPerform />} />,
   },
   {
     path: "profile",

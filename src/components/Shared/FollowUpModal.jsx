@@ -108,6 +108,18 @@ const FollowUpModal = ({id, setFollowUp}) => {
     }
   }
 
+  const addRecord= async (data)=>{
+    await axios
+      .patch(`${siteInfo.api}/users/addRecords`, data)
+      .then((res) => {
+        console.log(res.data)
+      })
+      .catch((error) => {
+        toast.error('errror')
+        console.log(error)
+      });
+  }
+
   const handleAddRemark = async (e) => {
     e.preventDefault();
     setUpdating(true);
@@ -126,6 +138,9 @@ const FollowUpModal = ({id, setFollowUp}) => {
       .then((res) => {
         toast.success("Remark Added", alert);
         setFollowUp(null)
+        const remarks = res.data.remarks;
+        const len = res.data.remarks.length -1;
+        addRecord(remarks[len])
       })
       .catch((error) => {
         toast.error("Something Wrong, Try Again");

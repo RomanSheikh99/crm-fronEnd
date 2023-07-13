@@ -5,7 +5,7 @@ const PerformLayout = ({ children }) => {
     return (
         <div>
             <div className='w-full '>
-                <PerformHeader />
+                
                 { children }
             </div>
         </div>

@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import ReplyIcon from '@mui/icons-material/Reply';
 import { NavLink } from "react-router-dom";
-import moment from "moment/moment";
+import moment from "moment";
 
 const Leads = () => {
   const { showLeads, leadsError, pending } = useSelector(
