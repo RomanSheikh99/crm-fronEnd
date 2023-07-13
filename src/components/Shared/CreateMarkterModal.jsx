@@ -40,7 +40,6 @@ const CreateMarkterModal = () => {
       })
       .catch((error) => {
         toast.error("Something Wrong, Try Again", alert);
-        console.log(error);
       });
 
 

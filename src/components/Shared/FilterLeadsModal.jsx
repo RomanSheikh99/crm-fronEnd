@@ -15,7 +15,7 @@ const FilterLeadsModal = ({setFilterModal}) => {
         const data = await response.json();
         setCountries(data.countries);
       } catch (error) {
-        console.log("Failed to fetch country data", error);
+        toast.error("Failed to fetch country data");
       }
     };
     FetchCountry();
@@ -76,7 +76,7 @@ const FilterLeadsModal = ({setFilterModal}) => {
                       name="possibility"
                       className=" select-bordered  border border-slate-400  w-56 ml-1 h-10 rounded-sm"
                     >
-                      <option disabled selected>
+                      <option disabled>
                         {" "}
                       </option>
                       <option> High </option>
@@ -91,7 +91,7 @@ const FilterLeadsModal = ({setFilterModal}) => {
                       name="category"
                       className=" select-bordered  border border-slate-400  w-56 ml-1 h-10 rounded-sm"
                     >
-                      <option disabled selected>
+                      <option disabled>
                         {""}
                       </option>
                       <option> Online Store </option>
@@ -113,7 +113,7 @@ const FilterLeadsModal = ({setFilterModal}) => {
                       name="status"
                       className=" select-bordered w-56 border border-slate-400  ml-1 h-10 rounded-sm"
                     >
-                      <option disabled selected>
+                      <option disabled>
                         {" "}
                       </option>
                       <option> Gatekeeper</option>
@@ -133,7 +133,7 @@ const FilterLeadsModal = ({setFilterModal}) => {
                       name="country"
                       className=" select-bordered  border border-slate-400  w-56 ml-1 h-10 rounded-sm"
                     >
-                      <option value={""} disabled selected>
+                      <option value={""} disabled>
                         {" "}
                       </option>
                       {countries.map((country, i) => (

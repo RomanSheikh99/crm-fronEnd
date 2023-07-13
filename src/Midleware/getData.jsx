@@ -10,10 +10,8 @@ const { setShowLeads } = action;
 const getData = async (path) => {
   try {
     const res = await axios.get(`${siteInfo.api+path}`)
-    console.log(res.data)
     dispatch(setShowLeads(res.data))
   } catch (err) {
-    console.log(err)
   }
 };
 

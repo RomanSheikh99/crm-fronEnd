@@ -25,7 +25,6 @@ const users = createSlice({
       state.users = action.payload
     },
     setCurrentUser: (state,action)=>{
-      console.log(action.payload)
       state.currentUser = action.payload
     },
     updateUser: (state,action)=>{

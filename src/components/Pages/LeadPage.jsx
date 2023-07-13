@@ -118,9 +118,7 @@ const LeadPage = () => {
                 <h3 className="text-center w-full border p-2 font-black">
                   Minor :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">
-                  {lead.minor}
-                </h3>
+                <h3 className="text-center w-full border p-2 ">{lead.minor}</h3>
               </div>
             </div>
             <div className=" border border-2 w-full">
@@ -144,17 +142,13 @@ const LeadPage = () => {
                 <h3 className="text-center w-full border p-2 font-black">
                   Phone :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">
-                  {lead.phone}
-                </h3>
+                <h3 className="text-center w-full border p-2 ">{lead.phone}</h3>
               </div>
               <div className="flex justify-between">
                 <h3 className="text-center w-full border p-2 font-black">
                   Email :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">
-                  {lead.email}
-                </h3>
+                <h3 className="text-center w-full border p-2 ">{lead.email}</h3>
               </div>
               <div className="flex justify-between">
                 <h3 className="text-center w-full border p-2 font-black">
@@ -192,28 +186,30 @@ const LeadPage = () => {
             <h2 className="text-center font-bold mb-4 border-b-2 py-3">
               All followup remarks show hare
             </h2>
-            <div className="flex justify-between border-b-2 py-3">
-              <div>
-                <h3>
-                  <span className="font-bold">Status : </span>
-                  {"remark.status"}
-                </h3>{" "}
-                <h3>
-                  <span className="font-bold">Next Poke : </span>
-                  {"remark.status"}
-                </h3>{" "}
+            {lead?.remarks?.map((remark) => (
+              <div key={remark.id} className="flex justify-between border-b-2 py-3">
+                <div>
+                  <h3>
+                    <span className="font-bold">Status : </span>
+                    {remark.status}
+                  </h3>{" "}
+                  <h3>
+                    <span className="font-bold">Next Poke : </span>
+                    {remark.nextPoke}
+                  </h3>{" "}
+                </div>
+                <div>
+                  <p>{remark.desc}</p>
+                </div>
+                <div>
+                  <h3>
+                    <span className="font-bold">Follower : </span>
+                    {remark.follower}
+                  </h3>{" "}
+                  <span>{remark.date}</span>
+                </div>
               </div>
-              <div>
-                <p>{"remark.des"}</p>
-              </div>
-              <div>
-                <h3>
-                  <span className="font-bold">Follower : </span>
-                  {"remark.status"}
-                </h3>{" "}
-                <span>{"remark.date"}</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       )}

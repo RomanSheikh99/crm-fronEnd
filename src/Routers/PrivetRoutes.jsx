@@ -22,7 +22,6 @@ const PrivetRoute = ({ element }) => {
       axios
         .get(api)
         .then((res) => {
-          console.log(res.data);
           dispatch(setCurrentUser(res.data));
           localStorage.setItem("crmUserId", JSON.stringify(res.data.id));
           setIsAuthenticate(res.data.id);

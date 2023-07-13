@@ -120,7 +120,7 @@ const FollowLeadModal = ({ id }) => {
                       defaultValue={lead?.status}
                       className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                     >
-                      <option disabled selected>
+                      <option disabled >
                         {" "}
                       </option>
                       <option> Gatekeeper </option>
@@ -143,7 +143,7 @@ const FollowLeadModal = ({ id }) => {
                       defaultValue={lead?.possibility}
                       className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                     >
-                      <option disabled selected>
+                      <option disabled >
                         {" "}
                       </option>
                       <option> High </option>
@@ -165,7 +165,7 @@ const FollowLeadModal = ({ id }) => {
                       defaultValue={lead?.status}
                       className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                     >
-                      <option disabled selected>
+                      <option disabled >
                         {" "}
                       </option>
                       <option> Gatekeeper </option>
@@ -188,7 +188,7 @@ const FollowLeadModal = ({ id }) => {
                       defaultValue={lead?.possibility}
                       className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                     >
-                      <option disabled selected>
+                      <option disabled>
                         {" "}
                       </option>
                       <option> High </option>

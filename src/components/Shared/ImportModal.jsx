@@ -1,13 +1,17 @@
 import axios from "axios";
 import React, { useState } from "react";
+import siteInfo from "../../../siteInfo";
+import { useDispatch } from "react-redux";
+import { fetchData } from "../../store/reducers/leadsReducers";
+import { toast } from "react-toastify";
 
 const ImportModal = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
-    // console.log(event.target.files[0])
   };
 
   const handleSubmit = (e) => {
@@ -15,14 +19,13 @@ const ImportModal = () => {
     setIsUploading(true);
     const formData = new FormData();
     formData.append("file", selectedFile);
-    console.log(formData)
     axios
-      .post("http://localhost:4000/api/leads/import", formData)
+      .post(`${siteInfo.api}/leads/import`, formData)
       .then((res) => {
-        console.log(res);
+        dispatch(fetchData(`/leads/allLeads`));
       })
       .catch((error) => {
-        console.log("error: " + error);
+        toast.error("An Error Occured");
       });
     setIsUploading(false);
     setSelectedFile(null);

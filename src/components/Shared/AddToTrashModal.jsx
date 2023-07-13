@@ -4,6 +4,7 @@ import siteInfo from "../../../siteInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { setLead } from "../../store/reducers/leadsReducers";
 import { toast } from "react-toastify";
+import { useLocation } from "react-router";
 
 const AddToTrashModal = ({ item, handleTrashModal }) => {
   const { showLeads, leadsError, pending } = useSelector(
@@ -11,6 +12,23 @@ const AddToTrashModal = ({ item, handleTrashModal }) => {
   );
   const dispatch = useDispatch();
 
+  const {pathname} = useLocation();
+
+  const handleDelete = () => {
+    axios
+      .delete(`${siteInfo.api}/leads/${item.id}`)
+      .then((res) => {
+        if (res.status == 200) {
+          const newArray = showLeads.filter((lead) => lead != item);
+          dispatch(setLead(newArray));
+          toast.success("Lead Deleted", alert);
+        }
+      })
+      .catch((error) => {
+        toast.error("Something Is Wrong, Try Again Letter", alert);
+      });
+      handleTrashModal();
+  };
   const addToTrash = () => {
     axios
       .patch(`${siteInfo.api}/leads/addToTrash/${item.id}`)
@@ -31,15 +49,13 @@ const AddToTrashModal = ({ item, handleTrashModal }) => {
     <div className="">
       <input type="checkbox" id="addToTrashModal" className="modal-toggle" />
       <div className="modal">
-        <div className="modal-box">
+        {pathname != '/trashLeads' && <div className="modal-box">
           <h2 className="text-3xl font-bold mt-2 mb-4">
             This Lead Will Add To Trash
           </h2>
 
-          {/* <div className="flex  flex-row-reverse items-end  w-full   gap-2  "> */}
           <div className="modal-action">
             <button
-              // htmlFor="addToTrashModal"
               onClick={handleTrashModal}
               className=" bg-yellow-600 hover:bg-yellow-700 cursor-pointer  text-neutral-100 px-4  py-2 rounded-md "
             >
@@ -52,8 +68,27 @@ const AddToTrashModal = ({ item, handleTrashModal }) => {
               Confirm
             </button>
           </div>
-          {/* </div> */}
-        </div>
+        </div>}
+        {pathname == '/trashLeads' && <div className="modal-box">
+          <h2 className="text-3xl font-bold mt-2 mb-4">
+            This Lead Will Permanently Delete 
+          </h2>
+
+          <div className="modal-action">
+            <button
+              onClick={handleTrashModal}
+              className=" bg-yellow-600 hover:bg-yellow-700 cursor-pointer  text-neutral-100 px-4  py-2 rounded-md "
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleDelete}
+              className=" bg-red-600 hover:bg-red-700 cursor-pointer  text-neutral-100 px-4  py-2 rounded-md "
+            >
+              Confirm
+            </button>
+          </div>
+        </div>}
       </div>
     </div>
   );

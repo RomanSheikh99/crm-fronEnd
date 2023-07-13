@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DefaultLayout from '../Layout/DefaultLayout';
 import DataTable from '../Shared/DataTable';
+import { toast } from 'react-toastify';
 
 const FavouriteLeads = () => {
   const [userData,setUserData] = useState([])
@@ -12,7 +13,7 @@ const FavouriteLeads = () => {
         const data = await response.json()
          setUserData(data)
         }catch(error){
-            console.log('Failed to fetch data', error)
+            toast.error('Failed to fetch data')
         }
     }
     FetchData()

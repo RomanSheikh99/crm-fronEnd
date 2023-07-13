@@ -57,7 +57,6 @@ const AssignModal = ({id, setAssignItem}) => {
         if(pathname == "freshLeads"){
           const newArray = showLeads.filter((lead) => lead != res.data);
           dispatch(setLead(newArray));
-          console.log('dispatch(setLead(newArray));')
         }else{
           dispatch(updateLead(res.data));
         }
@@ -103,8 +102,8 @@ const AssignModal = ({id, setAssignItem}) => {
                   name="userName"
                   className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                 >
-                  <option disabled selected>
-                    Select An User
+                  <option value={"Select An User"} disabled>
+                    
                   </option>
                   {users.map((user=><option value={user.id}> {user.name} </option>))}
                   

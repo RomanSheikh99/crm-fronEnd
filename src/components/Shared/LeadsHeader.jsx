@@ -6,6 +6,7 @@ import CreateNewLeadModal from "./CreateNewLeadModal";
 import { useSelector } from "react-redux";
 import ImportModal from "./ImportModal";
 import AssignModal from "./AssignModal";
+import FollowUpModal from "./FollowUpModal";
 
 const LeadsHeader = ({
   assignItem,
@@ -16,6 +17,8 @@ const LeadsHeader = ({
   setDltItem,
   handleTrashModal,
   path,
+  followUp,
+  setFollowUp
 }) => {
   const state = useSelector((state) => state.app);
 
@@ -41,6 +44,11 @@ const LeadsHeader = ({
           Create New Lead
         </label>
 
+        {followUp && (
+          <FollowUpModal id={followUp} setFollowUp={setFollowUp} onClose={() => setFollowUp(null)}>
+            {" "}
+          </FollowUpModal>
+        )}
         {assignItem && (
           <AssignModal id={assignItem} setAssignItem={setAssignItem} onClose={() => setAssignItem(null)}>
             {" "}

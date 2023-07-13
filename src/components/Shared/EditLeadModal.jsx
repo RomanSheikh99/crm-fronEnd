@@ -193,7 +193,7 @@ const EditLeadModal = ({ id }) => {
                         defaultValue={lead?.country}
                         className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                       >
-                        <option disabled selected>
+                        <option disabled>
                           Select Country.
                         </option>
                         {countris.map((country, i) => (
@@ -213,7 +213,7 @@ const EditLeadModal = ({ id }) => {
                         defaultValue={lead?.category}
                         className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                       >
-                        <option disabled selected>
+                        <option disabled>
                           Select Category
                         </option>
                         <option> VFX </option>

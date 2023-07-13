@@ -11,7 +11,9 @@ import { useLocation } from "react-router";
 import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
+import ReplyIcon from '@mui/icons-material/Reply';
 import { NavLink } from "react-router-dom";
+import moment from "moment/moment";
 
 const Leads = () => {
   const { showLeads, leadsError, pending } = useSelector(
@@ -24,6 +26,7 @@ const Leads = () => {
   const [dltItem, setDltItem] = useState(null);
   const [editItem, setEditItem] = useState(null);
   const [assignItem, setAssignItem] = useState(null);
+  const [followUp, setFollowUp] = useState(null);
 
   const state = useSelector((state) => state.app);
   const dispatch = useDispatch();
@@ -93,7 +96,7 @@ const Leads = () => {
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
       },
       {
-        field: "follower",
+        field: "followerName",
         headerName: "Follower",
         width: 120,
         sortable: false,
@@ -107,12 +110,13 @@ const Leads = () => {
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
       },
       {
-        field: "nextFollowUp",
+        field: "nextFollowUP",
         headerName: "Next Follow Up",
         width: 150,
         sortable: false,
         filterable: false,
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+        valueGetter: (params) => params.row.nextFollowUP && moment(params.row.nextFollowUP).format('D MMM YYYY'),
       },
       {
         field: "createdOn",
@@ -121,6 +125,7 @@ const Leads = () => {
         sortable: false,
         filterable: false,
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+        valueGetter: (params) => moment(params.row.createdOn).format('D MMM YYYY HH:mm'),
       },
       {
         field: "phone",
@@ -145,6 +150,16 @@ const Leads = () => {
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
         renderCell: ({ row }) => (
           <div>
+           {currentUser?.role != "ADMIN" && <Button
+              variant="text"
+              color="info"
+              onClick={() => setFollowUp(row.id)}
+            >
+              <label htmlFor="assign-lead-modal" className="cursor-pointer">
+              <ReplyIcon />
+              </label>
+              
+            </Button>}
            { currentUser?.role == "ADMIN" && <Button
               variant="text"
               color="info"
@@ -155,7 +170,7 @@ const Leads = () => {
               </label>
               
             </Button>}
-            {currentUser.id == row.followerID && <Button
+            {currentUser.id == row.followerID || currentUser.role =='ADMIN' && <Button
               onClick={() => setEditItem(row.id)}
               variant="text"
               color="warning"
@@ -164,7 +179,7 @@ const Leads = () => {
                 <EditCalendarIcon />
               </label>
             </Button>}
-            {currentUser.id == row.followerID && <Button variant="text" color="error" onClick={() => setDltItem(row)}>
+            {currentUser.id == row.followerID || currentUser.role =='ADMIN' && <Button variant="text" color="error" onClick={() => setDltItem(row)}>
               <label htmlFor="addToTrashModal" className="cursor-pointer">
                 <DeleteIcon />
               </label>
@@ -187,6 +202,8 @@ const Leads = () => {
   return (
     <Layout>
       <LeadsHeader
+        followUp={followUp}
+        setFollowUp={setFollowUp}
         assignItem={assignItem}
         setAssignItem={setAssignItem}
         editItem={editItem}
