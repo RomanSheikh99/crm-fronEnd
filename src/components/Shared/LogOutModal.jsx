@@ -1,13 +1,14 @@
 import React from "react";
 import { FaSignOutAlt } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../store/reducers/usersReducers";
 import { useNavigate } from "react-router-dom";
-// import { useHistory } from 'react-router-dom';
 
 const LogOutModal = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
+  const {theme} = useSelector(state => state.app)
+
 
   const handleLogOut = () => {
     dispatch(setCurrentUser(null));
@@ -21,7 +22,7 @@ const LogOutModal = () => {
       <div className="px-2 py-4">
         <input type="checkbox" id="logout_modal" className="modal-toggle" />
         <div className="modal">
-          <div className="modal-box">
+          <div className={`${theme == "DARK" ? "dark" : "light"} modal-box`}>
             <h3 className="font-bold text-lg">
               {" "}
               Are you sure you want to logout ?

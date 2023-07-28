@@ -11,6 +11,7 @@ const CreateNewLeadModal = () => {
   const [disable, setDisable] = useState(false);
   const [msg, setMsg] = useState(null);
   const state = useSelector((state) => state.app);
+  const {theme} = useSelector((state) => state.app);
 
   const { currentUser } = useSelector(
     (state) => state.users
@@ -84,7 +85,6 @@ const CreateNewLeadModal = () => {
         setDisable(false)
       }
     } catch (error) {
-      console.log(error)
       toast.error(`Getting error while check the ${item} value is exist or not! pls try again letter`);
     }
   }
@@ -93,19 +93,32 @@ const CreateNewLeadModal = () => {
     "Germany" , "Spain", "Austria", "Luxembourg", "Belgium", "Canada", "Denmark", "France","Italy", "Netherlands","Poland", "Sweden", "Switzerland","UK", "Norway", "Finland", "Ireland", "USA (EST)", "USA (CST)"," USA(PDT)",  " USA (CDT)", " Czech Republic", "Greece", "Romania", "Portugal", "Malta", "Bulgaria", "Cyprus", "Russia", "Brazil","Mexico", "Estonia", "Turkey", "Australia"," New Zealand","Singapore", "Malaysia", "Indonesia", "Hungary", "South Africa", "Slovenia", "Others"
   ]
 
+  const inputStyle = ()  => {
+    if(theme == "DARK"){
+      return {
+        background: "#0a1929",
+        border: "1px solid #93c5fd",
+        color: "#f5f5f5",
+       }
+    }else{
+      return {
+      }
+    }
+  }
+
   return (
-    <div className={` ${state.theme == "DARK" ? 'dark': 'light'} px-2 py-4`}>
+    <div className={`  px-2 py-4`}>
       <input
         type="checkbox"
         id="create_newlead_modal"
         className="modal-toggle"
       />
-      <div className={` ${state.theme == "DARK" ? 'dark': 'light'} modal px-2 py-4`}>
-        <div className={`  ${state.theme == "DARK" ? 'dark': 'light'} w-4/6 max-w-3xl h-[75vh] overflow-y-scroll`}>
+      <div className={`  modal px-2 py-4`}>
+        <div className={` modal-box  ${state.theme == "DARK" ? 'dark': 'light'} max-w-3xl h-[75vh] overflow-y-scroll`}>
           <form
             onReset={reset}
             onSubmit={handleCreateNewLead}
-            className="px-10 w-10/12   py-10 mx-auto"
+            className=" w-10/12 mx-auto"
           >
             <h1 className="text-3xl font-semibold   mb-2">
               Create New Lead{" "}
@@ -129,6 +142,7 @@ const CreateNewLeadModal = () => {
                     <input
                       type="text"
                       name="company"
+                      style={inputStyle()}
                       onChange={(e)=> handleValueCheck(e,'company')}
                       required
                       className="mt-1 block w-72 h-10 border border-gray-300 rounded-md mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -141,6 +155,7 @@ const CreateNewLeadModal = () => {
                     <input
                       type="url"
                       name="website"
+                      style={inputStyle()}
                       onChange={(e)=> handleValueCheck(e,'website')}
                       required
                       className="mt-1 block w-72 h-10 border border-gray-300 rounded-md mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -153,12 +168,11 @@ const CreateNewLeadModal = () => {
                     </label>
                     <select
                       name="country"
+                      style={inputStyle()}
                       required
-                      defaultValue='Select Country.'
                       className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                     >
-                      <option disabled>
-                      Select Country
+                      <option>
                       </option>
                       {countries.map((country, i) => (
                         <option key={i}> {country} </option>
@@ -174,20 +188,22 @@ const CreateNewLeadModal = () => {
                     </label>
                     <select
                       name="category"
+                      style={inputStyle()}
                       required
                       className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                     >
-                      <option disabled>
-                        Select Category
+                      <option>
                       </option>
                       <option> VFX </option>
                       <option> 2D animation </option>
                       <option> Motion Graphics </option>
                       <option> 3D animation/ CGI </option>
                       <option> Individual </option>
-                      <option> BP Seller </option>
+                      <option> Agency </option>
                       <option> video editing </option>
                       <option> AR/VR </option>
+                      <option> Brand </option>
+                      <option> Others </option>
                     </select>
                   </div>
                   {/* Left side of form end  */}
@@ -201,6 +217,7 @@ const CreateNewLeadModal = () => {
                     </label>
                     <input
                       type="text"
+                      style={inputStyle()}
                       required
                       name="contactParson"
                       className="mt-1 block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -213,6 +230,7 @@ const CreateNewLeadModal = () => {
                     </label>
                     <input
                       type="text"
+                      style={inputStyle()}
                       required
                       name="designation"
                       className="mt-1 block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -224,6 +242,7 @@ const CreateNewLeadModal = () => {
                       Phone
                     </label>
                     <input
+                    style={inputStyle()}
                       type="number"
                       onChange={(e)=> handleValueCheck(e,'phone')}
                       required
@@ -240,6 +259,7 @@ const CreateNewLeadModal = () => {
                     </label>
                     <input
                       type="email"
+                      style={inputStyle()}
                       onChange={(e)=> handleValueCheck(e,'email')}
                       required
                       name="email"
@@ -258,6 +278,7 @@ const CreateNewLeadModal = () => {
                 </label>
                 <textarea
                   placeholder=" "
+                  style={inputStyle()}
                   name="description"
                   className="textarea textarea-bordered textarea-lg w-full mt-2  "
                 ></textarea>

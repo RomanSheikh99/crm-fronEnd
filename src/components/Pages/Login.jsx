@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Lottie from "lottie-react";
 
@@ -14,6 +14,7 @@ const Login = () => {
   const [isLoading, setIsLoding] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {theme} = useSelector(state => state.app)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,11 +40,32 @@ const Login = () => {
       });
   };
 
+
+  const inputStyle = ()  => {
+    if(theme == "DARK"){
+      return {
+        background: "#0a1929",
+        border: "1px solid #93c5fd",
+        color: "#f5f5f5",
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
+       }
+    }else{
+      return {
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
+  
+  
+      }
+    }
+    
+  }
+
   return (
-    <div className="w-full">
+    <div style={{height: '100vh',display: 'flex'}} className="w-full">
       {/* Login form section start here  */}
-      <div className="block w-3/5 mx-auto mt-4 rounded-lg bg-white text-center shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-        <div className="border-b-2 border-slate-200 text-start px-4 rounded-t-md py-3 bg-neutral-200 dark:border-neutral-600 dark:text-neutral-50">
+      <div className={`${theme == "DARK" ? "dark" : "light"} block w-3/5 mx-auto my-auto rounded-lg text-center shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700`}>
+        <div className={`${theme == "DARK" ? "dark" : "light"} loginHeader  border-b-2 text-start px-4 rounded-t-md py-3`}>
           Login
         </div>
         {/* Log in form body and animation section  */}
@@ -63,7 +85,8 @@ const Login = () => {
                 <input
                   type="email"
                   name={"email"}
-                  className="w-80 py-2 border hover:bg-yellow-100 "
+                  style={inputStyle()}
+                  className={`${theme == "DARK" && "darkInput"} w-80 py-2 `}
                   placeholder=" Enter your email"
                   required
                 />
@@ -76,7 +99,8 @@ const Login = () => {
                 <input
                   type="password"
                   name={"pass"}
-                  className="w-80 py-2 border hover:bg-yellow-100"
+                  style={inputStyle()}
+                  className={`${theme == "DARK" && "darkInput"} w-80 py-2 `}
                   placeholder=" Enter your password"
                   required
                 />

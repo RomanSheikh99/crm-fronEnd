@@ -11,7 +11,7 @@ import PathList from "../Shared/PathList";
 import CRMAppBar from "../Shared/CRMAppBar";
 import { useSelector } from "react-redux";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -19,7 +19,7 @@ const openedMixin = (theme) => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
-  // overflowX: "hidden",
+  overflowX: "hidden",
 });
 
 const closedMixin = (theme) => ({
@@ -27,7 +27,7 @@ const closedMixin = (theme) => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  // overflowX: "hidden",
+  overflowX: "hidden",
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
@@ -67,8 +67,6 @@ const Drawer = styled(MuiDrawer, {
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
-  // boxSizing: "border-box",
-  // background: "blue",
   ...(open && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),

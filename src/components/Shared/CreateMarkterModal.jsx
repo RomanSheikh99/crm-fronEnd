@@ -1,7 +1,7 @@
 import React from "react";
 import { FaRegTimesCircle } from "react-icons/fa";
 // import { createUsers } from "../../store/reducers/usersReducers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import siteInfo from "../../../siteInfo";
 import { toast } from "react-toastify";
@@ -9,6 +9,8 @@ import { addUser } from "../../store/reducers/usersReducers";
 
 const CreateMarkterModal = () => {
   const dispatch = useDispatch();
+  const {theme} = useSelector(state => state.app)
+
 
   const alert = {
     position: "top-center",
@@ -19,6 +21,12 @@ const CreateMarkterModal = () => {
     draggable: true,
     progress: undefined,
     theme: "colored",
+  }
+
+  const reset =(event) => {
+    event.target.name.value = "";
+    event.target.email.value = "";
+    event.target.pass.value = "";
   }
 
   const handleCreateMarkter = async (event) => {
@@ -45,15 +53,27 @@ const CreateMarkterModal = () => {
 
     event.target.name.value = "";
     event.target.email.value = "";
-    // event.target.phone.value = '';
-    // event.target.designation.value = '';
     event.target.pass.value = "";
   };
+
+  const inputStyle = ()  => {
+    if(theme == "DARK"){
+      return {
+        background: "#0a1929",
+        border: "1px solid #93c5fd",
+        color: "#f5f5f5",
+       }
+    }else{
+      return {
+      }
+    }
+  }
+  
   return (
     <div className="">
       <input type="checkbox" id="marketers-modal" className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box">
+      <div className={`modal`}>
+        <div className={` modal-box ${theme == "DARK" ? "dark" : "light"}`}>
           <div className="float-right">
             <label
               htmlFor="marketers-modal"
@@ -66,6 +86,7 @@ const CreateMarkterModal = () => {
           {/* Create Marketer form start here  */}
           <form
             onSubmit={handleCreateMarkter}
+            onReset={reset}
             className=" w-full mx-auto px-4 py-6 mb-10  items-start  flex flex-col rounded-b-md font-semibold "
           >
             <h2 className="text-2xl font-smeibold mt-2 mb-4">
@@ -78,6 +99,7 @@ const CreateMarkterModal = () => {
                 <input
                   type="text"
                   name={"name"}
+                  style={inputStyle()}
                   className="w-72 py-2 border hover:bg-yellow-100 "
                   placeholder=" Marketer name"
                   required
@@ -91,6 +113,7 @@ const CreateMarkterModal = () => {
                 <input
                   type="email"
                   name={"email"}
+                  style={inputStyle()}
                   className="w-72 py-2 border hover:bg-yellow-100 "
                   placeholder="  Marketer email"
                   required
@@ -116,6 +139,7 @@ const CreateMarkterModal = () => {
                 <input
                   type="password"
                   name={"pass"}
+                  style={inputStyle()}
                   className="w-72 py-2 border hover:bg-yellow-100 "
                   placeholder=" Create a strong password"
                 />
@@ -143,7 +167,7 @@ const CreateMarkterModal = () => {
                 />
               </div>
               {/* <div className="modal-action"> */}
-              <button className=" bg-green-600 hover:bg-green-700 cursor-pointer  text-neutral-100 px-4  py-2 rounded-md ">
+              <button type="reset" className=" bg-green-600 hover:bg-green-700 cursor-pointer  text-neutral-100 px-4  py-2 rounded-md ">
                 {" "}
                 Reset{" "}
               </button>

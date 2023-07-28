@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaRegTimesCircle } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import siteInfo from "../../../siteInfo";
 import { toast } from "react-toastify";
@@ -14,6 +14,8 @@ const EditLeadModal = ({ id }) => {
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState(null);
 
+  const { theme } = useSelector((state) => state.app);
+
   const alert = {
     position: "top-center",
     autoClose: 500,
@@ -26,17 +28,17 @@ const EditLeadModal = ({ id }) => {
   };
 
   useEffect(() => {
-    setError(null)
-    setLoading(true)
+    setError(null);
+    setLoading(true);
     axios
       .get(`${siteInfo.api}/leads/${id}`)
       .then((res) => {
         setLead(res.data);
-        setLoading(false)
+        setLoading(false);
       })
       .catch((error) => {
-        setError(error)
-        setLoading(false)
+        setError(error);
+        setLoading(false);
       });
   }, [id]);
 
@@ -50,7 +52,6 @@ const EditLeadModal = ({ id }) => {
     e.target.website.value = lead.website;
     e.target.company.value = lead.company;
   };
-
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -78,7 +79,7 @@ const EditLeadModal = ({ id }) => {
       });
 
     reset(e);
-    setUpdating(false)
+    setUpdating(false);
   };
 
   const countris = [
@@ -126,12 +127,32 @@ const EditLeadModal = ({ id }) => {
     "Others",
   ];
 
+  const inputStyle = ()  => {
+    if(theme == "DARK"){
+      return {
+        background: "#0a1929",
+        border: "1px solid #93c5fd",
+        color: "#f5f5f5",
+       }
+    }else{
+      return {
+      }
+    }
+  }
+
   return (
     <div className="">
       <input type="checkbox" id="edit-lead-modal" className="modal-toggle" />
       <div className="modal">
-        <div className="bg-neutral-100 w-4/6 max-w-3xl h-[75vh] overflow-y-scroll">
-          <div className="float-right">
+        <div
+          className={` ${
+            theme == "DARK" ? "dark" : "light"
+          } modal-box w-4/6 max-w-2xl h-[77vh] overflow-y-scroll"`}
+        >
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="text-2xl font-smeibold mt-2 ">
+              Edit Lead Information
+            </h2>
             <label
               htmlFor="edit-lead-modal"
               className="cursor-pointer text-slate-700 text-3xl hover:text-red-500 rounded-md"
@@ -147,12 +168,8 @@ const EditLeadModal = ({ id }) => {
             <form
               onSubmit={handleUpdate}
               onReset={reset}
-              className=" w-full mx-auto px-4 py-6 mb-10  items-start  flex flex-col rounded-b-md font-semibold "
+              className=" w-full mx-auto px-4  items-start  flex flex-col rounded-b-md font-semibold "
             >
-              <h2 className="text-2xl font-smeibold mt-2 mb-4">
-                Edit Lead Information
-              </h2>
-
               {/* ================================================== */}
               <section className="  ">
                 <div className=" flex  justify-between">
@@ -161,41 +178,42 @@ const EditLeadModal = ({ id }) => {
                     <div className="mb-3">
                       <label
                         htmlFor="name"
-                        className="text-lg font-medium text-gray-700"
+                        className="text-lg font-medium "
                       >
                         Company
                       </label>
                       <input
                         type="text"
                         name="company"
+                        style={inputStyle()}
                         defaultValue={lead?.company}
                         className="mt-1 block w-72 h-10 border border-gray-300 rounded-md mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       />
                     </div>
                     <div className="mb-3">
-                      <label className="text-lg font-medium text-gray-700">
+                      <label className="text-lg font-medium ">
                         Website
                       </label>
                       <input
                         type="url"
                         name="website"
+                        style={inputStyle()}
                         defaultValue={lead?.website}
                         className="mt-1 block w-72 h-10 border border-gray-300 rounded-md mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       />
                     </div>
 
                     <div className="mb-3 flex flex-col">
-                      <label className="text-lg font-medium text-gray-700">
+                      <label className="text-lg font-medium ">
                         Country
                       </label>
                       <select
                         name="country"
+                        style={inputStyle()}
                         defaultValue={lead?.country}
                         className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                       >
-                        <option disabled>
-                          Select Country.
-                        </option>
+                        <option></option>
                         {countris.map((country, i) => (
                           <option key={i}> {country} </option>
                         ))}
@@ -204,26 +222,27 @@ const EditLeadModal = ({ id }) => {
                     <div className="mb-3 flex flex-col">
                       <label
                         htmlFor="email"
-                        className="text-lg font-medium text-gray-700"
+                        className="text-lg font-medium "
                       >
                         Category
                       </label>
                       <select
                         name="category"
+                        style={inputStyle()}
                         defaultValue={lead?.category}
                         className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                       >
-                        <option disabled>
-                          Select Category
-                        </option>
+                        <option></option>
                         <option> VFX </option>
                         <option> 2D animation </option>
                         <option> Motion Graphics </option>
                         <option> 3D animation/ CGI </option>
                         <option> Individual </option>
-                        <option> BP Seller </option>
+                        <option> Agency </option>
                         <option> video editing </option>
                         <option> AR/VR </option>
+                        <option> Brand </option>
+                        <option> Others </option>
                       </select>
                     </div>
                     {/* Left side of form end  */}
@@ -232,11 +251,12 @@ const EditLeadModal = ({ id }) => {
                   {/* Right side of form start  */}
                   <div>
                     <div className="mb-3">
-                      <label className="text-lg font-medium text-gray-700">
+                      <label className="text-lg font-medium ">
                         Contact Person
                       </label>
                       <input
                         type="text"
+                        style={inputStyle()}
                         defaultValue={lead?.contactParson}
                         name="contactParson"
                         className="mt-1 block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -244,11 +264,12 @@ const EditLeadModal = ({ id }) => {
                     </div>
 
                     <div className="mb-3">
-                      <label className="text-lg font-medium text-gray-700">
+                      <label className="text-lg font-medium ">
                         Designation
                       </label>
                       <input
                         type="text"
+                        style={inputStyle()}
                         defaultValue={lead?.designation}
                         name="designation"
                         className="mt-1 block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -256,11 +277,12 @@ const EditLeadModal = ({ id }) => {
                     </div>
 
                     <div className="mb-3">
-                      <label className="text-lg font-medium text-gray-700">
+                      <label className="text-lg font-medium ">
                         Phone
                       </label>
                       <input
                         type="number"
+                        style={inputStyle()}
                         defaultValue={lead?.phone}
                         name="phone"
                         className=" block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -269,12 +291,13 @@ const EditLeadModal = ({ id }) => {
                     <div className="mb-3">
                       <label
                         htmlFor="email"
-                        className="text-lg font-medium text-gray-700"
+                        className="text-lg font-medium "
                       >
                         Email
                       </label>
                       <input
                         type="email"
+                        style={inputStyle()}
                         defaultValue={lead?.email}
                         name="email"
                         className=" block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -292,7 +315,7 @@ const EditLeadModal = ({ id }) => {
               <div className="flex  flex-row-reverse items-end  w-full   gap-2  ">
                 <div>
                   <input
-                    value={updating ? "Updating...": "Update"}
+                    value={updating ? "Updating..." : "Update"}
                     disabled={updating}
                     type="submit"
                     className="  bg-sky-600 border-none text-neutral-100 px-4 py-2 rounded-md hover:bg-sky-800 cursor-pointer"

@@ -21,22 +21,23 @@ const LeadsHeader = ({
   setFollowUp
 }) => {
   const state = useSelector((state) => state.app);
+  const {currentUser} = useSelector((state) => state.users);
 
   return (
     <div
       className={`${
         state.theme == "DARK" ? "dark" : "light"
-      } flex justify-between px-2 items-center py-3  `}
+      } flex justify-between items-center py-3  `}
     >
       <SearchLeads path={path}></SearchLeads>
 
       <div className="flex gap-2">
-        <label
+        {currentUser?.role == "ADMIN" && <label
           htmlFor="import_modal"
           className=" bg-indigo-500 hover:bg-indigo-600  font-semibold  text-neutral-100  py-2 px-3 rounded-sm"
         >
           Imports
-        </label>
+        </label>}
         <label
           htmlFor="create_newlead_modal"
           className=" bg-indigo-500 hover:bg-indigo-600  font-semibold  text-neutral-100  py-2 px-3 rounded-sm"

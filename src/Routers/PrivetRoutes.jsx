@@ -1,15 +1,16 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import siteInfo from "../../siteInfo";
 import { setCurrentUser } from "../store/reducers/usersReducers";
 import { useEffect, useState } from "react";
+import addLoginUpdate from "../Midleware/addLoginUpdate";
 
 const PrivetRoute = ({ element }) => {
   const dispatch = useDispatch();
+  const {pathname} = useLocation();
 
   const [isAuthenticate, setIsAuthenticate] = useState(JSON.parse(localStorage.getItem("crmUserId")));
-  // const [isAdmin, setIsAdmin] = useState(false);
   
 
   
@@ -22,6 +23,7 @@ const PrivetRoute = ({ element }) => {
       axios
         .get(api)
         .then((res) => {
+          addLoginUpdate(res.data.id)
           dispatch(setCurrentUser(res.data));
           localStorage.setItem("crmUserId", JSON.stringify(res.data.id));
           setIsAuthenticate(res.data.id);
@@ -34,7 +36,7 @@ const PrivetRoute = ({ element }) => {
       localStorage.setItem("crmUserId", JSON.stringify(null));
       setIsAuthenticate(null);
     }
-  }, [isAuthenticate]);
+  }, [isAuthenticate,pathname]);
 
   return isAuthenticate ? element : <Navigate to="/login" replace={true} />;
 };

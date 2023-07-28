@@ -13,6 +13,9 @@ const HomeRoutes = () => {
       <Navigate to={`/followUp/${currentUser.id}`} />
     );
   }
+  
+   
+
 };
 
 export default HomeRoutes;

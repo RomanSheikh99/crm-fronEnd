@@ -22,17 +22,8 @@ const leads = createSlice({
     state.showLeads = action.payload
   },
   updateLead: (state,action)=>{
-    const itemToEdit = state.showLeads.find(lead => lead.id === action.payload.id);
-    itemToEdit.email = action.payload.email;
-    itemToEdit.phone = action.payload.phone;
-    itemToEdit.designation = action.payload.designation;
-    itemToEdit.contactParson = action.payload.contactParson;
-    itemToEdit.category = action.payload.category;
-    itemToEdit.country = action.payload.country;
-    itemToEdit.website = action.payload.website;
-    itemToEdit.company = action.payload.company;
-    itemToEdit.assignToName = action.payload.assignToName;
-    itemToEdit.assignToID = action.payload.assignToID;
+    const index = state.showLeads.findIndex((lead) => lead.id == action.payload.id)
+    state.showLeads[index] = action.payload;
   },
 },
   extraReducers: (builder) => {

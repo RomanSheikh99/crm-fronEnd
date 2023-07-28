@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import siteInfo from "../../../siteInfo";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLead } from "../../store/reducers/leadsReducers";
 import { toast } from "react-toastify";
 
 const FilterLeadsModal = ({setFilterModal}) => {
   const [countries, setCountries] = useState([]);
   const dispatch = useDispatch()
+  const {theme} = useSelector(state => state.app)
+
   useEffect(() => {
     const FetchCountry = async () => {
       try {
@@ -42,6 +44,19 @@ const FilterLeadsModal = ({setFilterModal}) => {
     }
   };
 
+  const inputStyle = ()  => {
+    if(theme == "DARK"){
+      return {
+        background: "#0a1929",
+        border: "1px solid #93c5fd",
+        color: "#f5f5f5",
+       }
+    }else{
+      return {
+      }
+    }
+  }
+
   return (
     <div>
       <div className="px-2 py-4">
@@ -52,10 +67,10 @@ const FilterLeadsModal = ({setFilterModal}) => {
           className="modal-toggle"
         />
         <div className="modal">
-          <div className=" w-[700px]  ">
+          <div className={` w-[700px]  ${theme == "DARK" ? "dark" : "light"}`}>
             <form
               onSubmit={handleFilter}
-              className="full py-10 px-4 rounded-md     bg-neutral-100 gap-y-2  font-semibold text-black"
+              className="full py-10 px-4 rounded-md gap-y-2  font-semibold"
             >
               <h1 className="text-2xl py-4 "> Filter Leads </h1>
               <section className="flex justify-between">
@@ -64,6 +79,7 @@ const FilterLeadsModal = ({setFilterModal}) => {
                   <div className="flex justify-between">
                     <label> Minor: </label>
                     <input
+                    style={inputStyle()}
                       name="minor"
                       placeholder=""
                       className="  border border-slate-400  w-56 ml-1 h-10 rounded-sm"
@@ -71,13 +87,13 @@ const FilterLeadsModal = ({setFilterModal}) => {
                   </div>
 
                   <div className="mt-6 flex justify-between">
-                    <label> Possibiliti :</label>
-                    <select
+                    <label> Possibility :</label>
+                    <select style={inputStyle()}
                       name="possibility"
                       className=" select-bordered  border border-slate-400  w-56 ml-1 h-10 rounded-sm"
                     >
-                      <option disabled>
-                        {" "}
+                      <option>
+                      
                       </option>
                       <option> High </option>
                       <option> Medium </option>
@@ -87,20 +103,22 @@ const FilterLeadsModal = ({setFilterModal}) => {
 
                   <div className="mt-6 flex justify-between items-start">
                     <label> Category :</label>
-                    <select
+                    <select style={inputStyle()}
                       name="category"
                       className=" select-bordered  border border-slate-400  w-56 ml-1 h-10 rounded-sm"
                     >
-                      <option disabled>
-                        {""}
+                      <option defaultValue={" "} >
                       </option>
-                      <option> Online Store </option>
-                      <option> Brand </option>
-                      <option> Photographer </option>
-                      <option> Agency </option>
                       <option> VFX </option>
-                      <option> BP Seller </option>
-                      <option> BP Buyer </option>
+                      <option> 2D animation </option>
+                      <option> Motion Graphics </option>
+                      <option> 3D animation/ CGI </option>
+                      <option> Individual </option>
+                      <option> Agency </option>
+                      <option> video editing </option>
+                      <option> AR/VR </option>
+                      <option> Brand </option>
+                      <option> Others </option>
                     </select>
                   </div>
                 </div>
@@ -109,11 +127,11 @@ const FilterLeadsModal = ({setFilterModal}) => {
                 <div className="">
                   <div className="flex justify-between">
                     <label> Status :</label>
-                    <select
+                    <select style={inputStyle()}
                       name="status"
                       className=" select-bordered w-56 border border-slate-400  ml-1 h-10 rounded-sm"
                     >
-                      <option disabled>
+                      <option>
                         {" "}
                       </option>
                       <option> Gatekeeper</option>
@@ -129,12 +147,11 @@ const FilterLeadsModal = ({setFilterModal}) => {
 
                   <div className=" flex justify-between mt-6">
                     <label> Country :</label>
-                    <select
+                    <select style={inputStyle()}
                       name="country"
                       className=" select-bordered  border border-slate-400  w-56 ml-1 h-10 rounded-sm"
                     >
-                      <option value={""} disabled>
-                        {" "}
+                      <option>
                       </option>
                       {countries.map((country, i) => (
                         <option key={i}> {country} </option>

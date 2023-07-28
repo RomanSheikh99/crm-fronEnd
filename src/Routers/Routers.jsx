@@ -12,6 +12,7 @@ import Login from "../components/Pages/Login";
 import HomeRoutes from "./HomeRoutes";
 import LeadPage from "../components/Pages/LeadPage";
 import Dashboard from "../components/Pages/Dashboard";
+import MarketerPage from "../components/Pages/MarketerPage";
 
 
 
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
     element: <AdminRoutes  element={<Marketers />} />,
   },
   {
+    path: "/marketers/:id",
+    element: <AdminRoutes  element={<MarketerPage />} />,
+  },
+  {
     path: "/trashLeads",
     element: <AdminRoutes  element={<Leads />} />,
   },
@@ -70,7 +75,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/leads/:id",
-    element: <LeadPage></LeadPage>,
+    element: <PrivetRoutes element={<LeadPage />} />,
   },
   {
     path: "/followUp/:id",

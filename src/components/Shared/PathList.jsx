@@ -33,10 +33,20 @@ const PathList = ({ open }) => {
       user: true,
       admin: true,
     },
-    { icon: <PeopleAltIcon />, text: "Users", path: "/users", user: false,
-    admin: true, },
-    { icon: <BallotIcon />, text: "All Leads", path: "/allLeads", user: true,
-    admin: true, },
+    {
+      icon: <PeopleAltIcon />,
+      text: "Users",
+      path: "/users",
+      user: false,
+      admin: true,
+    },
+    {
+      icon: <BallotIcon />,
+      text: "All Leads",
+      path: "/allLeads",
+      user: true,
+      admin: true,
+    },
     {
       icon: <WorkHistoryRoundedIcon />,
       text: "Fresh Leads",
@@ -47,39 +57,45 @@ const PathList = ({ open }) => {
     {
       icon: <BookmarkIcon />,
       text: "FollowUp Leads",
-      path: `/followUp/${currentUser.id}`,
+      path: `/followUp/${currentUser?.id}`,
       user: true,
       admin: false,
     },
     {
       icon: <AssignmentIcon />,
       text: "Assign Leads",
-      path: `/assignLeads/${currentUser.id}`,
+      path: `/assignLeads/${currentUser?.id}`,
       user: true,
       admin: false,
     },
     {
       icon: <FavoriteIcon />,
       text: "Favorite Leads",
-      path: `/favLeads/${currentUser.id}`,
+      path: `/favLeads/${currentUser?.id}`,
       user: true,
       admin: false,
     },
-    {
-      icon: <EngineeringIcon />,
-      text: "Parformenc",
-      path: "/parformenc",
-      user: true,
-      admin: false,
-    },
+    // {
+    //   icon: <EngineeringIcon />,
+    //   text: "Parformenc",
+    //   path: "/parformenc",
+    //   user: true,
+    //   admin: false,
+    // },
   ];
   return (
-    <Box sx={{background: `${theme == "DARK" && "#0a1929"}`,color: `${theme == "DARK" && "#f3f6f9"}`, height: '100%'}}>
+    <Box
+      sx={{
+        background: `${theme == "DARK" && "#0a1929"}`,
+        color: `${theme == "DARK" && "#f3f6f9"}`,
+        height: "100%",
+      }}
+    >
       <List>
         {pathList.map((link, index) => {
           if (currentUser.role == "ADMIN") {
             return (
-              (link.admin && (
+              link.admin && (
                 <ListItem key={index} disablePadding sx={{ display: "block" }}>
                   <NavLink to={link.path}>
                     <ListItemButton
@@ -106,11 +122,11 @@ const PathList = ({ open }) => {
                     </ListItemButton>
                   </NavLink>
                 </ListItem>
-              ))
+              )
             );
-          }else{
+          } else {
             return (
-              (link.user && (
+              link.user && (
                 <ListItem key={index} disablePadding sx={{ display: "block" }}>
                   <NavLink to={link.path}>
                     <ListItemButton
@@ -137,44 +153,65 @@ const PathList = ({ open }) => {
                     </ListItemButton>
                   </NavLink>
                 </ListItem>
-              ))
+              )
             );
           }
         })}
       </List>
       <Divider />
       <List>
-        {[
-          { icon: <DeleteIcon />, text: "Trash Leads", path: "/trashLeads" },
-          { icon: <AccountBoxIcon />, text: "Profile", path: "/profile" },
-        ].map((link, index) => (
-          <ListItem key={index} disablePadding sx={{ display: "block" }}>
-            <NavLink to={link.path}>
-              <ListItemButton
+        {currentUser?.role == 'ADMIN' && <ListItem disablePadding sx={{ display: "block" }}>
+          <NavLink to={"/trashLeads"}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
                 sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                  color: theme === "DARK" ? "#fff" : "#111",
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                    color: theme === "DARK" ? "#fff" : "#111",
-                  }}
-                >
-                  {link.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={link.text}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </NavLink>
-          </ListItem>
-        ))}
+                <DeleteIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Trash Leads"}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </NavLink>
+        </ListItem>}
+        <ListItem disablePadding sx={{ display: "block" }}>
+          <NavLink to={"/profile"}>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                  color: theme === "DARK" ? "#fff" : "#111",
+                }}
+              >
+                <AccountBoxIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Profile"}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </NavLink>
+        </ListItem>
       </List>
     </Box>
   );

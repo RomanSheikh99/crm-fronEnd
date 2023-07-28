@@ -6,30 +6,20 @@ import siteInfo from "../../../siteInfo";
 import { toast } from "react-toastify";
 import ShowMsg from "./ShowMsg";
 import { setLead, updateLead } from "../../store/reducers/leadsReducers";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
-const AssignModal = ({id, setAssignItem}) => {
+const AssignModal = ({ id, setAssignItem }) => {
   const { showLeads, leadsError, pending } = useSelector(
     (state) => state.leads
   );
+  const { theme } = useSelector((state) => state.app);
   const dispatch = useDispatch();
-  const {pathname} = useLocation()
+  const { pathname } = useLocation();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState(null);
-
-  const alert = {
-    position: "top-center",
-    autoClose: 500,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored",
-  };
-
+  
   useEffect(() => {
     setError(null);
     setLoading(true);
@@ -48,19 +38,19 @@ const AssignModal = ({id, setAssignItem}) => {
   const handleAssign = async (e) => {
     e.preventDefault();
     setUpdating(true);
-    const user = users.find(user => user.id == e.target.userName.value)
+    const user = users.find((user) => user.id == e.target.userName.value);
 
     await axios
       .patch(`${siteInfo.api}/leads/assignTo/${id}`, user)
       .then((res) => {
-        toast.success("Lead Edited", alert);
-        if(pathname == "freshLeads"){
+        toast.success("Successfully Assigned", alert);
+        if (pathname == "freshLeads") {
           const newArray = showLeads.filter((lead) => lead != res.data);
           dispatch(setLead(newArray));
-        }else{
+        } else {
           dispatch(updateLead(res.data));
         }
-        setAssignItem(null)
+        setAssignItem(null);
       })
       .catch((error) => {
         toast.error("Something Wrong, Try Again", alert);
@@ -70,13 +60,27 @@ const AssignModal = ({id, setAssignItem}) => {
     setUpdating(false);
   };
 
+  const inputStyle = ()  => {
+    if(theme == "DARK"){
+      return {
+        background: "#0a1929",
+        border: "1px solid #93c5fd",
+        color: "#f5f5f5",
+       }
+    }else{
+      return {
+      }
+    }
+  }
+
   return (
     <div className="">
       <input type="checkbox" id="assign-lead-modal" className="modal-toggle" />
-      <div className="modal">
-        <div className="bg-neutral-100 w-4/6 max-w-3xl h-[75vh] overflow-y-scroll">
-          <div className="flex justify-between">
-            <h2 className="text-2xl font-smeibold mt-2 mb-4">
+      <div className={`modal`}>
+        <div className={`modal-box ${theme == "DARK" ? "dark" : "light"}`}>
+          {/* <div className="bg-neutral-100 w-4/6 max-w-3xl h-[75vh] overflow-y-scroll"> */}
+          <div className="flex justify-between items-center	">
+            <h2 className="text-2xl capitalize font-smeibold mt-2 mb-4">
               Assign This Lead To An User
             </h2>
             <label
@@ -87,7 +91,6 @@ const AssignModal = ({id, setAssignItem}) => {
               <FaRegTimesCircle />{" "}
             </label>
           </div>
-          {/* Create Marketer form start here  */}
           {loading && <ShowMsg>Lead loading...</ShowMsg>}
           {error && <ShowMsg>{error.message}</ShowMsg>}
           {!loading && !error && (
@@ -100,13 +103,13 @@ const AssignModal = ({id, setAssignItem}) => {
               <div className="mb-3 flex flex-col">
                 <select
                   name="userName"
+                  style={inputStyle()}
                   className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                 >
-                  <option value={"Select An User"} disabled>
-                    
-                  </option>
-                  {users.map((user=><option value={user.id}> {user.name} </option>))}
-                  
+                  <option></option>
+                  {users.map((user) => (
+                    <option key={user.id} value={user.id}> {user.name} </option>
+                  ))}
                 </select>
               </div>
 
@@ -125,6 +128,7 @@ const AssignModal = ({id, setAssignItem}) => {
 
           {/* Create Marketer form end here  */}
         </div>
+        {/* </div> */}
       </div>
     </div>
   );

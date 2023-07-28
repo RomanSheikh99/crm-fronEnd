@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import siteInfo from "../../../siteInfo";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../../store/reducers/leadsReducers";
 import { toast } from "react-toastify";
 
@@ -9,6 +9,8 @@ const ImportModal = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const dispatch = useDispatch();
+  const {theme} = useSelector(state => state.app)
+
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -31,17 +33,30 @@ const ImportModal = () => {
     setSelectedFile(null);
   };
 
+  const inputStyle = ()  => {
+    if(theme == "DARK"){
+      return {
+        background: "#0a1929",
+        border: "1px solid #93c5fd",
+        color: "#f5f5f5",
+       }
+    }else{
+      return {
+      }
+    }
+  }
+
   return (
     <div>
       <input type="checkbox" id="import_modal" className="modal-toggle" />
       <div className="modal">
-        <div className="modal-box">
-          <h1 className="text-2xl text-gray-600 mb-2">
+        <div className={`${theme == "DARK" ? "dark" : "light"} modal-box`}>
+          <h1 className="text-2xl mb-2">
             {" "}
             Drag and drop or browse for upload file{" "}
           </h1>
           <form onSubmit={handleSubmit} action="">
-            <label className="flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
+            <label className="flex justify-center w-full h-32 px-4 transition  border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
               <span className="flex items-center space-x-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -69,6 +84,7 @@ const ImportModal = () => {
               <input
                 onChange={handleFileChange}
                 type="file"
+                style={inputStyle()}
                 name="file_upload"
                 className="hidden"
               />

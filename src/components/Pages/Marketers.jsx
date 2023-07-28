@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import AdminLayout from "../Layout/AdminLayout";
+import AdsClickIcon from '@mui/icons-material/AdsClick';
 import DataTable from "../Shared/DataTable";
 import CreateMarkterModal from "../Shared/CreateMarkterModal";
 import { getUsers, setUser } from "../../store/reducers/usersReducers";
@@ -12,13 +12,21 @@ import siteInfo from "../../../siteInfo";
 import { toast } from "react-toastify";
 import EditMarkterModal from "../Shared/EditMarkterModal";
 import MiniDrawer from "../Layout/Layout";
+import DeleteMarketerModal from "../Shared/DeleteMarketerModal";
+import moment from "moment";
+import SetTargetModal from "../Shared/setTargetModal";
+import { NavLink } from "react-router-dom";
 
 const Marketers = () => {
   const { users, error, pending } = useSelector((state) => state.users);
-  // const [searchValue, setSearchValue] = useState("");
+  const { theme } = useSelector((state) => state.app);
+
   const [selectedID, setSelectedID] = useState(null);
+  const [deleteItem, setDeleteItem] = useState(null);
   const state = useSelector((state) => state.app);
   const dispatch = useDispatch();
+
+  
 
   const alert = {
     position: "top-center",
@@ -31,17 +39,10 @@ const Marketers = () => {
     theme: "colored",
   };
 
-  // const handleSearchValue = (e) => {
-  //   setSearchValue();
-  //   handleUsersSearch();
-  // };
-
   const handleUsersSearch = async (e) => {
     const value = e.target.value;
     try {
-      const res = await axios.get(
-        `${siteInfo.api}/users/search/${value}`
-      );
+      const res = await axios.get(`${siteInfo.api}/users/search/${value}`);
       res.data == null
         ? dispatch(getUsers(`/users`))
         : dispatch(setUser(res.data));
@@ -54,19 +55,8 @@ const Marketers = () => {
     dispatch(getUsers(`/users`));
   }, []);
 
-  const handleDelete = (data) => {
-    axios
-      .delete(`${siteInfo.api}/users/${data.id}`)
-      .then((res) => {
-        if (res.status == 200) {
-          const newArray = users.filter((user) => user != data);
-          dispatch(setUser(newArray));
-          toast.success("User Deleted", alert);
-        }
-      })
-      .catch((error) => {
-        toast.error("Something Is Wrong, Try Again Letter", alert);
-      });
+  const handleDltModal = () => {
+    setDeleteItem(null);
   };
 
   const columns = [
@@ -76,6 +66,11 @@ const Marketers = () => {
       width: 120,
       sortable: false,
       headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+      renderCell: ({ row }) => (
+        <NavLink to={`/marketers/${row.id}`}>
+          <h3 className="text-blue-600 capitalize">{row.name}</h3>
+        </NavLink>
+      ),
     },
     {
       field: "email",
@@ -98,6 +93,13 @@ const Marketers = () => {
       sortable: false,
       filterable: false,
       headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
+      renderCell: (params) => (
+        <div>
+          {moment(params.row.createdOn).format('D MMM YYYY')}
+        <br />
+        {moment(params.row.createdOn).format('hh:mm A')}
+        </div>
+      ),
     },
     {
       field: "action",
@@ -108,49 +110,73 @@ const Marketers = () => {
       headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
       renderCell: ({ row }) => (
         <div>
-          {/* <Button variant="text" color="info" onClick={() => handleDelete(id)}>
-            <FaTelegramPlane />
-          </Button> */}
+          <Button
+            onClick={() => setSelectedID(row.id)}
+            variant="text"
+            color="info"
+          >
+            <label htmlFor="set-marketers-target" className="cursor-pointer">
+              <AdsClickIcon />
+            </label>
+          </Button>
 
-          <Button onClick={() => setSelectedID(row.id)} variant="text" color="warning">
-            {/* <div> */}
-              <label htmlFor="edit-marketers-modal" className="cursor-pointer" >
-                <FaEdit />
-              </label> 
-           {/* </div> */}
+          <Button
+            onClick={() => setSelectedID(row.id)}
+            variant="text"
+            color="warning"
+          >
+            <label htmlFor="edit-marketers-modal" className="cursor-pointer">
+              <FaEdit />
+            </label>
           </Button>
           <Button
             variant="text"
             color="error"
-            onClick={() => handleDelete(row)}
+            onClick={() => setDeleteItem(row)}
           >
-            <FaTrashAlt />
+            <label htmlFor="delete-marketer-modal" className="cursor-pointer">
+              <FaTrashAlt />
+            </label>
           </Button>
         </div>
       ),
     },
   ];
 
+  const inputStyle = () => {
+    if (theme == "DARK") {
+      return {
+        background: "#0a1929",
+        border: "1px solid #93c5fd",
+        color: "#f5f5f5",
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
+      };
+    } else {
+      return {
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
+      };
+    }
+  };
+
   return (
     <MiniDrawer>
-      <section className={` ${state.theme == "DARK" ? 'dark': 'light'}`}>
-        <div className={`flex ${state.theme == "DARK" ? 'dark': 'light'} justify-between px-2 items-center py-3  `}>
+      <section className={` ${state.theme == "DARK" ? "dark" : "light"}`}>
+        <div
+          className={`flex ${
+            state.theme == "DARK" ? "dark" : "light"
+          } justify-between px-2 items-center py-3  `}
+        >
           <div className="flex">
             <input
               type="search"
-              // onChange={handleSearchValue}
+              style={inputStyle()}
               onChange={handleUsersSearch}
               placeholder=" Search marketer "
               className="input input-bordered rounded  w-96 h-10"
             />
-            {/* <button
-              type="submit"
-              onClick={handleUsersSearch}
-              className="  px-2 py-0  h-10 border border-blue-300 hover:bg-blue-300 hover:text-white text-blue-500 cursor-pointer  rounded-tr-md rounded-br-md "
-            >
-              {" "}
-              Search{" "}
-            </button> */}
+          
           </div>
 
           <div>
@@ -161,7 +187,31 @@ const Marketers = () => {
               {" "}
               Create New Marketer{" "}
             </label>
-            {selectedID && <EditMarkterModal id={selectedID} onClose={()=> setSelectedID(null)}> </EditMarkterModal>}
+            {selectedID && (
+              <EditMarkterModal
+                id={selectedID}
+                onClose={() => setSelectedID(null)}
+              >
+                {" "}
+              </EditMarkterModal>
+            )}
+            {selectedID && (
+              <SetTargetModal
+                id={selectedID}
+                onClose={() => setSelectedID(null)}
+              >
+                {" "}
+              </SetTargetModal>
+            )}
+            {deleteItem && (
+              <DeleteMarketerModal
+                data={deleteItem}
+                handleDltModal={handleDltModal}
+                onClose={() => setDeleteItem(null)}
+              >
+                {" "}
+              </DeleteMarketerModal>
+            )}
             <CreateMarkterModal> </CreateMarkterModal>
           </div>
         </div>

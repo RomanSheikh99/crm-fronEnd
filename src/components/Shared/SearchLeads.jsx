@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import siteInfo from "../../../siteInfo";
 import { fetchData, setLead } from "../../store/reducers/leadsReducers";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FilterLeadsModal from "./FilterLeadsModal";
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { useLocation } from "react-router";
@@ -12,6 +12,7 @@ const SearchLeads = ({ path }) => {
   const {pathname} = useLocation();
   const dispatch = useDispatch();
   const [filterModal,setFilterModal] = useState(null)
+  const { theme } = useSelector((state) => state.app);
 
   const handleSearch = async (e) => {
     const value = e.target.value;
@@ -27,9 +28,30 @@ const SearchLeads = ({ path }) => {
     }
   };
 
+ const inputStyle = ()  => {
+  if(theme == "DARK"){
+    return {
+      background: "#0a1929",
+      border: "1px solid #93c5fd",
+      color: "#f5f5f5",
+      borderTopRightRadius: 0,
+      borderBottomRightRadius: 0,
+     }
+  }else{
+    return {
+      borderTopRightRadius: 0,
+      borderBottomRightRadius: 0,
+
+
+    }
+  }
+  
+}
+
   return (
     <div className="flex">
       <input
+      style={inputStyle()}
         type="search"
         onChange={handleSearch}
         placeholder=" Search Leads "

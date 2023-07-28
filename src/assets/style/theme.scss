@@ -14,8 +14,8 @@ $dark-primary-color: #333;
 }
 
 .dark {
-  background-color: #0a1929;
-  color: #f3f6f9;
+  background-color: #0a1929 !important;
+  color: #f3f6f9 !important;
   border: none;
 }
 
@@ -37,3 +37,8 @@ $dark-primary-color: #333;
   border: none;
 }
 
+.darkInput{
+  background: "#0a1929";
+  border: "1px solid #93c5fd";
+  color: "#f5f5f5";
+}

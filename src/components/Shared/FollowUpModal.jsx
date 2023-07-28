@@ -7,27 +7,28 @@ import { toast } from "react-toastify";
 import ShowMsg from "./ShowMsg";
 import { setLead, updateLead } from "../../store/reducers/leadsReducers";
 import { useLocation } from "react-router";
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { Button } from "@mui/material";
 
-const FollowUpModal = ({id, setFollowUp}) => {
+const FollowUpModal = ({ id, setFollowUp }) => {
   const { showLeads, leadsError, pending } = useSelector(
     (state) => state.leads
   );
-  const { currentUser } = useSelector(
-    (state) => state.users
-  );
+  const { currentUser } = useSelector((state) => state.users);
   const dispatch = useDispatch();
-  const {pathname} = useLocation()
+  const { pathname } = useLocation();
   const [lead, setLead] = useState([]);
   const [loading, setLoading] = useState(false);
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState(null);
   const [fav, setFav] = useState(null);
   const [follow, setFollow] = useState(null);
+  const { theme } = useSelector((state) => state.app);
+
+  const [dis, setDis] = useState("");
 
   const alert = {
     position: "top-center",
@@ -41,161 +42,184 @@ const FollowUpModal = ({id, setFollowUp}) => {
   };
 
   useEffect(() => {
-    setError(null)
-    setLoading(true)
+    setError(null);
+    setLoading(true);
     axios
       .get(`${siteInfo.api}/leads/${id}`)
       .then((res) => {
-        const lead = res.data
+        const lead = res.data;
         setLead(lead);
-        setLoading(false)
-        if(lead.followerID == currentUser.id){
-          setFollow(true)
+        setLoading(false);
+        if (lead.followerID == currentUser.id) {
+          setFollow(true);
         }
-        if(lead.favOf == currentUser.id){
-          setFav(true)
+        if (lead.favOf == currentUser.id) {
+          setFav(true);
         }
       })
       .catch((error) => {
-        setError(error)
-        setLoading(false)
+        setError(error);
+        setLoading(false);
       });
+    setDis("");
   }, [id]);
 
   const handleFav = async () => {
-    if(fav){
+    if (fav) {
       await axios
-      .patch(`${siteInfo.api}/leads/setFavOf/${id}`, {id: null})
-      .then((res) => {
-        setLead(res.data);
-        setFav(false)
-      })
-      .catch((error) => {
-        toast.error("Something Wrong, Try Again");
-      });
-    }else{
-      if(lead.followerID == currentUser.id){
-        await axios
-        .patch(`${siteInfo.api}/leads/setFavOf/${id}`, {id: currentUser.id})
+        .patch(`${siteInfo.api}/leads/setFavOf/${id}`, { id: null })
         .then((res) => {
           setLead(res.data);
-          setFav(true)
+          setFav(false);
         })
         .catch((error) => {
           toast.error("Something Wrong, Try Again");
         });
+    } else {
+      if (lead.followerID == currentUser.id) {
+        await axios
+          .patch(`${siteInfo.api}/leads/setFavOf/${id}`, { id: currentUser.id })
+          .then((res) => {
+            setLead(res.data);
+            setFav(true);
+          })
+          .catch((error) => {
+            toast.error("Something Wrong, Try Again");
+          });
+      } else {
+        toast.error("YOU HAVE TO FOLLOW FIRST", alert);
       }
-      else{
-        toast.error("YOU HAVE TO FOLLOW FIRST", alert)
-      }
-     
     }
-  }
+  };
 
   const handleFollow = async () => {
-    if(follow){
-      toast.error("You Are Already Follwing This Lead")
-    }else{
+    if (follow) {
+      toast.error("You Are Already Follwing This Lead");
+    } else {
       await axios
-    .patch(`${siteInfo.api}/leads/setFollower/${id}`, currentUser)
-    .then((res) => {
-      setLead(res.data);
-      setFollow(true)
-    })
-    .catch((error) => {
-      toast.error("Something Wrong, Try Again", alert);
-    });
+        .patch(`${siteInfo.api}/leads/setFollower/${id}`, currentUser)
+        .then((res) => {
+          setLead(res.data);
+          setFollow(true);
+        })
+        .catch((error) => {
+          toast.error("Something Wrong, Try Again", alert);
+        });
     }
-  }
+  };
 
-  const addRecord= async (data)=>{
+  const addRecord = async (data) => {
     await axios
       .patch(`${siteInfo.api}/users/addRecords`, data)
       .then((res) => {
-        console.log(res.data)
       })
       .catch((error) => {
-        toast.error('errror')
-        console.log(error)
+        toast.error("errror");
       });
-  }
+  };
 
   const handleAddRemark = async (e) => {
     e.preventDefault();
-    setUpdating(true);
+    if (lead.followerID == currentUser.id) {
+      setUpdating(true);
 
-    const data = {
-      status: e.target.status.value,
-      possibility:  e.target.possibility.value,
-      nextPoke:  e.target.nfu.value,
-      follower: currentUser.name,
-      followerId: currentUser.id,
-      desc:  e.target.desc.value
+      const data = {
+        status: e.target.status.value,
+        possibility: e.target.possibility.value,
+        nextPoke: e.target.nfu.value,
+        follower: currentUser.name,
+        followerId: currentUser.id,
+        desc: e.target.desc.value,
+      };
+
+      await axios
+        .patch(`${siteInfo.api}/leads/addRemarks/${id}`, data)
+        .then((res) => {
+          toast.success("Remark Added", alert);
+          setFollowUp(null);
+          const remarks = res.data.remarks;
+          addRecord(remarks[0]);
+          setLead(res.data);
+          dispatch(updateLead(res.data))
+        })
+        .catch((error) => {
+          toast.error("Something Wrong, Try Again");
+          setFollowUp(null);
+        });
+      setUpdating(false);
+    } else {
+      toast.error("YOU HAVE TO FOLLOW FIRST", alert);
     }
-
-    await axios
-      .patch(`${siteInfo.api}/leads/addRemarks/${id}`, data)
-      .then((res) => {
-        toast.success("Remark Added", alert);
-        setFollowUp(null)
-        const remarks = res.data.remarks;
-        const len = res.data.remarks.length -1;
-        addRecord(remarks[len])
-      })
-      .catch((error) => {
-        toast.error("Something Wrong, Try Again");
-        setFollowUp(null);
-      });
-
-    setUpdating(false);
   };
 
   const handleStatus = async (e) => {
+    setDis(e.target.value);
     await axios
-    .patch(`${siteInfo.api}/leads/setStatus/${id}`, {status: e.target.value})
-    .then((res) => {
-      setLead(res.data);
-    })
-    .catch((error) => {
-      toast.error("Something Wrong, Try Again", alert);
-    });
-  }
+      .patch(`${siteInfo.api}/leads/setStatus/${id}`, {
+        status: e.target.value,
+      })
+      .then((res) => {
+        setLead(res.data);
+      })
+      .catch((error) => {
+        toast.error("Something Wrong, Try Again", alert);
+      });
+  };
 
   const handlePossibility = async (e) => {
     await axios
-    .patch(`${siteInfo.api}/leads/setPosibility/${id}`, {possibility: e.target.value})
-    .then((res) => {
-      setLead(res.data);
-    })
-    .catch((error) => {
-      toast.error("Something Wrong, Try Again", alert);
-    });
-  }
+      .patch(`${siteInfo.api}/leads/setPosibility/${id}`, {
+        possibility: e.target.value,
+      })
+      .then((res) => {
+        setLead(res.data);
+      })
+      .catch((error) => {
+        toast.error("Something Wrong, Try Again", alert);
+      });
+  };
 
   const handleNextFollowUp = async (e) => {
     await axios
-    .patch(`${siteInfo.api}/leads/setNextFollowUp/${id}`, {nfup: e.target.value})
-    .then((res) => {
-      setLead(res.data);
-    })
-    .catch((error) => {
-      toast.error("Something Wrong, Try Again", alert);
-    });
-  }
+      .patch(`${siteInfo.api}/leads/setNextFollowUp/${id}`, {
+        nfup: e.target.value,
+      })
+      .then((res) => {
+        setLead(res.data);
+      })
+      .catch((error) => {
+        toast.error("Something Wrong, Try Again", alert);
+      });
+  };
 
+  const inputStyle = () => {
+    if (theme == "DARK") {
+      return {
+        background: "#0a1929",
+        border: "1px solid #93c5fd",
+        color: "#f5f5f5",
+      };
+    } else {
+      return {};
+    }
+  };
 
   return (
     <div className="">
-      <input type="checkbox" id="assign-lead-modal" className="modal-toggle" />
+      <input type="checkbox" id="folloUP-modal" className="modal-toggle" />
       <div className="modal">
-        <div className="bg-neutral-100 w-4/6 max-w-3xl h-[75vh] overflow-y-scroll">
-          <div className="flex justify-between">
-            <h2 className="text-2xl font-smeibold mt-2 mb-4">
+        <div
+          className={`${
+            theme == "DARK" ? "dark" : "light"
+          } modal-box w-4/6 max-w-3xl h-[75vh] overflow-y-scroll`}
+        >
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-smeibold ">
               Add Remarks {lead.leadsNo}
             </h2>
             <label
-              htmlFor="assign-lead-modal"
-              className="cursor-pointer text-slate-700 text-3xl hover:text-red-500 rounded-md"
+              htmlFor="folloUP-modal"
+              className="cursor-pointer  text-3xl hover:text-red-500 rounded-md"
             >
               {" "}
               <FaRegTimesCircle />{" "}
@@ -204,11 +228,13 @@ const FollowUpModal = ({id, setFollowUp}) => {
           {/* Create Marketer form start here  */}
           {loading && <ShowMsg>Lead loading...</ShowMsg>}
           {error && <ShowMsg>{error.message}</ShowMsg>}
-          {lead?.followerId != null && lead?.followerId != currentUser.id && <ShowMsg>Someone Folloing This Lead</ShowMsg>}
+          {lead?.followerId != null && lead?.followerId != currentUser.id && (
+            <ShowMsg>Someone Folloing This Lead</ShowMsg>
+          )}
           {!loading && !error && (
             <form
               onSubmit={handleAddRemark}
-              className=" w-full mx-auto px-4 py-6 mb-10  items-start  flex flex-col rounded-b-md font-semibold "
+              className=" w-full mx-auto  items-start  flex flex-col rounded-b-md font-semibold "
             >
               {/* ================================================== */}
 
@@ -216,18 +242,15 @@ const FollowUpModal = ({id, setFollowUp}) => {
                 <div className=" flex  justify-between">
                   {/* Left side of form  */}
                   <div className="mb-3 flex flex-col">
-                    <label className="text-lg font-medium text-gray-700">
-                      status
-                    </label>
+                    <label className="text-lg font-medium">Status</label>
                     <select
+                      style={inputStyle()}
                       name="status"
-                      defaultValue={lead?.status}
                       onChange={handleStatus}
-                      className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
+                      required
+                      className="select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                     >
-                      <option disabled>
-                        {" "}
-                      </option>
+                      <option> </option>
                       <option> Gatekeeper </option>
                       <option> Contacted </option>
                       <option> Follow-up </option>
@@ -240,18 +263,15 @@ const FollowUpModal = ({id, setFollowUp}) => {
                     </select>
                   </div>
                   <div className="mb-3 flex flex-col">
-                    <label className="text-lg font-medium text-gray-700">
-                      Possibility
-                    </label>
+                    <label className="text-lg font-medium">Possibility</label>
                     <select
+                      style={inputStyle()}
                       name="possibility"
-                      defaultValue={lead?.possibility}
                       onChange={handlePossibility}
+                      required
                       className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                     >
-                      <option disabled>
-                        {" "}
-                      </option>
+                      <option></option>
                       <option> High </option>
                       <option> Medium </option>
                       <option> Low </option>
@@ -263,25 +283,32 @@ const FollowUpModal = ({id, setFollowUp}) => {
                 <div className=" flex  justify-between">
                   {/* Left side of form  */}
                   <div className="mb-3 flex flex-col">
-                    <label className="text-lg font-medium text-gray-700">
+                    <label className="text-lg font-medium">
                       Next Follow Up
                     </label>
-                    <input name="nfu" onChange={handleNextFollowUp} type="date" />
+                    <input
+                      style={inputStyle()}
+                      className="rounded border-2 py-2 px-4"
+                      onChange={handleNextFollowUp}
+                      name="nfu"
+                      type="date"
+                    />
                   </div>
-                  <div className="mb-3 flex flex-col">
-                   <button>change followUp date</button>
-                  </div>
+                  {/* <div className="mb-3 flex flex-col">
+                    <button>change followUp date</button>
+                  </div> */}
 
                   {/* Right side of form end   */}
                 </div>
                 <div className="w-full mx-auto">
-                  <label className="text-lg font-medium text-gray-700">
-                    {" "}
-                    Description{" "}
-                  </label>
+                  <label className="text-lg font-medium"> Description </label>
                   <textarea
+                    style={inputStyle()}
                     placeholder=" "
                     name="desc"
+                    required
+                    defaultValue={dis}
+                    onChange={(e) => setDis(e.target.value)}
                     className="textarea textarea-bordered textarea-lg w-full mt-2  "
                   ></textarea>
                 </div>
@@ -291,12 +318,14 @@ const FollowUpModal = ({id, setFollowUp}) => {
 
               {/* ============================================ */}
 
-              <div style={{
-                display: "flex",
-                justifyContent: "end",
-                gap: "20px",
-                width: "100%",
-              }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "end",
+                  gap: "20px",
+                  width: "100%",
+                }}
+              >
                 <input
                   value={updating ? "Updating..." : "Add Remark"}
                   disabled={updating}
@@ -304,10 +333,10 @@ const FollowUpModal = ({id, setFollowUp}) => {
                   className="  bg-sky-600 border-none text-neutral-100 px-4 py-2 rounded-md hover:bg-sky-800 cursor-pointer"
                 />
                 <Button onClick={handleFollow}>
-                {follow ? <CheckBoxIcon/> :<AddBoxOutlinedIcon/>}
+                  {follow ? <CheckBoxIcon /> : <AddBoxOutlinedIcon />}
                 </Button>
                 <Button color="error" onClick={handleFav}>
-                {fav ? <FavoriteIcon/> :<FavoriteBorderIcon/>}
+                  {fav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                 </Button>
               </div>
             </form>

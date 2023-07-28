@@ -1,19 +1,34 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import AssignmentReturnedIcon from "@mui/icons-material/AssignmentReturned";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import ReplyIcon from "@mui/icons-material/Reply";
 import { Button } from "@mui/material";
 import axios from "axios";
 import siteInfo from "../../../siteInfo";
 import ShowMsg from "../Shared/ShowMsg";
+import moment from "moment";
+import AssignModal from "../Shared/AssignModal";
+import EditLeadModal from "../Shared/EditLeadModal";
+import AddToTrashModal from "../Shared/AddToTrashModal";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import FollowUpModal from "../Shared/FollowUpModal";
 
 const LeadPage = () => {
+  const { showLeads, leadsError, pending } = useSelector(
+    (state) => state.leads
+  );
   const { id } = useParams();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [lead, setLead] = useState("");
+  const [ID, setID] = useState(null);
+  const navigate = useNavigate();
+
+  const { currentUser } = useSelector((state) => state.users);
 
   useEffect(() => {
     setError(null);
@@ -28,7 +43,38 @@ const LeadPage = () => {
         setError(error);
         setLoading(false);
       });
-  }, [id]);
+  }, [id, showLeads]);
+
+  const style = {
+    background: "#5f9ea069",
+    borderRadius: "4px",
+  };
+
+  const handleTrashModal = () => {
+    setID(null);
+    navigate(-1);
+  };
+
+  const handleDltRemark = async (remark) => {
+    try {
+      await axios
+        .patch(`${siteInfo.api}/leads/deleteRemark/${lead.id}`, remark)
+        .then((res) => {
+          setLead(res.data);
+          toast.success("Remark Deleted");
+        });
+    } catch (error) {
+      toast.error(error.massage);
+    }
+  };
+
+  const isShow = () => {
+    return currentUser.id == lead.followerID || currentUser.role == "ADMIN";
+  };
+
+  const isFollow = () => {
+    return lead.followerID == currentUser.id || lead.followerID == null;
+  };
 
   return (
     <Layout>
@@ -39,138 +85,182 @@ const LeadPage = () => {
           <div className="flex justify-between my-4 px-3 gap-4">
             <h2 className="font-bold my-3">Showing Lead {lead.leadsNo}</h2>
             <div>
-              <Button
-                variant="text"
-                color="info"
-                // onClick={() => setAssignItem(row.id)}
-              >
-                <label htmlFor="assign-lead-modal" className="cursor-pointer">
-                  <AssignmentReturnedIcon />
-                </label>
-              </Button>
-              <Button
-                // onClick={() => setEditItem(row.id)}
-                variant="text"
-                color="warning"
-              >
-                <label htmlFor="edit-lead-modal" className="cursor-pointer">
-                  <EditCalendarIcon />
-                </label>
-              </Button>
-              <Button variant="text" color="error">
-                <label htmlFor="addToTrashModal" className="cursor-pointer">
-                  <DeleteIcon />
-                </label>
-              </Button>
+              {isFollow() && (
+                <Button
+                  variant="text"
+                  color="info"
+                  onClick={() => setID(lead.id)}
+                >
+                  <label htmlFor="folloUP-modal" className="cursor-pointer">
+                    <ReplyIcon />
+                  </label>
+                </Button>
+              )}
+              {currentUser?.role == "ADMIN" && (
+                <Button
+                  variant="text"
+                  color="info"
+                  onClick={() => setID(lead.id)}
+                >
+                  <label htmlFor="assign-lead-modal" className="cursor-pointer">
+                    <AssignmentReturnedIcon />
+                  </label>
+                </Button>
+              )}
+              {isShow() && (
+                <Button
+                  onClick={() => setID(lead.id)}
+                  variant="text"
+                  color="warning"
+                >
+                  <label htmlFor="edit-lead-modal" className="cursor-pointer">
+                    <EditCalendarIcon />
+                  </label>
+                </Button>
+              )}
+              {isShow() && (
+                <Button
+                  onClick={() => setID(lead.id)}
+                  variant="text"
+                  color="error"
+                >
+                  <label htmlFor="addToTrashModal" className="cursor-pointer">
+                    <DeleteIcon />
+                  </label>
+                </Button>
+              )}
             </div>
           </div>
+
+          {ID && <FollowUpModal id={ID} setFollowUp={setID} />}
+          {ID && <AssignModal id={ID} setAssignItem={setID}></AssignModal>}
+          {ID && <EditLeadModal id={ID}></EditLeadModal>}
+          {ID && (
+            <AddToTrashModal
+              item={lead}
+              handleTrashModal={handleTrashModal}
+            ></AddToTrashModal>
+          )}
+
           <div className="flex justify-between px-3 gap-4">
-            <div className=" border border-2 w-full">
-              <div className="flex justify-between">
-                <h3 className="text-center w-full border p-2 font-black">
+            <div className=" capitalize border-1 w-full">
+              <div style={style} className="flex justify-between">
+                <h3 className="text-center w-full capitalize p-2 font-black">
                   Company :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">
+                <h3 className="text-center w-full capitalize p-2 ">
                   {lead.company}
                 </h3>
               </div>
               <div className="flex justify-between">
-                <h3 className="text-center w-full border p-2 font-black">
+                <h3 className="text-center w-full capitalize p-2 font-black">
                   Website :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">
-                  {lead.website}
+                <h3 className="text-center w-full lowercase  p-2 ">
+                  <a
+                    className="text-blue-400"
+                    target="_blank"
+                    href={lead.website}
+                  >
+                    {lead.website}
+                  </a>
                 </h3>
               </div>
-              <div className="flex justify-between">
-                <h3 className="text-center w-full border p-2 font-black">
+              <div style={style} className="flex justify-between">
+                <h3 className="text-center w-full capitalize p-2 font-black">
                   Country :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">
+                <h3 className="text-center w-full capitalize p-2 ">
                   {lead.country}
                 </h3>
               </div>
               <div className="flex justify-between">
-                <h3 className="text-center w-full border p-2 font-black">
+                <h3 className="text-center w-full capitalize p-2 font-black">
                   Catagory :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">
+                <h3 className="text-center w-full capitalize p-2 ">
                   {lead.category}
                 </h3>
               </div>
-              <div className="flex justify-between">
-                <h3 className="text-center w-full border p-2 font-black">
-                  Posibility :
+              <div style={style} className="flex justify-between">
+                <h3 className="text-center w-full capitalize p-2 font-black">
+                  possibility :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">
-                  {lead.posibility}
+                <h3 className="text-center w-full capitalize p-2 ">
+                  {lead.possibility}
                 </h3>
               </div>
               <div className="flex justify-between">
-                <h3 className="text-center w-full border p-2 font-black">
+                <h3 className="text-center w-full capitalize p-2 font-black">
                   Created :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">
-                  {lead.created}
+                <h3 className="text-center w-full  p-2 ">
+                  {moment(lead.createdOn).format("D MMM YYYY hh:mm A")}
                 </h3>
               </div>
-              <div className="flex justify-between">
-                <h3 className="text-center w-full border p-2 font-black">
+              <div style={style} className="flex justify-between">
+                <h3 className="text-center w-full capitalize p-2 font-black">
                   Minor :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">{lead.minor}</h3>
+                <h3 className="text-center w-full capitalize p-2 ">
+                  {lead.minor}
+                </h3>
               </div>
             </div>
-            <div className=" border border-2 w-full">
-              <div className="flex justify-between">
-                <h3 className="text-center w-full border p-2 font-black">
+            <div className=" capitalize border-1 w-full">
+              <div style={style} className="flex justify-between">
+                <h3 className="text-center w-full capitalize p-2 font-black">
                   Contact Parson :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">
+                <h3 className="text-center w-full capitalize p-2 ">
                   {lead.contactParson}
                 </h3>
               </div>
               <div className="flex justify-between">
-                <h3 className="text-center w-full border p-2 font-black">
+                <h3 className="text-center w-full capitalize p-2 font-black">
                   Designation :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">
+                <h3 className="text-center w-full capitalize p-2 ">
                   {lead.designation}
                 </h3>
               </div>
-              <div className="flex justify-between">
-                <h3 className="text-center w-full border p-2 font-black">
+              <div style={style} className="flex justify-between">
+                <h3 className="text-center w-full capitalize p-2 font-black">
                   Phone :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">{lead.phone}</h3>
+                <h3 className="text-center w-full capitalize p-2 ">
+                  {lead.phone}
+                </h3>
               </div>
               <div className="flex justify-between">
-                <h3 className="text-center w-full border p-2 font-black">
+                <h3 className="text-center w-full capitalize p-2 font-black">
                   Email :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">{lead.email}</h3>
+                <h3 className="text-center lowercase w-full p-2 ">
+                  {lead.email}
+                </h3>
               </div>
-              <div className="flex justify-between">
-                <h3 className="text-center w-full border p-2 font-black">
+              <div style={style} className="flex justify-between">
+                <h3 className="text-center w-full capitalize p-2 font-black">
                   Status :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">
+                <h3 className="text-center w-full capitalize p-2 ">
                   {lead.status}
                 </h3>
               </div>
               <div className="flex justify-between">
-                <h3 className="text-center w-full border p-2 font-black">
+                <h3 className="text-center w-full capitalize p-2 font-black">
                   Updated :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">
-                  {lead?.updated}
+                <h3 className="text-center w-full capitalize p-2 ">
+                  {moment(lead.updated).format("D MMM YYYY hh:mm A")}
                 </h3>
               </div>
-              <div className="flex justify-between">
-                <h3 className="text-center w-full border p-2 font-black">
+              <div style={style} className="flex justify-between">
+                <h3 className="text-center w-full capitalize p-2 font-black">
                   Follower :
                 </h3>
-                <h3 className="text-center w-full border p-2 ">
+                <h3 className="text-center w-full capitalize p-2 ">
                   {lead.followerName}
                 </h3>
               </div>
@@ -187,26 +277,49 @@ const LeadPage = () => {
               All followup remarks show hare
             </h2>
             {lead?.remarks?.map((remark) => (
-              <div key={remark.id} className="flex justify-between border-b-2 py-3">
-                <div>
-                  <h3>
-                    <span className="font-bold">Status : </span>
-                    {remark.status}
-                  </h3>{" "}
-                  <h3>
-                    <span className="font-bold">Next Poke : </span>
-                    {remark.nextPoke}
-                  </h3>{" "}
-                </div>
-                <div>
-                  <p>{remark.desc}</p>
-                </div>
-                <div>
-                  <h3>
-                    <span className="font-bold">Follower : </span>
-                    {remark.follower}
-                  </h3>{" "}
-                  <span>{remark.date}</span>
+              <div key={remark.id}>
+                {/* {currentUser.role == "ADMIN" && <div
+                  style={{
+                    position: "relative",
+                    marginBottom: "28px",
+                  }}
+                  className="w-full"
+                >
+                  
+                </div>} */}
+                <div className="flex justify-between items-center px-3 border-b-2 py-3">
+                  <div>
+                    <h3>
+                      <span className="font-bold">Status : </span>
+                      {remark.status}
+                    </h3>{" "}
+                    <h3>
+                      <span className="font-bold">Next Poke : </span>
+                      {moment(remark.nextPoke).format("DD MMM YYYY")}
+                    </h3>{" "}
+                  </div>
+                  <div className="text-center">
+                    <p>{remark.desc}</p>
+                    {currentUser?.role == "ADMIN" && <Button
+                      onClick={()=> handleDltRemark(remark)}
+                      sx={{
+                        background: "#2d505a"
+                      }}
+                      variant="text"
+                      color="error"
+                    >
+                      <DeleteIcon /> Delete Remark
+                    </Button>}
+                  </div>
+                  <div className="">
+                    <h3 className="capitalize ">
+                      <span className="font-bold capitalize">Follower : </span>
+                      {remark.follower}
+                    </h3>{" "}
+                    <span>
+                      {moment(remark.date).format("DD MMM YYYY h:m A")}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -218,4 +331,3 @@ const LeadPage = () => {
 };
 
 export default LeadPage;
-// onClick={() => setDltItem(row)}

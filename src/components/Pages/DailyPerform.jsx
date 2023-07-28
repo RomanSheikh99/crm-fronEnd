@@ -1,49 +1,81 @@
 import React from "react";
-import Dashboard from "./Dashboard";
+import { useSelector } from "react-redux";
 
 const DailyPerform = () => {
-  return (
-    <Dashboard>
-      <div className="w-full mx-auto mt-5 ">
-        <table className=" w-full  ">
-          {/* head*/}
-          <thead className="text-center">
-            <tr className=" h-16">
-              <th className="bg-blue-500 capitalize  font-bold "> date</th>
-              <th className="bg-blue-500 capitalize  font-bold "> call target</th>
-              <th className="bg-blue-500 capitalize  font-bold "> call attempt </th>
-              <th className="bg-blue-500 capitalize  font-bold "> call achieve</th>
-              <th className="bg-blue-500 capitalize  font-bold "> high lead </th>
-              <th className="bg-blue-500 capitalize  font-bold "> new test </th>
-              <th className="bg-blue-500 capitalize  font-bold ">
-                stisfactory <br /> achievement
-              </th>
-              <th className="bg-blue-500 capitalize  font-bold ">best effort</th>
-              <th className="bg-blue-500 capitalize  font-bold ">first login</th>
-              <th className="bg-blue-500 capitalize  font-bold ">last update</th>
-            </tr>
-          </thead>
-          <tbody className=" text-center  ">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <tr className=" h-20">
-                <td className="border">12 may 2023</td>
-                <td className="border"> 5 </td>
-                <td className="border">4</td>
-                <td className="border"> 5</td>
-                <td className="border"> 3 </td>
-                <td className="border"> 7 </td>
-                <td className="border">3%</td>
-                <td className="border">85%</td>
-                <td className="border">11:30am</td>
-                <td className="border">2:37pm</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+  const { currentUser } = useSelector((state) => state.users);
 
-        <div className="w-full h-2 bg-gray-400"> </div>
-      </div>
-    </Dashboard>
+  const getEfficiency = (achieve, target) => {
+    const result = (achieve / target) * 100;
+    if (result == "Infinity") {
+      return 0;
+    }
+    return result ? result.toFixed(2) : 0;
+  };
+
+  return (
+    // <Dashboard>
+    <div className="w-full mx-auto mt-5 ">
+      <table className=" w-full  ">
+        {/* head*/}
+        <thead className="text-center">
+          <tr className=" border h-16">
+            <th className="bg-blue-500 capitalize  font-bold "> date</th>
+            <th className="bg-blue-500 capitalize  font-bold "> call target</th>
+            <th className="bg-blue-500 capitalize  font-bold ">
+              {" "}
+              call attempt{" "}
+            </th>
+            <th className="bg-blue-500 capitalize  font-bold ">
+              {" "}
+              call achieve
+            </th>
+            <th className="bg-blue-500 capitalize  font-bold "> high lead </th>
+            <th className="bg-blue-500 capitalize  font-bold "> new test </th>
+            <th className="bg-blue-500 capitalize  font-bold ">
+              stisfactory <br /> achievement
+            </th>
+            <th className="bg-blue-500 capitalize  font-bold ">best effort</th>
+            <th className="bg-blue-500 capitalize  font-bold ">first login</th>
+            <th className="bg-blue-500 capitalize  font-bold ">last update</th>
+          </tr>
+        </thead>
+        <tbody className=" text-center  ">
+          {currentUser?.daily?.map((day) => (
+            <tr key={day.title} className=" h-20">
+              <td className="border">{day.title}</td>
+              <td className="border"> {day.callTarget} </td>
+              <td className="border">{day.bit.length}</td>
+              <td className="border">
+                {" "}
+                {day.bit.filter((d) => d.status != "Not available").length}
+              </td>
+              <td className="border">
+                {" "}
+                {day.bit.filter((d) => d.possibility == "High").length}{" "}
+              </td>
+              <td className="border">
+                {" "}
+                {day.bit.filter((d) => d.status == "Contacted").length}{" "}
+              </td>
+              <td className="border">
+                {getEfficiency(
+                  day.bit.filter((d) => d.status != "Not available").length,
+                  day.callTarget
+                )}
+                %
+              </td>
+              <td className="border">{
+              getEfficiency(day.bit.filter((d) => d.status == "Contacted").length,day.callTarget)}%</td>
+              <td className="border">{day.firstLogin}</td>
+              <td className="border">{day.lastUpdate}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div className="w-full h-2 bg-gray-400"> </div>
+    </div>
+    // </Dashboard>
   );
 };
 
