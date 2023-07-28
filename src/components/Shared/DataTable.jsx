@@ -20,7 +20,7 @@ const DataTable = ({ columns, data }) => {
 
   useEffect(() => {
     const storedPageSize = JSON.parse(localStorage.getItem("pageSize"));
-    if (storedPageSize.pageSize) {
+    if (storedPageSize?.pageSize) {
       setPaginationModel({
         pageSize: Number(storedPageSize.pageSize),
         page: Number(storedPageSize.page),
