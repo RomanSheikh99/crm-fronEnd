@@ -4,6 +4,8 @@ import siteInfo from "../../../siteInfo";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { addLead } from "../../store/reducers/leadsReducers";
+import categories from "../../assets/category";
+import countries from "../../assets/country";
 
 const CreateNewLeadModal = () => {
   const dispatch = useDispatch();
@@ -89,9 +91,7 @@ const CreateNewLeadModal = () => {
     }
   }
 
-  const countries = [
-    "Germany" , "Spain", "Austria", "Luxembourg", "Belgium", "Canada", "Denmark", "France","Italy", "Netherlands","Poland", "Sweden", "Switzerland","UK", "Norway", "Finland", "Ireland", "USA (EST)", "USA (CST)"," USA(PDT)",  " USA (CDT)", " Czech Republic", "Greece", "Romania", "Portugal", "Malta", "Bulgaria", "Cyprus", "Russia", "Brazil","Mexico", "Estonia", "Turkey", "Australia"," New Zealand","Singapore", "Malaysia", "Indonesia", "Hungary", "South Africa", "Slovenia", "Others"
-  ]
+  
 
   const inputStyle = ()  => {
     if(theme == "DARK"){
@@ -174,9 +174,9 @@ const CreateNewLeadModal = () => {
                     >
                       <option>
                       </option>
-                      {countries.map((country, i) => (
-                        <option key={i}> {country} </option>
-                      ))}
+                      {countries.map(country=>{
+                        return <option className="capitalize" key={country}> {country} </option>
+                      })}
                     </select>
                   </div>
                   <div className="mb-3 flex flex-col">
@@ -194,16 +194,9 @@ const CreateNewLeadModal = () => {
                     >
                       <option>
                       </option>
-                      <option> VFX </option>
-                      <option> 2D animation </option>
-                      <option> Motion Graphics </option>
-                      <option> 3D animation/ CGI </option>
-                      <option> Individual </option>
-                      <option> Agency </option>
-                      <option> video editing </option>
-                      <option> AR/VR </option>
-                      <option> Brand </option>
-                      <option> Others </option>
+                      {categories.map(category=>{
+                        return <option className="capitalize" key={category}> {category} </option>
+                      })}
                     </select>
                   </div>
                   {/* Left side of form end  */}

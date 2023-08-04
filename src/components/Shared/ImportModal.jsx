@@ -9,11 +9,11 @@ const ImportModal = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const dispatch = useDispatch();
-  const {theme} = useSelector(state => state.app)
-
+  const { theme } = useSelector((state) => state.app);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
+    console.log(event.target.files[0]);
   };
 
   const handleSubmit = (e) => {
@@ -21,6 +21,7 @@ const ImportModal = () => {
     setIsUploading(true);
     const formData = new FormData();
     formData.append("file", selectedFile);
+    console.log(`${siteInfo.api}/leads/import`, formData)
     axios
       .post(`${siteInfo.api}/leads/import`, formData)
       .then((res) => {
@@ -33,18 +34,17 @@ const ImportModal = () => {
     setSelectedFile(null);
   };
 
-  const inputStyle = ()  => {
-    if(theme == "DARK"){
+  const inputStyle = () => {
+    if (theme == "DARK") {
       return {
         background: "#0a1929",
         border: "1px solid #93c5fd",
         color: "#f5f5f5",
-       }
-    }else{
-      return {
-      }
+      };
+    } else {
+      return {};
     }
-  }
+  };
 
   return (
     <div>
@@ -102,7 +102,7 @@ const ImportModal = () => {
                 type="submit"
               >
                 {" "}
-                {isUploading ? "Uploading...": "Upload"}{" "}
+                {isUploading ? "Uploading..." : "Upload"}{" "}
               </button>
             </div>
           </form>

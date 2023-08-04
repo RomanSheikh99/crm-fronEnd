@@ -4,24 +4,14 @@ import siteInfo from "../../../siteInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { setLead } from "../../store/reducers/leadsReducers";
 import { toast } from "react-toastify";
+import categories from "../../assets/category";
+import countries from "../../assets/country";
 
 const FilterLeadsModal = ({setFilterModal}) => {
-  const [countries, setCountries] = useState([]);
   const dispatch = useDispatch()
   const {theme} = useSelector(state => state.app)
 
-  useEffect(() => {
-    const FetchCountry = async () => {
-      try {
-        const response = await fetch("../../../country.json");
-        const data = await response.json();
-        setCountries(data.countries);
-      } catch (error) {
-        toast.error("Failed to fetch country data");
-      }
-    };
-    FetchCountry();
-  }, []);
+
 
   const handleFilter = async (e) => {
     e.preventDefault();
@@ -109,16 +99,9 @@ const FilterLeadsModal = ({setFilterModal}) => {
                     >
                       <option defaultValue={" "} >
                       </option>
-                      <option> VFX </option>
-                      <option> 2D animation </option>
-                      <option> Motion Graphics </option>
-                      <option> 3D animation/ CGI </option>
-                      <option> Individual </option>
-                      <option> Agency </option>
-                      <option> video editing </option>
-                      <option> AR/VR </option>
-                      <option> Brand </option>
-                      <option> Others </option>
+                      {categories.map(category=>{
+                        return <option className="capitalize" key={category}> {category} </option>
+                      })}
                     </select>
                   </div>
                 </div>
@@ -153,9 +136,14 @@ const FilterLeadsModal = ({setFilterModal}) => {
                     >
                       <option>
                       </option>
-                      {countries.map((country, i) => (
-                        <option key={i}> {country} </option>
-                      ))}
+                      {countries.map((country) => {
+                          return (
+                            <option className="capitalize" key={country}>
+                              {" "}
+                              {country}{" "}
+                            </option>
+                          );
+                        })}
                     </select>
                   </div>
                 </div>

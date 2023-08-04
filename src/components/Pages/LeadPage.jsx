@@ -73,7 +73,10 @@ const LeadPage = () => {
   };
 
   const isFollow = () => {
-    return lead.followerID == currentUser.id || lead.followerID == null;
+    if(currentUser.role != "ADMIN"){
+      return lead.followerID == currentUser.id || lead.followerID == null;
+    }
+    
   };
 
   return (
@@ -176,7 +179,7 @@ const LeadPage = () => {
               </div>
               <div className="flex justify-between">
                 <h3 className="text-center w-full capitalize p-2 font-black">
-                  Catagory :
+                  Category :
                 </h3>
                 <h3 className="text-center w-full capitalize p-2 ">
                   {lead.category}

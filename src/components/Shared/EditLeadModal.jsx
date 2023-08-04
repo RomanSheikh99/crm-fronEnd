@@ -6,6 +6,8 @@ import siteInfo from "../../../siteInfo";
 import { toast } from "react-toastify";
 import ShowMsg from "./ShowMsg";
 import { updateLead } from "../../store/reducers/leadsReducers";
+import categories from "../../assets/category";
+import countries from "../../assets/country";
 
 const EditLeadModal = ({ id }) => {
   const dispatch = useDispatch();
@@ -82,63 +84,17 @@ const EditLeadModal = ({ id }) => {
     setUpdating(false);
   };
 
-  const countris = [
-    "Germany",
-    "Spain",
-    "Austria",
-    "Luxembourg",
-    "Belgium",
-    "Canada",
-    "Denmark",
-    "France",
-    "Italy",
-    "Netherlands",
-    "Poland",
-    "Sweden",
-    "Switzerland",
-    "UK",
-    "Norway",
-    "Finland",
-    "Ireland",
-    "USA (EST)",
-    "USA (CST)",
-    " USA(PDT)",
-    " USA (CDT)",
-    " Czech Republic",
-    "Greece",
-    "Romania",
-    "Portugal",
-    "Malta",
-    "Bulgaria",
-    "Cyprus",
-    "Russia",
-    "Brazil",
-    "Mexico",
-    "Estonia",
-    "Turkey",
-    "Australia",
-    " New Zealand",
-    "Singapore",
-    "Malaysia",
-    "Indonesia",
-    "Hungary",
-    "South Africa",
-    "Slovenia",
-    "Others",
-  ];
-
-  const inputStyle = ()  => {
-    if(theme == "DARK"){
+  const inputStyle = () => {
+    if (theme == "DARK") {
       return {
         background: "#0a1929",
         border: "1px solid #93c5fd",
         color: "#f5f5f5",
-       }
-    }else{
-      return {
-      }
+      };
+    } else {
+      return {};
     }
-  }
+  };
 
   return (
     <div className="">
@@ -176,10 +132,7 @@ const EditLeadModal = ({ id }) => {
                   {/* Left side of form  */}
                   <div>
                     <div className="mb-3">
-                      <label
-                        htmlFor="name"
-                        className="text-lg font-medium "
-                      >
+                      <label htmlFor="name" className="text-lg font-medium ">
                         Company
                       </label>
                       <input
@@ -191,9 +144,7 @@ const EditLeadModal = ({ id }) => {
                       />
                     </div>
                     <div className="mb-3">
-                      <label className="text-lg font-medium ">
-                        Website
-                      </label>
+                      <label className="text-lg font-medium ">Website</label>
                       <input
                         type="url"
                         name="website"
@@ -204,9 +155,7 @@ const EditLeadModal = ({ id }) => {
                     </div>
 
                     <div className="mb-3 flex flex-col">
-                      <label className="text-lg font-medium ">
-                        Country
-                      </label>
+                      <label className="text-lg font-medium ">Country</label>
                       <select
                         name="country"
                         style={inputStyle()}
@@ -214,16 +163,18 @@ const EditLeadModal = ({ id }) => {
                         className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                       >
                         <option></option>
-                        {countris.map((country, i) => (
-                          <option key={i}> {country} </option>
-                        ))}
+                        {countries.map((country) => {
+                          return (
+                            <option className="capitalize" key={country}>
+                              {" "}
+                              {country}{" "}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     <div className="mb-3 flex flex-col">
-                      <label
-                        htmlFor="email"
-                        className="text-lg font-medium "
-                      >
+                      <label htmlFor="email" className="text-lg font-medium ">
                         Category
                       </label>
                       <select
@@ -233,16 +184,14 @@ const EditLeadModal = ({ id }) => {
                         className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                       >
                         <option></option>
-                        <option> VFX </option>
-                        <option> 2D animation </option>
-                        <option> Motion Graphics </option>
-                        <option> 3D animation/ CGI </option>
-                        <option> Individual </option>
-                        <option> Agency </option>
-                        <option> video editing </option>
-                        <option> AR/VR </option>
-                        <option> Brand </option>
-                        <option> Others </option>
+                        {categories.map((category) => {
+                          return (
+                            <option className="capitalize" key={category}>
+                              {" "}
+                              {category}{" "}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     {/* Left side of form end  */}
@@ -277,9 +226,7 @@ const EditLeadModal = ({ id }) => {
                     </div>
 
                     <div className="mb-3">
-                      <label className="text-lg font-medium ">
-                        Phone
-                      </label>
+                      <label className="text-lg font-medium ">Phone</label>
                       <input
                         type="number"
                         style={inputStyle()}
@@ -289,10 +236,7 @@ const EditLeadModal = ({ id }) => {
                       />
                     </div>
                     <div className="mb-3">
-                      <label
-                        htmlFor="email"
-                        className="text-lg font-medium "
-                      >
+                      <label htmlFor="email" className="text-lg font-medium ">
                         Email
                       </label>
                       <input
