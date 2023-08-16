@@ -1,29 +1,40 @@
 import axios from "axios";
 import React, { useState } from "react";
 import siteInfo from "../../../siteInfo";
-import { fetchData, setLead } from "../../store/reducers/leadsReducers";
+import { fetchData, setLead, setTotalCount } from "../../store/reducers/leadsReducers";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import FilterLeadsModal from "./FilterLeadsModal";
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { useLocation } from "react-router";
+import { action } from "../../store/store";
 
 const SearchLeads = ({ path }) => {
   const {pathname} = useLocation();
   const dispatch = useDispatch();
   const [filterModal,setFilterModal] = useState(null)
-  const { theme } = useSelector((state) => state.app);
+  const { theme, pageModel} = useSelector((state) => state.app);
 
+  const { setPageModel, setIsSearch,setSearchValue,setSearchPath  } = action;
   const handleSearch = async (e) => {
     const value = e.target.value;
     try {
+      
       if (value) {
-        const res = await axios.get(`${siteInfo.api + path + "/" + value}`);
-        dispatch(setLead(res.data));
+        dispatch(setPageModel({page: 0, pageSize: pageModel.pageSize}));
+        dispatch(setIsSearch(true));
+        dispatch(setSearchValue(value));
+        dispatch(setSearchPath(path));
+        const res = await axios.get(`${siteInfo.api + path + "/" + value}`, {params: {pageModel}});
+        dispatch(setTotalCount(res.data.totalCount))
+        dispatch(setLead(res.data.data));
       } else {
-        dispatch(fetchData(`${path}`));
+        dispatch(fetchData({ path: path, pageModel: pageModel }));
+        dispatch(setIsSearch(false));
+
       }
     } catch (error) {
+      console.log(error)
       toast.error("An error occurred while fetching search results");
     }
   };

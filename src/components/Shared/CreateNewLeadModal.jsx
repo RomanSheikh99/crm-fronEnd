@@ -211,7 +211,6 @@ const CreateNewLeadModal = () => {
                     <input
                       type="text"
                       style={inputStyle()}
-                      required
                       name="contactParson"
                       className="mt-1 block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
@@ -224,7 +223,6 @@ const CreateNewLeadModal = () => {
                     <input
                       type="text"
                       style={inputStyle()}
-                      required
                       name="designation"
                       className="mt-1 block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
@@ -238,7 +236,6 @@ const CreateNewLeadModal = () => {
                     style={inputStyle()}
                       type="number"
                       onChange={(e)=> handleValueCheck(e,'phone')}
-                      required
                       name="phone"
                       className=" block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
@@ -254,7 +251,6 @@ const CreateNewLeadModal = () => {
                       type="email"
                       style={inputStyle()}
                       onChange={(e)=> handleValueCheck(e,'email')}
-                      required
                       name="email"
                       className=" block w-72 h-10 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />

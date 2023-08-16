@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button, MenuItem, Select } from "@mui/material";
-import { fetchData, setLead, updateLead } from "../../store/reducers/leadsReducers";
+import { Button } from "@mui/material";
+import {
+  fetchData,
+  setLead,
+  updateLead,
+} from "../../store/reducers/leadsReducers";
 import DataTable from "../Shared/DataTable";
 import ShowMsg from "../Shared/ShowMsg";
 import LeadsHeader from "../Shared/LeadsHeader";
@@ -23,6 +26,8 @@ const Leads = () => {
     (state) => state.leads
   );
   const { currentUser } = useSelector((state) => state.users);
+  const state = useSelector((state) => state.app);
+  const dispatch = useDispatch();
 
   const { pathname } = useLocation();
   const api = `/leads${pathname}`;
@@ -31,13 +36,12 @@ const Leads = () => {
   const [assignItem, setAssignItem] = useState(null);
   const [followUp, setFollowUp] = useState(null);
   const [users, setUsers] = useState([]);
-  const [changeAssign, setChangeAssign] = useState(null);
-
-  const state = useSelector((state) => state.app);
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchData(api));
+
+      dispatch(fetchData({ path: api, pageModel: state.pageModel }));
+    
+
     axios
       .get(`${siteInfo.api}/users`)
       .then((res) => {
@@ -46,8 +50,7 @@ const Leads = () => {
       .catch((error) => {
         toast.error(error.massage);
       });
-  }, [pathname]);
-
+  }, [ pathname]);
 
   const alert = {
     position: "top-center",
@@ -60,7 +63,7 @@ const Leads = () => {
     theme: "colored",
   };
 
-  const handleAssign = async (e,id) => {
+  const handleAssign = async (e, id) => {
     const user = users.find((user) => user.id == e.target.value);
 
     await axios
@@ -83,16 +86,14 @@ const Leads = () => {
     setDltItem(null);
   };
 
-
   const isShow = (row) => {
     return currentUser.id == row.followerID || currentUser.role == "ADMIN";
-  }
+  };
   const isFollow = (row) => {
-    if(currentUser?.role != "ADMIN"){
-      return row.followerID == currentUser.id || row.followerID == null
+    if (currentUser?.role != "ADMIN") {
+      return row.followerID == currentUser.id || row.followerID == null;
     }
-    
-  }
+  };
 
   const getColumns = () => {
     const baseColumns = [
@@ -110,7 +111,7 @@ const Leads = () => {
         sortable: false,
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
         renderCell: ({ row }) => (
-          <NavLink to={`/leads/${row.id}`}>
+          <NavLink to={`/leads/${row.leadsNo}`}>
             <h3 className="text-blue-600">{row.company}</h3>
           </NavLink>
         ),
@@ -130,7 +131,13 @@ const Leads = () => {
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
         renderCell: ({ row }) => (
           <div className="p-3">
-            <a target="_blank" href={row.website} className="cursor-pointer text-blue-500">{row.website}</a>
+            <a
+              target="_blank"
+              href={"https://" + row.website}
+              className="cursor-pointer text-blue-500"
+            >
+              {row.website}
+            </a>
           </div>
         ),
       },
@@ -162,19 +169,33 @@ const Leads = () => {
         renderCell: ({ row }) => (
           <div className="pe-3" style={{ width: "100%", border: "none" }}>
             {/* {row.assignToID && changeAssign != row.id && <h3 onClick={()=> setChangeAssign(row.id)} className="capitalize cursor-pointer">{row.assignToName}</h3>} */}
-           { <select onChange={(e)=>handleAssign(e,row.id)} className="bg-transparent	outline-0	h-10 capitalize">
-              <option className={`${state.theme == "DARK" ? "dark" : "light"} capitalize`} defaultValue={row.assignToName}>{row.assignToName}</option>
-              {users.map((user) => (
+            {
+              <select
+                onChange={(e) => handleAssign(e, row.id)}
+                className="bg-transparent	outline-0	h-10 capitalize"
+              >
                 <option
-                  className={`${state.theme == "DARK" ? "dark" : "light"} capitalize`}
-                  value={user.id}
-                  key={user.id}
+                  className={`${
+                    state.theme == "DARK" ? "dark" : "light"
+                  } capitalize`}
+                  defaultValue={row.assignToName}
                 >
-                  {" "}
-                  {user.name}{" "}
+                  {row.assignToName}
                 </option>
-              ))}
-            </select>}
+                {users.map((user) => (
+                  <option
+                    className={`${
+                      state.theme == "DARK" ? "dark" : "light"
+                    } capitalize`}
+                    value={user.id}
+                    key={user.id}
+                  >
+                    {" "}
+                    {user.name}{" "}
+                  </option>
+                ))}
+              </select>
+            }
           </div>
         ),
       },
@@ -217,9 +238,9 @@ const Leads = () => {
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
         renderCell: (params) => (
           <div>
-            {moment(params.row.createdOn).format('D MMM YYYY')}
-          <br />
-          {moment(params.row.createdOn).format('hh:mm A')}
+            {moment(params.row.createdOn).format("D MMM YYYY")}
+            <br />
+            {moment(params.row.createdOn).format("hh:mm A")}
           </div>
         ),
       },
@@ -269,49 +290,49 @@ const Leads = () => {
               </Button>
             )}
             {isShow(row) && (
-                <Button
-                  onClick={() => setEditItem(row.id)}
-                  variant="text"
-                  color="warning"
-                >
-                  <label htmlFor="edit-lead-modal" className="cursor-pointer">
-                    <EditCalendarIcon />
-                  </label>
-                </Button>
-              )}
+              <Button
+                onClick={() => setEditItem(row.id)}
+                variant="text"
+                color="warning"
+              >
+                <label htmlFor="edit-lead-modal" className="cursor-pointer">
+                  <EditCalendarIcon />
+                </label>
+              </Button>
+            )}
             {isShow(row) && (
-                <Button
-                  variant="text"
-                  color="error"
-                  onClick={() => setDltItem(row)}
-                >
-                  <label htmlFor="addToTrashModal" className="cursor-pointer">
-                    <DeleteIcon />
-                  </label>
-                </Button>
-              )}
+              <Button
+                variant="text"
+                color="error"
+                onClick={() => setDltItem(row)}
+              >
+                <label htmlFor="addToTrashModal" className="cursor-pointer">
+                  <DeleteIcon />
+                </label>
+              </Button>
+            )}
           </div>
         ),
       },
     ];
 
-    if(currentUser?.role != "ADMIN"){
+    if (currentUser?.role != "ADMIN") {
       return baseColumns.filter(
         (column) =>
           // column.field !== "nextFollowUp" &&
           // column.field !== "possibility" &&
           // column.field !== "follower" &&
-          column.field !== "assignToName" 
+          column.field !== "assignToName"
       );
     }
     if (pathname === "/freshLeads") {
-      if(currentUser?.role != "ADMIN"){
+      if (currentUser?.role != "ADMIN") {
         return baseColumns.filter(
           (column) =>
             column.field !== "nextFollowUp" &&
             column.field !== "possibility" &&
             column.field !== "follower" &&
-            column.field !== "assignToName" 
+            column.field !== "assignToName"
         );
       }
       return baseColumns.filter(
@@ -326,6 +347,7 @@ const Leads = () => {
   };
 
   const columns = getColumns();
+
 
   return (
     <Layout>
@@ -342,16 +364,17 @@ const Leads = () => {
         path={api}
       ></LeadsHeader>
 
-      {/* <Box> */}
-        {pending && <ShowMsg>data is loading...</ShowMsg>}
-        {leadsError && <ShowMsg color={"yellow"}>{leadsError}</ShowMsg>}
-        {showLeads?.length > 0 && (
-          <DataTable columns={columns} data={showLeads}></DataTable>
-        )}
-        {!pending && !leadsError && !showLeads?.length && (
-          <ShowMsg>data not found</ShowMsg>
-        )}
-      {/* </Box> */}
+      {pending && <ShowMsg>data is loading...</ShowMsg>}
+      {leadsError && <ShowMsg color={"yellow"}>{leadsError}</ShowMsg>}
+      {showLeads?.length > 0 && (
+        <DataTable
+          api={api}
+          columns={columns}
+        ></DataTable>
+      )}
+      {!pending && !leadsError && !showLeads?.length && (
+        <ShowMsg>data not found</ShowMsg>
+      )}
     </Layout>
   );
 };

@@ -94,7 +94,15 @@ const FollowUpModal = ({ id, setFollowUp }) => {
 
   const handleFollow = async () => {
     if (follow) {
-      toast.error("You Are Already Follwing This Lead");
+      await axios
+        .patch(`${siteInfo.api}/leads/setFollower/${id}`, { id: null })
+        .then((res) => {
+          setLead(res.data);
+          setFollow(false);
+        })
+        .catch((error) => {
+          toast.error("Something Wrong, Try Again");
+        });
     } else {
       await axios
         .patch(`${siteInfo.api}/leads/setFollower/${id}`, currentUser)
@@ -153,7 +161,13 @@ const FollowUpModal = ({ id, setFollowUp }) => {
   };
 
   const handleStatus = async (e) => {
-    setDis(e.target.value);
+    const val = e.target.value;
+    if(val == "Not available" || val == "Contacted" || val == "Gatekeeper" || val == "Closed"){
+      setDis(val);
+    }else{
+      setDis("");
+    }
+    
     await axios
       .patch(`${siteInfo.api}/leads/setStatus/${id}`, {
         status: e.target.value,
@@ -215,7 +229,7 @@ const FollowUpModal = ({ id, setFollowUp }) => {
         >
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-smeibold ">
-              Add Remarks {lead.leadsNo}
+              Add Remarks {lead?.leadsNo}
             </h2>
             <label
               htmlFor="folloUP-modal"
@@ -268,7 +282,6 @@ const FollowUpModal = ({ id, setFollowUp }) => {
                       style={inputStyle()}
                       name="possibility"
                       onChange={handlePossibility}
-                      required
                       className=" select-bordered  border border-gray-300  w-72 ml-0 mr-2 h-10 rounded-md"
                     >
                       <option></option>

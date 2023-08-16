@@ -1,0 +1,45 @@
+[33mb8345e3[m[33m ([m[1;36mHEAD -> [m[1;32mdemo[m[33m, [m[1;31morigin/demo[m[33m)[m category name changes
+[33mb5b3b67[m done the code
+[33m7c047b9[m done the code
+[33m2c3d9f0[m add api
+[33mb5ac731[m main
+[33mf734156[m add more code
+[33mb9aabae[m add api
+[33m1f965a5[m add demo
+[33m5c7dcaa[m[33m ([m[1;31morigin/theme[m[33m)[m pull
+[33m760a2ec[m onk kichu korchi
+[33m454e41e[m[33m ([m[1;31morigin/ashraf[m[33m)[m added all button color with same background
+[33mc729b41[m customize create-new-lead modal  responsive and overflow scroll
+[33m6980cbc[m pull some code
+[33mb2f7880[m add datagrid
+[33mf9cb65c[m fix hight width create new lead
+[33mc58b487[m added user profile section and react photo viewer
+[33m61491c4[m added import modal with drag and drop file design
+[33mcd12a6c[m added brand logo
+[33me6ca7ee[m added not found page with animation
+[33m6a177cf[m added quarterly,monthly,daily perform table and perform my followup route create
+[33mb104b6c[m added filter modal country name by json
+[33mf62f903[m added country name json and show country name in select country name  option
+[33m0807d30[m pull code
+[33m8d6c463[m add data tabel
+[33m409be90[m added performance create new lead modal  with form
+[33mbcbded5[m update create  new lead
+[33m6c8bcbf[m added create new lead form with modal
+[33meae1572[m added filter Leads with form and modal , added Logout modal
+[33mef0e1ad[m added admin profile sectiona and logout with modal
+[33mf9cf2c1[m pull new branch
+[33m2ef1420[m add theme
+[33mc467c66[m added create marketer modal with form
+[33mae805f9[m  fix datatable scrollable
+[33ma9dcb00[m added marketer data table and fix color and added edit, delete,follow up icon
+[33m40e1da2[m Merge branch 'roman' of https://github.com/RomanSheikh99/crm-fronEnd into theme
+[33mbb958b6[m create new branch
+[33m1c1474e[m  fix dashboard width, remove username, header and performance header dynamic , aded admin profile route
+[33m2f80c27[m[33m ([m[1;31morigin/roman[m[33m)[m modify the code
+[33mb374399[m[33m ([m[1;32mroman[m[33m)[m update branch roman
+[33m0e39792[m add login system
+[33m3596757[m create new branch
+[33mf59e0b0[m[33m ([m[1;31morigin/ashrafull[m[33m)[m added Dashboard Layout, Layout design  with nav option ,added login page Layout
+[33m032fa21[m added daisyui , followupData.json,Show followup data by json file
+[33m2e7eeff[m delete table.jsx and tableHeader.jsx
+[33m1439b40[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m, [m[1;32ma[m[33m)[m first commit

@@ -112,7 +112,8 @@ const Layout = ({ children }) => {
             noWrap
             component="div"
           >
-            VIVIAN
+            VIVIAN<span style={{fontSize: '36px'}}>S</span>tudios
+            {/* VIVIAN <br /> <span style={{marginLeft: '12px'}}>Studios</span> */}
           </Typography>
         </DrawerHeader>
         <Divider />

@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import siteInfo from "../../../siteInfo";
 
-export const fetchData = createAsyncThunk("leads/fetchData", async (path) => {
-  const res = await axios.get(`${siteInfo.api + path}`);
+export const fetchData = createAsyncThunk("leads/fetchData", async ({path, pageModel}) => {
+  const res = await axios.get(`${siteInfo.api + path}`, {params: {pageModel}});
   return res.data;
 });
 
@@ -13,6 +13,7 @@ const leads = createSlice({
     pending: false,
     leadsError: null,
     showLeads: [],
+    totalCount: 0,
   },
   reducers: {
     addLead: (state,action)=>{
@@ -20,6 +21,9 @@ const leads = createSlice({
   },
   setLead: (state,action)=>{
     state.showLeads = action.payload
+  },
+  setTotalCount: (state,action)=>{
+    state.totalCount = action.payload
   },
   updateLead: (state,action)=>{
     const index = state.showLeads.findIndex((lead) => lead.id == action.payload.id)
@@ -40,12 +44,13 @@ const leads = createSlice({
     builder.addCase(fetchData.fulfilled, (state, action) => {
       state.pending = false;
       state.leadsError = null;
-      state.showLeads = action.payload;
+      state.totalCount = action.payload.totalCount;
+      state.showLeads = action.payload.data;
     });
   },
 });
 
-export const { addLead, setLead , updateLead } = leads.actions;
+export const { addLead, setLead , updateLead , setTotalCount } = leads.actions;
 
 
 export default leads.reducer;

@@ -29,7 +29,7 @@ const CRMAppBar = ({AppBar, handleDrawer, open}) => {
             noWrap
             component="div"
           >
-            VIVIAN
+            VIVIAN<span style={{fontSize: '36px'}}>S</span>tudios
           </Typography>
          <Settings />
         </Toolbar>

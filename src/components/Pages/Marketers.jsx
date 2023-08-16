@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import AdsClickIcon from '@mui/icons-material/AdsClick';
-import DataTable from "../Shared/DataTable";
 import CreateMarkterModal from "../Shared/CreateMarkterModal";
 import { getUsers, setUser } from "../../store/reducers/usersReducers";
 import ShowMsg from "../Shared/ShowMsg";
@@ -16,6 +15,7 @@ import DeleteMarketerModal from "../Shared/DeleteMarketerModal";
 import moment from "moment";
 import SetTargetModal from "../Shared/setTargetModal";
 import { NavLink } from "react-router-dom";
+import UserDataTable from "../Shared/UserDataTable";
 
 const Marketers = () => {
   const { users, error, pending } = useSelector((state) => state.users);
@@ -220,7 +220,7 @@ const Marketers = () => {
         {pending && <ShowMsg>data is loading...</ShowMsg>}
         {error && <ShowMsg color={"yellow"}>{error}</ShowMsg>}
         {users?.length > 0 && (
-          <DataTable columns={columns} data={users}></DataTable>
+          <UserDataTable columns={columns} data={users}></UserDataTable>
         )}
         {!pending && !error && !users?.length && (
           <ShowMsg>data not found</ShowMsg>

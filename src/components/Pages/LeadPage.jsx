@@ -34,11 +34,15 @@ const LeadPage = () => {
     setError(null);
     setLoading(true);
     axios
-      .get(`${siteInfo.api}/leads/${id}`)
+      .get(`${siteInfo.api}/leads/getOneLeadByLeadsNo/${id}`)
       .then((res) => {
-        setLead(res.data);
-        setLoading(false);
-      })
+        if(res.data){
+          setLead(res.data);
+          setLoading(false);
+        }else{
+          setError(ture);
+          setLoading(false);
+      }})
       .catch((error) => {
         setError(error);
         setLoading(false);
@@ -68,6 +72,27 @@ const LeadPage = () => {
     }
   };
 
+  const handleChangeLead = (e) => {
+    navigate(`/leads/${e.target.value}`)
+    // setError(null);
+    // setLoading(true);
+    // axios
+    //   .get(`${siteInfo.api}/leads/getOneLeadByLeadsNo/${e.target.value}`)
+    //   .then((res) => {
+    //     if(res?.data?.id){
+    //       setLead(res.data);
+    //       setLoading(false);
+    //     }else{
+    //       setError({massage: "Lead Not Found"});
+    //       setLoading(false);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     setError(error);
+    //     setLoading(false);
+    //   });
+  }
+
   const isShow = () => {
     return currentUser.id == lead.followerID || currentUser.role == "ADMIN";
   };
@@ -79,14 +104,28 @@ const LeadPage = () => {
     
   };
 
+  const leadNoStyle = {
+    marginLeft: "20px",
+    border: "none",
+    background: "#bdd7d8",
+    textAlign: "center",
+    fontSize: "26px",
+    padding: "10px",
+    outline: "none",
+    borderRadius: "10px",
+    letterSpacing: "4px",
+  }
+
   return (
     <Layout>
       {loading && <ShowMsg>Lead loading...</ShowMsg>}
-      {error && <ShowMsg>{error.message}</ShowMsg>}
+      {error && <ShowMsg><h1>Lead Not Found</h1></ShowMsg>}
       {!loading && !error && (
         <div>
           <div className="flex justify-between my-4 px-3 gap-4">
-            <h2 className="font-bold my-3">Showing Lead {lead.leadsNo}</h2>
+            <h2 className="font-bold my-3">Showing Lead 
+            <input style={leadNoStyle} onChange={handleChangeLead} defaultValue={lead.leadsNo} type="number" />
+            </h2>
             <div>
               {isFollow() && (
                 <Button
@@ -163,7 +202,7 @@ const LeadPage = () => {
                   <a
                     className="text-blue-400"
                     target="_blank"
-                    href={lead.website}
+                    href={"https://" + lead.website}
                   >
                     {lead.website}
                   </a>
@@ -277,7 +316,7 @@ const LeadPage = () => {
           </div>
           <div className="px-3 my-4">
             <h2 className="text-center font-bold mb-4 border-b-2 py-3">
-              All followup remarks show hare
+            All follow-up remarks show here
             </h2>
             {lead?.remarks?.map((remark) => (
               <div key={remark.id}>

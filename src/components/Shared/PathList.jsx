@@ -8,7 +8,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import BallotIcon from "@mui/icons-material/Ballot";
@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 const PathList = ({ open }) => {
   const { currentUser } = useSelector((state) => state.users);
   const { theme } = useSelector((state) => state.app);
+  const {pathname}= useLocation()
 
   const pathList = [
     {
@@ -83,6 +84,25 @@ const PathList = ({ open }) => {
     //   admin: false,
     // },
   ];
+
+
+  const activeStyle = (path) => {
+    const style = {
+      
+    }
+
+    if(path == pathname){
+      console.log("i am ok")
+      if(theme == "DARK"){
+        style.background = '#000';
+        style.color = '#fff';
+      }else{
+        style.background = '#ddd';
+      }
+    }
+    return style;
+  }
+
   return (
     <Box
       sx={{
@@ -96,8 +116,9 @@ const PathList = ({ open }) => {
           if (currentUser.role == "ADMIN") {
             return (
               link.admin && (
-                <ListItem key={index} disablePadding sx={{ display: "block" }}>
-                  <NavLink to={link.path}>
+                <ListItem key={index} disablePadding sx={{display: "block"}}>
+                 <span style={activeStyle(link.path)} id="crm-list-item">
+                 <NavLink  to={link.path}>
                     <ListItemButton
                       sx={{
                         minHeight: 48,
@@ -121,6 +142,7 @@ const PathList = ({ open }) => {
                       />
                     </ListItemButton>
                   </NavLink>
+                 </span>
                 </ListItem>
               )
             );

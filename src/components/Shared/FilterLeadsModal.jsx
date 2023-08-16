@@ -2,16 +2,17 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import siteInfo from "../../../siteInfo";
 import { useDispatch, useSelector } from "react-redux";
-import { setLead } from "../../store/reducers/leadsReducers";
+import { setLead, setTotalCount } from "../../store/reducers/leadsReducers";
 import { toast } from "react-toastify";
 import categories from "../../assets/category";
 import countries from "../../assets/country";
+import { action } from "../../store/store";
 
 const FilterLeadsModal = ({setFilterModal}) => {
   const dispatch = useDispatch()
-  const {theme} = useSelector(state => state.app)
+  const {theme, pageModel} = useSelector(state => state.app)
 
-
+  const { setPageModel, setIsFilter,setFilterParams } = action;
 
   const handleFilter = async (e) => {
     e.preventDefault();
@@ -24,10 +25,14 @@ const FilterLeadsModal = ({setFilterModal}) => {
       minor: e.target.minor.value,
     };
     try {
-      const res = await axios.get(`${siteInfo.api}/leads/filterAllLeads`, {
-        params,
-      });
-      dispatch(setLead(res.data));
+      dispatch(setPageModel({page: 0, pageSize: pageModel.pageSize}));
+      dispatch(setIsFilter(true));
+      dispatch(setFilterParams(params));
+      
+      const res = await axios.get(`${siteInfo.api}/leads/filterAllLeads`, {params: {pageModel: pageModel, params: params}});
+      dispatch(setTotalCount(res.data.totalCount));
+      // dispatch(setTotalCount(res.data.totalCount));
+      dispatch(setLead(res.data.data));
       setFilterModal(null)
     } catch (error) {
       toast.error(error.message);
