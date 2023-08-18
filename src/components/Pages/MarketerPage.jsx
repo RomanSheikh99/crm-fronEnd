@@ -15,6 +15,9 @@ const MarketerPage = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState("");
+  const [userDailyRprt, setUserDailyRprt] = useState([]);
+  const [userMonthlyRprt, setUserMonthlyRprt] = useState([]);
+  const [userQuarterlyRprt, setUserQuarterlyRprt] = useState([]);
   const [show, setShow] = useState("Quarterly");
   const { theme } = useSelector((state) => state.app);
 
@@ -24,6 +27,27 @@ const MarketerPage = () => {
     axios
       .get(`${siteInfo.api}/users/${id}`)
       .then((res) => {
+        if (res.data?.daily?.length) {
+          if(res.data?.daily?.length > 1){
+            setUserDailyRprt(res.data?.daily?.reverse());
+          }else{
+            setUserDailyRprt(res.data?.daily);
+          }
+        }
+        if (res.data?.quarter?.length) {
+          if(res.data?.quarter?.length > 1){
+            setUserQuarterlyRprt(res.data?.quarter?.reverse());
+          }else{
+            setUserQuarterlyRprt(res.data?.quarter);
+          }
+        }
+        if (res.data?.month?.length) {
+          if(res.data?.month?.length > 1){
+            setUserMonthlyRprt(res.data?.month?.reverse());
+          }else{
+            setUserMonthlyRprt(res.data?.month);
+          }
+        }
         setUser(res.data);
         setLoading(false);
       })
@@ -65,7 +89,7 @@ const MarketerPage = () => {
         <div>
           <div className="flex justify-between items-center	 my-4 px-3 gap-4">
             <h2 className="font-bold my-3 text-3xl bolt capitalize">
-              Showing datails of {user.name}
+              Showing details of {user.name}
             </h2>
             <div className="flex">
               <h4
@@ -93,35 +117,8 @@ const MarketerPage = () => {
                 Daily
               </h4>
             </div>
-            {/* <div>
-              <Button
-                variant="text"
-                color="info"
-                // onClick={() => setAssignItem(row.id)}
-              >
-                <label htmlFor="assign-lead-modal" className="cursor-pointer">
-                  <AssignmentReturnedIcon />
-                </label>
-              </Button>
-              <Button
-                // onClick={() => setEditItem(row.id)}
-                variant="text"
-                color="warning"
-              >
-                <label htmlFor="edit-lead-modal" className="cursor-pointer">
-                  <EditCalendarIcon />
-                </label>
-              </Button>
-              <Button variant="text" color="error">
-                <label htmlFor="addToTrashModal" className="cursor-pointer">
-                  <DeleteIcon />
-                </label>
-              </Button>
-            </div> */}
           </div>
           <div>
-            
-
             {/* ======================================================================================================================================================================================================================================================================================================================================= */}
 
             {show === "Quarterly" && (
@@ -130,10 +127,7 @@ const MarketerPage = () => {
                   {/* head*/}
                   <thead className="text-center">
                     <tr className="h-12 font-extrabold">
-                      <th className="bg-blue-500   ">
-                        {" "}
-                        Quarter
-                      </th>
+                      <th className="bg-blue-500   "> Quarter</th>
                       <th className="bg-blue-500   font-extrabold ">
                         {" "}
                         Criteria
@@ -156,7 +150,7 @@ const MarketerPage = () => {
                       </th>
                     </tr>
                   </thead>
-                  {user?.quarter?.reverse().map((q) => (
+                  {userQuarterlyRprt.map((q) => (
                     <tbody
                       key={q.title}
                       style={{ borderBottom: "4px solid #666" }}
@@ -185,10 +179,7 @@ const MarketerPage = () => {
                       </tr>
                       <tr className="     font-semibold">
                         <th className="text-blue-500 ">{q.title}</th>
-                        <td className="  border border-slate-300">
-                          {" "}
-                          Archieve{" "}
-                        </td>
+                        <td className="  border border-slate-300"> Achieve </td>
                         <td className="  border border-slate-300">
                           {q.bit.filter((b) => b.status == "Contacted").length}
                         </td>
@@ -204,9 +195,7 @@ const MarketerPage = () => {
                       </tr>
                       {/* row 3 */}
                       <tr className="">
-                        <th className="  rounded-none">
-                          {" "}
-                        </th>
+                        <th className="  rounded-none"> </th>
                         <td className="   border border-slate-300">
                           {" "}
                           Efficiency{" "}
@@ -244,8 +233,6 @@ const MarketerPage = () => {
               </div>
             )}
 
-    
-
             {show === "Monthly" && (
               <div className="w-full mx-auto mt-5 ">
                 <table className=" w-full  ">
@@ -278,7 +265,7 @@ const MarketerPage = () => {
                       </th>
                     </tr>
                   </thead>
-                  {user?.month?.map((m) => (
+                  {userMonthlyRprt.map((m) => (
                     <tbody
                       key={m.title}
                       style={{ borderBottom: "4px solid #666" }}
@@ -310,10 +297,7 @@ const MarketerPage = () => {
                         <th className="  text-blue-500 border-none">
                           {m.title}
                         </th>
-                        <td className="  border border-slate-300">
-                          {" "}
-                          Archieve{" "}
-                        </td>
+                        <td className="  border border-slate-300"> Achieve </td>
                         <td className="  border border-slate-300">
                           {m.bit.filter((b) => b.status == "Contacted").length}
                         </td>
@@ -329,9 +313,7 @@ const MarketerPage = () => {
                       </tr>
                       {/* row 3 */}
                       <tr className="">
-                        <th className="   rounded-none">
-                          {" "}
-                        </th>
+                        <th className="   rounded-none"> </th>
                         <td className="   border border-slate-300">
                           {" "}
                           Efficiency{" "}
@@ -414,16 +396,30 @@ const MarketerPage = () => {
                     </tr>
                   </thead>
                   <tbody className=" text-center  ">
-                    {user?.daily?.map((day) => (
-                      <tr key={day.title} className=" h-20">
+                    {userDailyRprt.map((day) => (
+                      <tr key={day._id} className=" h-20">
                         <td className="border">{day.title}</td>
                         <td className="border"> {day.callTarget} </td>
-                        <td className="border">{day.bit.length}</td>
                         <td className="border">
-                          {" "}
                           {
-                            day.bit.filter((d) => d.status != "Not available")
-                              .length
+                            day.bit.filter(
+                              (d) =>
+                                d.status == "Gatekeeper" ||
+                                d.status == "Follow-up" ||
+                                d.status == "Contacted" ||
+                                d.status == "Not available" ||
+                                d.status == "Voice mail"
+                            ).length
+                          }
+                        </td>
+                        <td className="border">
+                          {
+                            day.bit.filter(
+                              (d) =>
+                                d.status == "Gatekeeper" ||
+                                d.status == "Follow-up" ||
+                                d.status == "Contacted"
+                            ).length
                           }
                         </td>
                         <td className="border">

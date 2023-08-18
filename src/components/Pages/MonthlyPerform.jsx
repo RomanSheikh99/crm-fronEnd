@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
 
 const MonthlyPerform = () => {
   const { currentUser } = useSelector((state) => state.users);
+  const [monthlyReports, setMonthlyReports] = useState([]);
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (!currentUser?.month?.length) {
+      setMonthlyReports([]);
+    } else if (currentUser?.month?.length > 1) {
+      setMonthlyReports(currentUser?.month.reverse());
+    } else {
+      setMonthlyReports(currentUser?.month);
+    }
+  }, [pathname]);
 
   const getEfficiency = (achieve, target) => {
     const result = (achieve / target) * 100;
@@ -50,7 +64,7 @@ const MonthlyPerform = () => {
               </th>
             </tr>
           </thead>
-          {currentUser?.month?.map((m) => (
+          {monthlyReports.map((m) => (
             <tbody
               key={m.title}
               style={{ borderBottom: "4px solid #666" }}
@@ -88,7 +102,7 @@ const MonthlyPerform = () => {
                 </th>
                 <td className="  border border-slate-300">
                   {" "}
-                  Archieve{" "}
+                  Achieve{" "}
                 </td>
                 <td className="  border border-slate-300">
                   {m.bit.filter((b) => b.status == "Contacted").length}

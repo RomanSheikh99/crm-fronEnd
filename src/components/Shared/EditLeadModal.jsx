@@ -48,6 +48,7 @@ const EditLeadModal = ({ id }) => {
     e.target.email.value = lead.email;
     e.target.phone.value = lead.phone;
     e.target.designation.value = lead.designation;
+    e.target.description.value = lead.description;
     e.target.contactParson.value = lead.contactParson;
     e.target.category.value = lead.category;
     e.target.country.value = lead.country;
@@ -62,6 +63,7 @@ const EditLeadModal = ({ id }) => {
       email: e.target.email.value,
       phone: e.target.phone.value,
       designation: e.target.designation.value,
+      description: e.target.description.value,
       contactParson: e.target.contactParson.value,
       category: e.target.category.value,
       country: e.target.country.value,
@@ -249,7 +251,21 @@ const EditLeadModal = ({ id }) => {
                     </div>
                   </div>
                   {/* Right side of form end   */}
+                 
                 </div>
+
+                <div className="w-full mx-auto">
+                    <label className="text-lg font-medium  ">
+                      {" "}
+                      Description{" "}
+                    </label>
+                    <textarea
+                      placeholder=" "
+                      style={inputStyle()}
+                      name="description"
+                      className="textarea textarea-bordered textarea-lg w-full mt-2  "
+                    ></textarea>
+                  </div>
 
                 {/* Text area for  description   */}
               </section>

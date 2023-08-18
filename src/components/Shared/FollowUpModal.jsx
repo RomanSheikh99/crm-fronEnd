@@ -162,9 +162,13 @@ const FollowUpModal = ({ id, setFollowUp }) => {
 
   const handleStatus = async (e) => {
     const val = e.target.value;
-    if(val == "Not available" || val == "Contacted" || val == "Gatekeeper" || val == "Closed"){
+    if(val == "Not available" || val == "Voice mail" || val == "Gatekeeper" || val == "Closed"){
       setDis(val);
-    }else{
+    }
+    else if(val == "New test"){
+      setDis("New test received");
+    }
+    else{
       setDis("");
     }
     
@@ -303,6 +307,7 @@ const FollowUpModal = ({ id, setFollowUp }) => {
                       style={inputStyle()}
                       className="rounded border-2 py-2 px-4"
                       onChange={handleNextFollowUp}
+                      required
                       name="nfu"
                       type="date"
                     />
@@ -321,7 +326,7 @@ const FollowUpModal = ({ id, setFollowUp }) => {
                     name="desc"
                     required
                     defaultValue={dis}
-                    onChange={(e) => setDis(e.target.value)}
+                    // onChange={(e) => setDis(e.target.value)}
                     className="textarea textarea-bordered textarea-lg w-full mt-2  "
                   ></textarea>
                 </div>

@@ -92,7 +92,6 @@ const PathList = ({ open }) => {
     }
 
     if(path == pathname){
-      console.log("i am ok")
       if(theme == "DARK"){
         style.background = '#000';
         style.color = '#fff';

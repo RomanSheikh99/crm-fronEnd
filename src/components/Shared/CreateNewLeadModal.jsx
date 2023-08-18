@@ -75,12 +75,13 @@ const CreateNewLeadModal = () => {
 
   const handleValueCheck = async (e,item) => {
     const params = { value: e.target.value, path: item };
+    
     try {
       const res = await axios.get(`${siteInfo.api}/leads/checkValue`, {
         params,
       });
       if(res.data != null){
-        setMsg(`this ${item} is allready exist`)
+        setMsg(`this ${item} is already exist`)
         setDisable(true);
       }else{
         setMsg(null)
@@ -143,7 +144,6 @@ const CreateNewLeadModal = () => {
                       type="text"
                       name="company"
                       style={inputStyle()}
-                      onChange={(e)=> handleValueCheck(e,'company')}
                       required
                       className="mt-1 block w-72 h-10 border border-gray-300 rounded-md mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />

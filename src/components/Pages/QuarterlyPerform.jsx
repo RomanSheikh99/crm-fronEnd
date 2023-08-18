@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
 
 const QuarterlyPerform = () => {
   const { currentUser } = useSelector((state) => state.users);
+  const [quarterlyReports, setQuarterlyReports] = useState([]);
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (!currentUser?.quarter?.length) {
+      setQuarterlyReports([]);
+    } else if (currentUser?.quarter?.length > 1) {
+      setQuarterlyReports(currentUser?.quarter.reverse());
+    } else {
+      setQuarterlyReports(currentUser?.quarter);
+    }
+  }, [pathname]);
 
   const getEfficiency = (achieve, target) => {
     const result = (achieve / target) * 100;
@@ -51,7 +65,7 @@ const QuarterlyPerform = () => {
               </th>
             </tr>
           </thead>
-          {currentUser?.quarter?.map((q) => (
+          {quarterlyReports.map((q) => (
             <tbody
               key={q.title}
               style={{ borderBottom: "4px solid #666" }}
@@ -89,7 +103,7 @@ const QuarterlyPerform = () => {
                 </th>
                 <td className="  border border-slate-300">
                   {" "}
-                  Archieve{" "}
+                  Achieve{" "}
                 </td>
                 <td className="  border border-slate-300">
                   {q.bit.filter((b) => b.status == "Contacted").length}

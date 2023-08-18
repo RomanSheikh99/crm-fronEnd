@@ -21,6 +21,9 @@ const LeadPage = () => {
   const { showLeads, leadsError, pending } = useSelector(
     (state) => state.leads
   );
+  const { theme } = useSelector(
+    (state) => state.app
+  );
   const { id } = useParams();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -104,10 +107,22 @@ const LeadPage = () => {
     
   };
 
+  const setUrl = (url) => {
+
+    const urlPattern = /^(http|https):\/\/([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.[a-z]{2,6}(\:[0-9]+)?(\/.*)?$/;
+    if(urlPattern.test(url)){
+      const domain = new URL(url).hostname.replace(/^www\./, '');
+      return domain;
+    }
+    else{
+      return url;
+    }
+}
+
   const leadNoStyle = {
     marginLeft: "20px",
     border: "none",
-    background: "#bdd7d8",
+    background: theme == "DARK" ? "#2d505a" : "#bdd7d8",
     textAlign: "center",
     fontSize: "26px",
     padding: "10px",
@@ -202,9 +217,9 @@ const LeadPage = () => {
                   <a
                     className="text-blue-400"
                     target="_blank"
-                    href={"https://" + lead.website}
+                    href={"https://" + setUrl(lead.website)}
                   >
-                    {lead.website}
+                    {setUrl(lead.website)}
                   </a>
                 </h3>
               </div>

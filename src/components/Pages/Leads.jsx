@@ -95,6 +95,19 @@ const Leads = () => {
     }
   };
 
+
+  const setUrl = (url) => {
+
+      const urlPattern = /^(http|https):\/\/([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.[a-z]{2,6}(\:[0-9]+)?(\/.*)?$/;
+      if(urlPattern.test(url)){
+        const domain = new URL(url).hostname.replace(/^www\./, '');
+        return domain;
+      }
+      else{
+        return url;
+      }
+  }
+
   const getColumns = () => {
     const baseColumns = [
       {
@@ -107,12 +120,12 @@ const Leads = () => {
       {
         field: "company",
         headerName: "Company",
-        width: 150,
+        width: 250,
         sortable: false,
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
         renderCell: ({ row }) => (
           <NavLink to={`/leads/${row.leadsNo}`}>
-            <h3 className="text-blue-600">{row.company}</h3>
+            <h2 style={{fontSize: '18px', color: "#417cff"}} className=" font-bold">{row.company}</h2>
           </NavLink>
         ),
       },
@@ -126,17 +139,17 @@ const Leads = () => {
       {
         field: "website",
         headerName: "Website",
-        width: 150,
+        width: 200,
         sortable: false,
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
         renderCell: ({ row }) => (
           <div className="p-3">
             <a
               target="_blank"
-              href={"https://" + row.website}
+              href={"https://" + setUrl(row.website)}
               className="cursor-pointer text-blue-500"
             >
-              {row.website}
+              <b>{setUrl(row.website)}</b>
             </a>
           </div>
         ),
@@ -144,14 +157,14 @@ const Leads = () => {
       {
         field: "category",
         headerName: "Category",
-        width: 150,
+        width: 200,
         sortable: false,
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
       },
       {
         field: "minor",
         headerName: "Minor",
-        width: 120,
+        width: 160,
         sortable: false,
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
         renderCell: ({ row }) => (
@@ -163,7 +176,7 @@ const Leads = () => {
       {
         field: "assignToName",
         headerName: "Assign To",
-        width: 120,
+        width: 160,
         sortable: false,
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
         renderCell: ({ row }) => (
@@ -202,7 +215,7 @@ const Leads = () => {
       {
         field: "followerName",
         headerName: "Follower",
-        width: 120,
+        width: 160,
         sortable: false,
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
         renderCell: ({ row }) => (
@@ -214,7 +227,7 @@ const Leads = () => {
       {
         field: "possibility",
         headerName: "Possibility",
-        width: 100,
+        width: 150,
         sortable: false,
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
       },
@@ -254,14 +267,14 @@ const Leads = () => {
       {
         field: "email",
         headerName: "Email",
-        width: 150,
+        width: 220,
         sortable: false,
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
       },
       {
         field: "action",
         headerName: "Action",
-        width: 200,
+        width: 140,
         sortable: false,
         filterable: false,
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",

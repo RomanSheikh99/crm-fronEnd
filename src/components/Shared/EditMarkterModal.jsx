@@ -100,7 +100,7 @@ const EditMarkterModal = ({ id }) => {
             </label>
           </div>
           {/* Create Marketer form start here  */}
-          {loading && <ShowMsg>usar loading</ShowMsg>}
+          {loading && <ShowMsg>user loading</ShowMsg>}
           {error && <ShowMsg>{error.message}</ShowMsg>}
          {!loading && !error && <form
             onSubmit={handleUpdateMarkter}

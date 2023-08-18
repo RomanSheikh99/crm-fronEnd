@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
 
 const DailyPerform = () => {
   const { currentUser } = useSelector((state) => state.users);
+  const [dailyReports, setDailyReports] = useState([]);
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (!currentUser?.daily?.length) {
+      setDailyReports([]);
+    } else if (currentUser?.daily?.length > 1) {
+      setDailyReports(currentUser?.daily.reverse());
+    } else {
+      setDailyReports(currentUser?.daily);
+    }
+  }, [pathname]);
 
   const getEfficiency = (achieve, target) => {
     const result = (achieve / target) * 100;
@@ -32,7 +46,7 @@ const DailyPerform = () => {
             <th className="bg-blue-500 capitalize  font-bold "> high lead </th>
             <th className="bg-blue-500 capitalize  font-bold "> new test </th>
             <th className="bg-blue-500 capitalize  font-bold ">
-              stisfactory <br /> achievement
+              satisfactory <br /> achievement
             </th>
             <th className="bg-blue-500 capitalize  font-bold ">best effort</th>
             <th className="bg-blue-500 capitalize  font-bold ">first login</th>
@@ -40,14 +54,32 @@ const DailyPerform = () => {
           </tr>
         </thead>
         <tbody className=" text-center  ">
-          {currentUser?.daily?.map((day) => (
-            <tr key={day.title} className=" h-20">
+          {dailyReports?.map((day) => (
+            <tr key={day._id} className=" h-20">
               <td className="border">{day.title}</td>
               <td className="border"> {day.callTarget} </td>
-              <td className="border">{day.bit.length}</td>
+              <td className="border">
+                {
+                  day.bit.filter(
+                    (d) =>
+                      d.status == "Gatekeeper" ||
+                      d.status == "Follow-up" ||
+                      d.status == "Contacted" ||
+                      d.status == "Not available" ||
+                      d.status == "Voice mail" 
+                  ).length
+                }
+              </td>
               <td className="border">
                 {" "}
-                {day.bit.filter((d) => d.status != "Not available").length}
+                {
+                  day.bit.filter(
+                    (d) =>
+                      d.status == "Gatekeeper" ||
+                      d.status == "Follow-up" ||
+                      d.status == "Contacted"
+                  ).length
+                }
               </td>
               <td className="border">
                 {" "}
@@ -64,8 +96,13 @@ const DailyPerform = () => {
                 )}
                 %
               </td>
-              <td className="border">{
-              getEfficiency(day.bit.filter((d) => d.status == "Contacted").length,day.callTarget)}%</td>
+              <td className="border">
+                {getEfficiency(
+                  day.bit.filter((d) => d.status == "Contacted").length,
+                  day.callTarget
+                )}
+                %
+              </td>
               <td className="border">{day.firstLogin}</td>
               <td className="border">{day.lastUpdate}</td>
             </tr>

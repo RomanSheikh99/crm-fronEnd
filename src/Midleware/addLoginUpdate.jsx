@@ -4,7 +4,9 @@ import siteInfo from "../../siteInfo";
 
 const addLoginUpdate = async (id) => {
   try {
-   const res = await axios.patch(`${siteInfo.api}/users//addLoginUpdate/${id}`)
+   if(id){
+    await axios.patch(`${siteInfo.api}/users//addLoginUpdate/${id}`)
+   }
   } catch (error) {
   }
 }
