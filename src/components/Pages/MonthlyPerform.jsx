@@ -4,19 +4,22 @@ import { useLocation } from "react-router";
 
 const MonthlyPerform = () => {
   const { currentUser } = useSelector((state) => state.users);
-  const [monthlyReports, setMonthlyReports] = useState([]);
+  // const [monthlyReports, setMonthlyReports] = useState([]);
 
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    if (!currentUser?.month?.length) {
-      setMonthlyReports([]);
-    } else if (currentUser?.month?.length > 1) {
-      setMonthlyReports(currentUser?.month.reverse());
-    } else {
-      setMonthlyReports(currentUser?.month);
-    }
-  }, [pathname]);
+  const monthly = [...currentUser?.month]
+
+  // useEffect(() => {
+    
+  //   if (!monthly.length) {
+  //     setMonthlyReports([]);
+  //   } else if (monthly.length > 1) {
+  //     setMonthlyReports(monthly.reverse());
+  //   } else {
+  //     setMonthlyReports(monthly);
+  //   }
+  // }, [pathname]);
 
   const getEfficiency = (achieve, target) => {
     const result = (achieve / target) * 100;
@@ -64,7 +67,7 @@ const MonthlyPerform = () => {
               </th>
             </tr>
           </thead>
-          {monthlyReports.map((m) => (
+          {monthly.map((m) => (
             <tbody
               key={m.title}
               style={{ borderBottom: "4px solid #666" }}

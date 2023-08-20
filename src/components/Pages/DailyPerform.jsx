@@ -4,19 +4,22 @@ import { useLocation } from "react-router";
 
 const DailyPerform = () => {
   const { currentUser } = useSelector((state) => state.users);
-  const [dailyReports, setDailyReports] = useState([]);
+  // const [dailyReports, setDailyReports] = useState([]);
 
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    if (!currentUser?.daily?.length) {
-      setDailyReports([]);
-    } else if (currentUser?.daily?.length > 1) {
-      setDailyReports(currentUser?.daily.reverse());
-    } else {
-      setDailyReports(currentUser?.daily);
-    }
-  }, [pathname]);
+  const dailyRp =[ ...currentUser?.daily];
+
+  // useEffect(() => {
+    
+  //   if (dailyRp.length) {
+  //     if(dailyRp.length > 1){
+  //       setDailyReports(dailyRp.reverse());
+  //     }else{
+  //       setDailyReports(dailyRp?.daily);
+  //     }
+  //   }
+  // }, [pathname]);
 
   const getEfficiency = (achieve, target) => {
     const result = (achieve / target) * 100;
@@ -54,7 +57,7 @@ const DailyPerform = () => {
           </tr>
         </thead>
         <tbody className=" text-center  ">
-          {dailyReports?.map((day) => (
+          {dailyRp.reverse().map((day) => (
             <tr key={day._id} className=" h-20">
               <td className="border">{day.title}</td>
               <td className="border"> {day.callTarget} </td>

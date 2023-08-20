@@ -63,7 +63,7 @@ const Marketers = () => {
     {
       field: "name",
       headerName: "Name",
-      width: 120,
+      width: 200,
       sortable: false,
       headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
       renderCell: ({ row }) => (
@@ -75,21 +75,21 @@ const Marketers = () => {
     {
       field: "email",
       headerName: "Email",
-      width: 150,
+      width: 300,
       sortable: false,
       headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
     },
     {
       field: "phone",
       headerName: "Phone",
-      width: 130,
+      width: 250,
       sortable: false,
       headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
     },
     {
       field: "createdOn",
       headerName: "Created At",
-      width: 150,
+      width: 200,
       sortable: false,
       filterable: false,
       headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",

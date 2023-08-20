@@ -4,19 +4,21 @@ import { useLocation } from "react-router";
 
 const QuarterlyPerform = () => {
   const { currentUser } = useSelector((state) => state.users);
-  const [quarterlyReports, setQuarterlyReports] = useState([]);
+  // const [quarterlyReports, setQuarterlyReports] = useState([]);
 
   const { pathname } = useLocation();
 
-  useEffect(() => {
-    if (!currentUser?.quarter?.length) {
-      setQuarterlyReports([]);
-    } else if (currentUser?.quarter?.length > 1) {
-      setQuarterlyReports(currentUser?.quarter.reverse());
-    } else {
-      setQuarterlyReports(currentUser?.quarter);
-    }
-  }, [pathname]);
+  const quarterlyReports = [...currentUser?.quarter];
+
+  // useEffect(() => {
+  //   if (?.length) {
+  //     setQuarterlyReports([]);
+  //   } else if (currentUser?.quarter?.length > 1) {
+  //     setQuarterlyReports(currentUser?.quarter.reverse());
+  //   } else {
+  //     setQuarterlyReports(currentUser?.quarter);
+  //   }
+  // }, [pathname]);
 
   const getEfficiency = (achieve, target) => {
     const result = (achieve / target) * 100;
@@ -65,7 +67,7 @@ const QuarterlyPerform = () => {
               </th>
             </tr>
           </thead>
-          {quarterlyReports.map((q) => (
+          {quarterlyReports.reverse().map((q) => (
             <tbody
               key={q.title}
               style={{ borderBottom: "4px solid #666" }}
