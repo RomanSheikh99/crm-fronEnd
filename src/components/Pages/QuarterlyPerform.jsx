@@ -1,24 +1,11 @@
-import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router";
 
 const QuarterlyPerform = () => {
   const { currentUser } = useSelector((state) => state.users);
-  // const [quarterlyReports, setQuarterlyReports] = useState([]);
 
-  const { pathname } = useLocation();
 
-  const quarterlyReports = [...currentUser?.quarter];
+  const quarterlyReports = currentUser?.quarter ? [...currentUser?.quarter]: [];
 
-  // useEffect(() => {
-  //   if (?.length) {
-  //     setQuarterlyReports([]);
-  //   } else if (currentUser?.quarter?.length > 1) {
-  //     setQuarterlyReports(currentUser?.quarter.reverse());
-  //   } else {
-  //     setQuarterlyReports(currentUser?.quarter);
-  //   }
-  // }, [pathname]);
 
   const getEfficiency = (achieve, target) => {
     const result = (achieve / target) * 100;
@@ -33,7 +20,6 @@ const QuarterlyPerform = () => {
     q.bit.map((b) => {
       b.status == "Contacted" && achive++;
       b.status == "New Test" && achive++;
-      // b.status == "Gatekeeper" && achive++
       b.possibility == "High" && achive++;
     });
     const { newCall, highLead, newTest } = q.target;
@@ -46,7 +32,6 @@ const QuarterlyPerform = () => {
   };
 
   return (
-    // <Dashboard>
       <div className="w-full mx-auto mt-5 ">
         <table className=" w-full  ">
           {/* head*/}
@@ -60,7 +45,6 @@ const QuarterlyPerform = () => {
               <th className="bg-blue-500   font-extrabold "> New Call </th>
               <th className="bg-blue-500   font-extrabold "> High Lead</th>
               <th className="bg-blue-500   font-extrabold "> New Test </th>
-              {/* <th className="bg-blue-500   font-extrabold "> New File </th> */}
               <th className="bg-blue-500 rounded-tr-sm rounded-br-sm font-extrabold ">
                 {" "}
                 Overall{" "}
@@ -92,10 +76,6 @@ const QuarterlyPerform = () => {
                   {" "}
                   {q.target.newTest}{" "}
                 </td>
-                {/* <td className="h-1  border border-slate-300">
-                {" "}
-                {q.target.newFil}{" "}
-              </td> */}
                 <td className="h-1  border-none"> </td>
               </tr>
               {/* row 2 */}
@@ -116,9 +96,6 @@ const QuarterlyPerform = () => {
                 <td className="  border border-slate-300">
                   {q.bit.filter((b) => b.status == "New Test").length}{" "}
                 </td>
-                {/* <td className="  border border-slate-300">
-                {q.bit.filter((b) => b.status == "Gatekeeper").length}{" "}
-              </td> */}
                 <td className="   border-none text-3xl">
                   {getOverAll(q)}%
                 </td>
@@ -155,13 +132,6 @@ const QuarterlyPerform = () => {
                   )}
                   %
                 </td>
-                {/* <td className="  border border-slate-300  ">
-                {getEfficiency(
-                  q.bit.filter((b) => b.status == "Gatekeeper").length,
-                  q.target.newFil
-                )}
-                %
-              </td> */}
                 <td className="    rounded-none">
                   {" "}
                 </td>
@@ -172,7 +142,6 @@ const QuarterlyPerform = () => {
 
         <div className="w-full h-2 bg-gray-400"> </div>
       </div>
-    // </Dashboard>
   );
 };
 

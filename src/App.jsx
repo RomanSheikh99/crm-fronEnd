@@ -6,7 +6,6 @@ import router from "./Routers/Routers";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { setCurrentUser } from "./store/reducers/usersReducers";
-import addLoginUpdate from "./Midleware/addLoginUpdate";
 
 function App() {
   const state = useSelector((state) => state.app);
@@ -31,7 +30,6 @@ function App() {
   };
 
   const resetTimer = () => {
-    // addLoginUpdate(currentUser.id)
     setLastActivity(Date.now());
   };
 

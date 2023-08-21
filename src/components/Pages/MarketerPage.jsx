@@ -382,7 +382,7 @@ const MarketerPage = () => {
                         new test{" "}
                       </th>
                       <th className="bg-blue-500 capitalize  font-bold ">
-                        stisfactory <br /> achievement
+                      satisfactory <br /> achievement
                       </th>
                       <th className="bg-blue-500 capitalize  font-bold ">
                         best effort

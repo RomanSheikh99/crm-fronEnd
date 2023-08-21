@@ -1,25 +1,9 @@
-import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router";
 
 const DailyPerform = () => {
   const { currentUser } = useSelector((state) => state.users);
-  // const [dailyReports, setDailyReports] = useState([]);
-
-  const { pathname } = useLocation();
 
   const dailyRp =[ ...currentUser?.daily];
-
-  // useEffect(() => {
-    
-  //   if (dailyRp.length) {
-  //     if(dailyRp.length > 1){
-  //       setDailyReports(dailyRp.reverse());
-  //     }else{
-  //       setDailyReports(dailyRp?.daily);
-  //     }
-  //   }
-  // }, [pathname]);
 
   const getEfficiency = (achieve, target) => {
     const result = (achieve / target) * 100;
@@ -30,7 +14,6 @@ const DailyPerform = () => {
   };
 
   return (
-    // <Dashboard>
     <div className="w-full mx-auto mt-5 ">
       <table className=" w-full  ">
         {/* head*/}
@@ -115,7 +98,6 @@ const DailyPerform = () => {
 
       <div className="w-full h-2 bg-gray-400"> </div>
     </div>
-    // </Dashboard>
   );
 };
 
