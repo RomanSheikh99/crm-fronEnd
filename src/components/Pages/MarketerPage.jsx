@@ -28,23 +28,23 @@ const MarketerPage = () => {
       .get(`${siteInfo.api}/users/${id}`)
       .then((res) => {
         if (res.data?.daily?.length) {
-          if(res.data?.daily?.length > 1){
+          if (res.data?.daily?.length > 1) {
             setUserDailyRprt(res.data?.daily?.reverse());
-          }else{
+          } else {
             setUserDailyRprt(res.data?.daily);
           }
         }
         if (res.data?.quarter?.length) {
-          if(res.data?.quarter?.length > 1){
+          if (res.data?.quarter?.length > 1) {
             setUserQuarterlyRprt(res.data?.quarter?.reverse());
-          }else{
+          } else {
             setUserQuarterlyRprt(res.data?.quarter);
           }
         }
         if (res.data?.month?.length) {
-          if(res.data?.month?.length > 1){
+          if (res.data?.month?.length > 1) {
             setUserMonthlyRprt(res.data?.month?.reverse());
-          }else{
+          } else {
             setUserMonthlyRprt(res.data?.month);
           }
         }
@@ -382,7 +382,7 @@ const MarketerPage = () => {
                         new test{" "}
                       </th>
                       <th className="bg-blue-500 capitalize  font-bold ">
-                      satisfactory <br /> achievement
+                        satisfactory <br /> achievement
                       </th>
                       <th className="bg-blue-500 capitalize  font-bold ">
                         best effort
@@ -432,17 +432,31 @@ const MarketerPage = () => {
                         <td className="border">
                           {" "}
                           {
-                            day.bit.filter((d) => d.status == "Contacted")
-                              .length
+                            day.bit.filter((d) => d.status == "New test").length
                           }{" "}
                         </td>
                         <td className="border">
-                          {getEfficiency(day.bit.length, day.callTarget)}%
+                          {getEfficiency(
+                            day.bit.filter(
+                              (d) =>
+                                d.status == "Gatekeeper" ||
+                                d.status == "Follow-up" ||
+                                d.status == "Contacted"
+                            ).length,
+                            day.callTarget
+                          )}
+                          %
                         </td>
                         <td className="border">
                           {getEfficiency(
-                            day.bit.filter((d) => d.status != "Not available")
-                              .length,
+                            day.bit.filter(
+                              (d) =>
+                                d.status == "Gatekeeper" ||
+                                d.status == "Follow-up" ||
+                                d.status == "Contacted" ||
+                                d.status == "Not available" ||
+                                d.status == "Voice mail"
+                            ).length,
                             day.callTarget
                           )}
                           %

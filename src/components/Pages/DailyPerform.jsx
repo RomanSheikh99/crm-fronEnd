@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 const DailyPerform = () => {
   const { currentUser } = useSelector((state) => state.users);
 
-  const dailyRp =[ ...currentUser?.daily];
+  const dailyRp = [...currentUser?.daily];
 
   const getEfficiency = (achieve, target) => {
     const result = (achieve / target) * 100;
@@ -52,7 +52,7 @@ const DailyPerform = () => {
                       d.status == "Follow-up" ||
                       d.status == "Contacted" ||
                       d.status == "Not available" ||
-                      d.status == "Voice mail" 
+                      d.status == "Voice mail"
                   ).length
                 }
               </td>
@@ -73,18 +73,30 @@ const DailyPerform = () => {
               </td>
               <td className="border">
                 {" "}
-                {day.bit.filter((d) => d.status == "Contacted").length}{" "}
+                {day.bit.filter((d) => d.status == "New test").length}{" "}
               </td>
               <td className="border">
                 {getEfficiency(
-                  day.bit.filter((d) => d.status != "Not available").length,
+                  day.bit.filter(
+                    (d) =>
+                      d.status == "Gatekeeper" ||
+                      d.status == "Follow-up" ||
+                      d.status == "Contacted"
+                  ).length,
                   day.callTarget
                 )}
                 %
               </td>
               <td className="border">
                 {getEfficiency(
-                  day.bit.filter((d) => d.status == "Contacted").length,
+                  day.bit.filter(
+                    (d) =>
+                      d.status == "Gatekeeper" ||
+                      d.status == "Follow-up" ||
+                      d.status == "Contacted" ||
+                      d.status == "Not available" ||
+                      d.status == "Voice mail"
+                  ).length,
                   day.callTarget
                 )}
                 %
