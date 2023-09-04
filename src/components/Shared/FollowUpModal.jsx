@@ -21,6 +21,8 @@ const FollowUpModal = ({ id, setFollowUp }) => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const [lead, setLead] = useState([]);
+  const [followUpcount, setFollowUpcount] = useState(0);
+  const [isFollowUpcount, setIsFollowUpcount] = useState(false);
   const [loading, setLoading] = useState(false);
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState(null);
@@ -200,10 +202,12 @@ const FollowUpModal = ({ id, setFollowUp }) => {
   const handleNextFollowUp = async (e) => {
     await axios
       .patch(`${siteInfo.api}/leads/setNextFollowUp/${id}`, {
-        nfup: e.target.value,
+        nfup: e.target.value, user: currentUser.id
       })
       .then((res) => {
-        setLead(res.data);
+        setLead(res.data.lead);
+        setFollowUpcount(res.data.totalCount);
+        setIsFollowUpcount(true);
       })
       .catch((error) => {
         toast.error("Something Wrong, Try Again", alert);
@@ -297,7 +301,7 @@ const FollowUpModal = ({ id, setFollowUp }) => {
 
                   {/* Right side of form end   */}
                 </div>
-                <div className=" flex  justify-between">
+                <div className=" flex  justify-between items-center	">
                   {/* Left side of form  */}
                   <div className="mb-3 flex flex-col">
                     <label className="text-lg font-medium">
@@ -312,9 +316,9 @@ const FollowUpModal = ({ id, setFollowUp }) => {
                       type="date"
                     />
                   </div>
-                  {/* <div className="mb-3 flex flex-col">
-                    <button>change followUp date</button>
-                  </div> */}
+                  <div className="mb-3 flex flex-col">
+                    {isFollowUpcount && <h2><span className="text-3xl me-4 text-yellow-600">{followUpcount}</span>  Follow UP On this day</h2>}
+                  </div>
 
                   {/* Right side of form end   */}
                 </div>

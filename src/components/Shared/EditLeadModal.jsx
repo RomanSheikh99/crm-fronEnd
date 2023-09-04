@@ -261,6 +261,7 @@ const EditLeadModal = ({ id }) => {
                     </label>
                     <textarea
                       placeholder=" "
+                      defaultValue={lead?.description}
                       style={inputStyle()}
                       name="description"
                       className="textarea textarea-bordered textarea-lg w-full mt-2  "
