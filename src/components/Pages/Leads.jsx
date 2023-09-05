@@ -20,6 +20,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import axios from "axios";
 import siteInfo from "../../../siteInfo";
+import { action } from "../../store/store";
 
 const Leads = () => {
   const { showLeads, leadsError, pending } = useSelector(
@@ -36,9 +37,11 @@ const Leads = () => {
   const [assignItem, setAssignItem] = useState(null);
   const [followUp, setFollowUp] = useState(null);
   const [users, setUsers] = useState([]);
+  const { setPageModel } = action;
 
   useEffect(() => {
-
+    
+      dispatch(setPageModel({page: 0, pageSize: state.pageModel.pageSize}));
       dispatch(fetchData({ path: api, pageModel: {page: 0, pageSize: state.pageModel.pageSize}}));
     
 

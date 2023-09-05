@@ -13,6 +13,7 @@ import HomeRoutes from "./HomeRoutes";
 import LeadPage from "../components/Pages/LeadPage";
 import Dashboard from "../components/Pages/Dashboard";
 import MarketerPage from "../components/Pages/MarketerPage";
+import AddBlog from "../components/Pages/AddBlog";
 
 
 
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <PrivetRoutes element={<HomeRoutes />} />,
+  },
+  {
+    path: "/blog",
+    element: <AddBlog />,
   },
   {
     path: "/dashboard",
