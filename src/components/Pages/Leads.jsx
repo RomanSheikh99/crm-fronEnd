@@ -20,6 +20,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import axios from "axios";
 import siteInfo from "../../../siteInfo";
+import { action } from "../../store/store";
 
 const Leads = () => {
   const { showLeads, leadsError, pending } = useSelector(
@@ -36,11 +37,16 @@ const Leads = () => {
   const [assignItem, setAssignItem] = useState(null);
   const [followUp, setFollowUp] = useState(null);
   const [users, setUsers] = useState([]);
+  const { setPageModel } = action;
 
   useEffect(() => {
-
-      dispatch(fetchData({ path: api, pageModel: {page: 0, pageSize: state.pageModel.pageSize}}));
-    
+    dispatch(setPageModel({ page: 0, pageSize: state.pageModel.pageSize }));
+    dispatch(
+      fetchData({
+        path: api,
+        pageModel: { page: 0, pageSize: state.pageModel.pageSize },
+      })
+    );
 
     axios
       .get(`${siteInfo.api}/users`)
@@ -50,7 +56,7 @@ const Leads = () => {
       .catch((error) => {
         toast.error(error.massage);
       });
-  }, [ pathname]);
+  }, [pathname]);
 
   const alert = {
     position: "top-center",
@@ -95,18 +101,16 @@ const Leads = () => {
     }
   };
 
-
   const setUrl = (url) => {
-
-      const urlPattern = /^(http|https):\/\/([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.[a-z]{2,6}(\:[0-9]+)?(\/.*)?$/;
-      if(urlPattern.test(url)){
-        const domain = new URL(url).hostname.replace(/^www\./, '');
-        return domain;
-      }
-      else{
-        return url;
-      }
-  }
+    const urlPattern =
+      /^(http|https):\/\/([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.[a-z]{2,6}(\:[0-9]+)?(\/.*)?$/;
+    if (urlPattern.test(url)) {
+      const domain = new URL(url).hostname.replace(/^www\./, "");
+      return domain;
+    } else {
+      return url;
+    }
+  };
 
   const getColumns = () => {
     const baseColumns = [
@@ -125,7 +129,12 @@ const Leads = () => {
         headerClassName: state.theme == "DARK" ? "dark" : "dataTableHeader",
         renderCell: ({ row }) => (
           <NavLink to={`/leads/${row.leadsNo}`}>
-            <h2 style={{fontSize: '18px', color: "#417cff"}} className=" font-bold">{row.company}</h2>
+            <h2
+              style={{ fontSize: "18px", color: "#417cff" }}
+              className=" font-bold"
+            >
+              {row.company}
+            </h2>
           </NavLink>
         ),
       },
@@ -361,7 +370,6 @@ const Leads = () => {
 
   const columns = getColumns();
 
-
   return (
     <Layout>
       <LeadsHeader
@@ -380,10 +388,7 @@ const Leads = () => {
       {pending && <ShowMsg>data is loading...</ShowMsg>}
       {leadsError && <ShowMsg color={"yellow"}>{leadsError}</ShowMsg>}
       {showLeads?.length > 0 && (
-        <DataTable
-          api={api}
-          columns={columns}
-        ></DataTable>
+        <DataTable api={api} columns={columns}></DataTable>
       )}
       {!pending && !leadsError && !showLeads?.length && (
         <ShowMsg>data not found</ShowMsg>
