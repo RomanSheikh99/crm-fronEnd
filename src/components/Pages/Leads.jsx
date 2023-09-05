@@ -39,7 +39,7 @@ const Leads = () => {
 
   useEffect(() => {
 
-      dispatch(fetchData({ path: api, pageModel: state.pageModel }));
+      dispatch(fetchData({ path: api, pageModel: {page: 0, pageSize: state.pageModel.pageSize}}));
     
 
     axios

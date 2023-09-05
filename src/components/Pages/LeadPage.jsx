@@ -326,7 +326,7 @@ const LeadPage = () => {
           <div className="px-3 my-3">
             <p>
               <span className="font-bold">Description: </span>
-              {lead.description}
+              <h2 className="text-orange-500 text-2xl">{lead.description}</h2>
             </p>
           </div>
           <div className="px-3 my-4">
