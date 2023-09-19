@@ -100,7 +100,16 @@ const FollowUpModal = ({ id, setFollowUp }) => {
     socket.emit("message", {
       id: id,
       name: currentUser.name,
-      user_id: currentUser.id,
+      user_id: !follow ? currentUser.id: null,
+    });
+    socket.on("lead", async (data) => {
+      setLead(data);
+      if(data.followerID){
+        setFollow(true)
+      }
+      else{
+        setFollow(false)
+      }
     });
   };
 
@@ -116,7 +125,6 @@ const FollowUpModal = ({ id, setFollowUp }) => {
           toast.error("Something Wrong, Try Again");
         });
     } else {
-      console.log(currentUser);
 
       await axios
         .patch(`${siteInfo.api}/leads/setFollower/${id}`, currentUser)
@@ -125,7 +133,6 @@ const FollowUpModal = ({ id, setFollowUp }) => {
           setFollow(true);
         })
         .catch((error) => {
-          console.log(error.message.body);
           toast.error("Something Wrong, Try Again", error);
         });
     }
