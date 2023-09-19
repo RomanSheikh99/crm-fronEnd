@@ -12,8 +12,10 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { Button } from "@mui/material";
+import socketIO from "socket.io-client";
 
 const FollowUpModal = ({ id, setFollowUp }) => {
+  const socket = socketIO.connect("http://localhost:4000");
   const { showLeads, leadsError, pending } = useSelector(
     (state) => state.leads
   );
@@ -94,6 +96,14 @@ const FollowUpModal = ({ id, setFollowUp }) => {
     }
   };
 
+  const handleFollowTwo = () => {
+    socket.emit("message", {
+      id: id,
+      name: currentUser.name,
+      user_id: currentUser.id,
+    });
+  };
+
   const handleFollow = async () => {
     if (follow) {
       await axios
@@ -106,6 +116,8 @@ const FollowUpModal = ({ id, setFollowUp }) => {
           toast.error("Something Wrong, Try Again");
         });
     } else {
+      console.log(currentUser);
+
       await axios
         .patch(`${siteInfo.api}/leads/setFollower/${id}`, currentUser)
         .then((res) => {
@@ -113,7 +125,8 @@ const FollowUpModal = ({ id, setFollowUp }) => {
           setFollow(true);
         })
         .catch((error) => {
-          toast.error("Something Wrong, Try Again", alert);
+          console.log(error.message.body);
+          toast.error("Something Wrong, Try Again", error);
         });
     }
   };
@@ -121,8 +134,7 @@ const FollowUpModal = ({ id, setFollowUp }) => {
   const addRecord = async (data) => {
     await axios
       .patch(`${siteInfo.api}/users/addRecords`, data)
-      .then((res) => {
-      })
+      .then((res) => {})
       .catch((error) => {
         toast.error("errror");
       });
@@ -150,7 +162,7 @@ const FollowUpModal = ({ id, setFollowUp }) => {
           const remarks = res.data.remarks;
           addRecord(remarks[0]);
           setLead(res.data);
-          dispatch(updateLead(res.data))
+          dispatch(updateLead(res.data));
         })
         .catch((error) => {
           toast.error("Something Wrong, Try Again");
@@ -164,16 +176,19 @@ const FollowUpModal = ({ id, setFollowUp }) => {
 
   const handleStatus = async (e) => {
     const val = e.target.value;
-    if(val == "Not available" || val == "Voice mail" || val == "Gatekeeper" || val == "Closed"){
+    if (
+      val == "Not available" ||
+      val == "Voice mail" ||
+      val == "Gatekeeper" ||
+      val == "Closed"
+    ) {
       setDis(val);
-    }
-    else if(val == "New test"){
+    } else if (val == "New test") {
       setDis("New test received");
-    }
-    else{
+    } else {
       setDis("");
     }
-    
+
     await axios
       .patch(`${siteInfo.api}/leads/setStatus/${id}`, {
         status: e.target.value,
@@ -202,7 +217,8 @@ const FollowUpModal = ({ id, setFollowUp }) => {
   const handleNextFollowUp = async (e) => {
     await axios
       .patch(`${siteInfo.api}/leads/setNextFollowUp/${id}`, {
-        nfup: e.target.value, user: currentUser.id
+        nfup: e.target.value,
+        user: currentUser.id,
       })
       .then((res) => {
         setLead(res.data.lead);
@@ -317,7 +333,14 @@ const FollowUpModal = ({ id, setFollowUp }) => {
                     />
                   </div>
                   <div className="mb-3 flex flex-col">
-                    {isFollowUpcount && <h2><span className="text-3xl me-4 text-yellow-600">{followUpcount}</span>  Follow UP On this day</h2>}
+                    {isFollowUpcount && (
+                      <h2>
+                        <span className="text-3xl me-4 text-yellow-600">
+                          {followUpcount}
+                        </span>{" "}
+                        Follow UP On this day
+                      </h2>
+                    )}
                   </div>
 
                   {/* Right side of form end   */}
@@ -354,7 +377,7 @@ const FollowUpModal = ({ id, setFollowUp }) => {
                   type="submit"
                   className="  bg-sky-600 border-none text-neutral-100 px-4 py-2 rounded-md hover:bg-sky-800 cursor-pointer"
                 />
-                <Button onClick={handleFollow}>
+                <Button onClick={handleFollowTwo}>
                   {follow ? <CheckBoxIcon /> : <AddBoxOutlinedIcon />}
                 </Button>
                 <Button color="error" onClick={handleFav}>
