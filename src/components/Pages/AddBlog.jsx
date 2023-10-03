@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import siteInfo from "../../../siteInfo";
+import Layout from "../Layout/Layout";
 
 function AddBlog() {
   const [image, setImage] = useState(null);
@@ -11,15 +12,20 @@ function AddBlog() {
     setImage(e.target.files[0]);
   };
 
-  useEffect(() => {
+  const getData = () => {
     axios
-      .get("http://localhost:4000/api/blogs")
+      .get("https://crm-server-yr5g.onrender.com/api/blogs")
       .then((res) => {
         setBlogs(res.data);
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+  console.log(blogs,'blogs')
+
+  useEffect(() => {
+    getData()
   }, [blog]);
 
   const handleSubmit = async (e) => {
@@ -31,7 +37,7 @@ function AddBlog() {
     formData.append("blog", e.target.blog.value);
   
     try {
-      const res = await axios.post("http://localhost:4000/api/blogs", formData, {
+      const res = await axios.post("https://crm-server-yr5g.onrender.com/api/blogs", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -44,8 +50,23 @@ function AddBlog() {
     }
   };
 
+  const handleDlt = (id)=>{
+    axios
+    .delete(`https://crm-server-yr5g.onrender.com/api/blogs/${id}`)
+    .then((res) => {
+      if(res.status === 200){
+        getData()
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    console.log(id)
+  }
+
   return (
-    <main>
+   <Layout>
+     <main>
       <div style={{ display: "flex" }}>
         <div
           style={{
@@ -112,13 +133,16 @@ function AddBlog() {
             fontSize: "32px",
           }}
         >
+        
           <h1>{blog.title}</h1>
           <img src={blog.image} alt="new image" />
           <p>{blog.blog}</p>
+          
         </div>
         {/* ================================================= */}
       </div>
-      <section style={{display: "flex", flexWrap: 'wrap'}}>
+
+      <section className="bg-slate-100">
       {blogs.map(blog=>{
       return <div
       key={blog.id}
@@ -131,13 +155,17 @@ function AddBlog() {
           fontSize: "22px",
         }}
       >
-        <h1>{blog.title}</h1>
+       <div className="flex justify-between">
+       <h1>{blog.title}</h1> 
+        <button onClick={()=>  handleDlt(blog.id)} style={{background:'#000', marginLeft: "20px", color: '#ddd', padding: "5px 10px", cursor: 'pointer'}}>Delete  </button>
+       </div>
         <img style={{ margin: "10px 0"}} src={blog.image} alt="new image" />
         <p>{blog.blog}</p>
       </div>
       })}
       </section>
     </main>
+   </Layout>
   );
 }
 
