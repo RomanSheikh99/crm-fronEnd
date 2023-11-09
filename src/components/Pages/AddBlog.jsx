@@ -133,7 +133,6 @@ function AddBlog() {
             fontSize: "32px",
           }}
         >
-        
           <h1>{blog.title}</h1>
           <img src={blog.image} alt="new image" />
           <p>{blog.blog}</p>
@@ -142,7 +141,7 @@ function AddBlog() {
         {/* ================================================= */}
       </div>
 
-      <section className="bg-slate-100">
+      <section className= " flex justify-center bg-slate-200">
       {blogs.map(blog=>{
       return <div
       key={blog.id}
